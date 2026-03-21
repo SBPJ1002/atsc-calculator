@@ -1,0 +1,2 @@
+frame_duration_ms=128.944444
+subframe_0_duration_ms=125.925926
