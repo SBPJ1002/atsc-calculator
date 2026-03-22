@@ -216,14 +216,27 @@ async function updateResultadosSubframeProgress(subframeIndex) {
             celulasTI = numFecBlocksMax * fecBlockSize;
         }
 
-        // BBFramerate and Bitrate (require subframe duration)
+        // Outer code parity bits (BCH/CRC overhead per FEC block)
+        // fec_type: 0=BCH+16K, 1=BCH+64K, 2=CRC+16K, 3=CRC+64K, 4=16K only, 5=64K only
+        let outerCodeParity = 0;
+        if (fecType === 0) outerCodeParity = 168;           // BCH + 16K LDPC
+        else if (fecType === 1) outerCodeParity = 192;      // BCH + 64K LDPC
+        else if (fecType === 2 || fecType === 3) outerCodeParity = 32; // CRC-32
+
+        const bbpHeader = 16; // 2 bytes BBP header
+        const kLdpc = ldpcSize * (codeRateNum / codeRateDen);
+        const kPayload = kLdpc - outerCodeParity - bbpHeader;
+        const payloadEff = (kLdpc > 0) ? (kPayload / kLdpc) : 1;
+
+        // BBFramerate and Bitrate (uses frame duration for average data rate)
         let bbFrameRateDisplay = '—';
         let bitrateDisplay = '—';
-        if (sfDurSec > 0 && numFecBlocks > 0) {
-			const bbfr = Math.trunc(numFecBlocks / sfDurSec);
-			bbFrameRateDisplay = bbfr + ' fps';
-            const usefulBitsPerBlock = ldpcSize * (codeRateNum / codeRateDen);
-            const bitrateBps = numFecBlocks * usefulBitsPerBlock / sfDurSec;
+        const frameDurSec = (window.__frameDurationMs__ || 0) / 1000;
+        if (frameDurSec > 0 && plp.size > 0) {
+            const bbfr = Math.trunc(numFecBlocks / frameDurSec);
+            bbFrameRateDisplay = bbfr + ' fps';
+            // Data Rate = PLP_cells × bits_per_cell × code_rate × payload_efficiency / frame_duration
+            const bitrateBps = plp.size * bitsPerCell * (codeRateNum / codeRateDen) * payloadEff / frameDurSec;
             bitrateDisplay = (bitrateBps / 1e6).toFixed(3) + ' Mbps';
         }
 
@@ -266,13 +279,17 @@ async function updateResultadosSubframeProgress(subframeIndex) {
                         <span class="sf-plp-field-value">${fecDisplay}</span>
                     </div>
                 </div>
+                ${(() => {
+                    const cnr = (typeof getCnrValues === 'function') ? getCnrValues(modOrder, codeRateIdx, fecType) : null;
+                    const f = (typeof formatCnr === 'function') ? formatCnr : (v) => v != null ? v.toFixed(2) : '—';
+                    return `
                 <div class="sf-plp-cnr-section">
                     <div class="sf-plp-cnr-group">
                         <span class="sf-plp-cnr-title">BICM CNR</span>
                         <div class="sf-plp-cnr-fields">
                             <div class="sf-plp-field">
                                 <span class="sf-plp-field-label">AWGN [dB]:</span>
-                                <span class="sf-plp-field-value">—</span>
+                                <span class="sf-plp-field-value">${cnr ? f(cnr.bicm.awgn) : '—'}</span>
                             </div>
                         </div>
                     </div>
@@ -281,15 +298,15 @@ async function updateResultadosSubframeProgress(subframeIndex) {
                         <div class="sf-plp-cnr-fields">
                             <div class="sf-plp-field">
                                 <span class="sf-plp-field-label">AWGN [dB]:</span>
-                                <span class="sf-plp-field-value">—</span>
+                                <span class="sf-plp-field-value">${cnr ? f(cnr.simulation.awgn) : '—'}</span>
                             </div>
                             <div class="sf-plp-field">
                                 <span class="sf-plp-field-label">RC20 [dB]:</span>
-                                <span class="sf-plp-field-value">—</span>
+                                <span class="sf-plp-field-value">${cnr ? f(cnr.simulation.rc20) : '—'}</span>
                             </div>
                             <div class="sf-plp-field">
                                 <span class="sf-plp-field-label">RL20 [dB]:</span>
-                                <span class="sf-plp-field-value">—</span>
+                                <span class="sf-plp-field-value">${cnr ? f(cnr.simulation.rl20) : '—'}</span>
                             </div>
                         </div>
                     </div>
@@ -298,15 +315,15 @@ async function updateResultadosSubframeProgress(subframeIndex) {
                         <div class="sf-plp-cnr-fields">
                             <div class="sf-plp-field">
                                 <span class="sf-plp-field-label">AWGN [dB]:</span>
-                                <span class="sf-plp-field-value">—</span>
+                                <span class="sf-plp-field-value">${cnr ? f(cnr.lab.awgn) : '—'}</span>
                             </div>
                             <div class="sf-plp-field">
                                 <span class="sf-plp-field-label">RC20 [dB]:</span>
-                                <span class="sf-plp-field-value">—</span>
+                                <span class="sf-plp-field-value">${cnr ? f(cnr.lab.rc20) : '—'}</span>
                             </div>
                             <div class="sf-plp-field">
                                 <span class="sf-plp-field-label">RL20 [dB]:</span>
-                                <span class="sf-plp-field-value">—</span>
+                                <span class="sf-plp-field-value">${cnr ? f(cnr.lab.rl20) : '—'}</span>
                             </div>
                         </div>
                     </div>
@@ -315,19 +332,20 @@ async function updateResultadosSubframeProgress(subframeIndex) {
                         <div class="sf-plp-cnr-fields">
                             <div class="sf-plp-field">
                                 <span class="sf-plp-field-label">AWGN [dB]:</span>
-                                <span class="sf-plp-field-value">—</span>
+                                <span class="sf-plp-field-value">${cnr ? f(cnr.field.awgn) : '—'}</span>
                             </div>
                             <div class="sf-plp-field">
                                 <span class="sf-plp-field-label">RC20 [dB]:</span>
-                                <span class="sf-plp-field-value">—</span>
+                                <span class="sf-plp-field-value">${cnr ? f(cnr.field.rc20) : '—'}</span>
                             </div>
                             <div class="sf-plp-field">
                                 <span class="sf-plp-field-label">RL20 [dB]:</span>
-                                <span class="sf-plp-field-value">—</span>
+                                <span class="sf-plp-field-value">${cnr ? f(cnr.field.rl20) : '—'}</span>
                             </div>
                         </div>
                     </div>
-                </div>
+                </div>`;
+                })()}
             </div>
         `;
     }

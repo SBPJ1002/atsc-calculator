@@ -32,13 +32,13 @@ L1B_first_sub_reduced_carriers → 0
 L1B_first_sub_guard_interval → GI5_1024
 L1B_first_sub_num_ofdm_symbols → 50
 L1B_first_sub_scattered_pilot_pattern → SP6_2
-L1B_first_sub_scattered_pilot_boost(power) → 0.00 dB
-L1B_first_sub_scattered_pilot_boost(amplitude) → 1.000
+L1B_first_sub_scattered_pilot_boost(power) → 4.60 dB
+L1B_first_sub_scattered_pilot_boost(amplitude) → 1.698
 L1B_first_sub_sbs_first → The first symbol of the first subframe of the current frame is not a subframe boundary symbol
 L1B_first_sub_sbs_last → The last symbol of the first subframe of the current frame is not a subframe boundary symbol
 L1B_first_sub_mimo_mixed → PLPs using and not using MIMO are multiplexed within the subframe
 L1B_reserved → 140737488355327
-L1B_crc → 3123828266
+L1B_crc → 3741389626
 
 -- L1 Detail --- 
 L1D_version → Version 0

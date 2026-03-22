@@ -913,6 +913,7 @@ function selected($value, $option) {
         </div>
     </div>
 <script src="assets/js/atsc-calculator.js"></script>
+<script src="assets/js/cnr-tables.js"></script>
 <script src="assets/js/ui-components.js"></script>
 <script src="assets/js/form-handler.js"></script>
 <script src="assets/js/backup-system.js"></script>
