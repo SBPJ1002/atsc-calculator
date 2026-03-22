@@ -5,29 +5,22 @@ if (!window.__NF_LISTENER__) {
     window.__NF_LISTENER__ = true;
 }
 
-// ======================================
-// FILTRAGEM DE PREAMBLE STRUCTURE POR MODO
-// ======================================
-
-/**
- * Filtra as opÃ§Ãµes de Preamble Structure baseado no modo selecionado
- */
 function filterPreambleStructureByMode() {
     const modeSelect = document.getElementById('preamble_mode');
     const structureSelect = document.getElementById('preamble_structure');
-    
+
     if (!modeSelect || !structureSelect) return;
-    
+
     const selectedMode = modeSelect.value;
     const currentStructureValue = structureSelect.value;
     let firstVisibleOption = null;
     let currentOptionStillVisible = false;
-    
+
     Array.from(structureSelect.options).forEach(option => {
         const optionMode = option.getAttribute('data-mode');
-        
+
         if (optionMode === selectedMode || optionMode === '0') {
-            // Mostrar opÃ§Ãµes do modo selecionado e reserved (mode 0)
+
             option.hidden = false;
             option.style.display = '';
             if (!firstVisibleOption) {
@@ -37,29 +30,25 @@ function filterPreambleStructureByMode() {
                 currentOptionStillVisible = true;
             }
         } else {
-            // Ocultar opÃ§Ãµes de outros modos
+
             option.hidden = true;
             option.style.display = 'none';
         }
     });
-    
-    // Se a opÃ§Ã£o atual não estÃ¡ mais visÃ­vel, selecionar a primeira visÃ­vel
+
     if (!currentOptionStillVisible && firstVisibleOption) {
         structureSelect.value = firstVisibleOption.value;
-        // Disparar evento de change para atualizar subframes
+
         structureSelect.dispatchEvent(new Event('change', { bubbles: true }));
     }
 }
 
-/**
- * Sincroniza o select de modo com a estrutura selecionada
- */
 function syncModeWithStructure() {
     const modeSelect = document.getElementById('preamble_mode');
     const structureSelect = document.getElementById('preamble_structure');
-    
+
     if (!modeSelect || !structureSelect) return;
-    
+
     const selectedOption = structureSelect.options[structureSelect.selectedIndex];
     if (selectedOption) {
         const optionMode = selectedOption.getAttribute('data-mode');
@@ -69,41 +58,32 @@ function syncModeWithStructure() {
     }
 }
 
-/**
- * Inicializa os event listeners para o filtro de modo
- */
 function initPreambleModeFilter() {
     const modeSelect = document.getElementById('preamble_mode');
     const structureSelect = document.getElementById('preamble_structure');
-    
+
     if (modeSelect) {
         modeSelect.addEventListener('change', filterPreambleStructureByMode);
     }
-    
-    // Sincronizar o modo na carga inicial baseado na estrutura salva
+
     if (structureSelect && modeSelect) {
         syncModeWithStructure();
         filterPreambleStructureByMode();
     }
 }
 
-// Inicializar quando o DOM estiver pronto
 if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', initPreambleModeFilter);
 } else {
     initPreambleModeFilter();
 }
 
-// ============================================================
-// WIZARD CONTROLLER
-// ============================================================
-
 let currentWizardStep = 1;
 const WIZARD_STEPS = {
     1: { label: 'Bootstrap', sections: ['botstrap'] },
     2: { label: 'Preamble', sections: ['preamble'] },
-    3: { label: 'Subframes', sections: [] },    // dynamic
-    4: { label: 'PLPs', sections: [] },          // dynamic
+    3: { label: 'Subframes', sections: [] },
+    4: { label: 'PLPs', sections: [] },
 };
 const TOTAL_WIZARD_STEPS = 4;
 
@@ -127,7 +107,7 @@ function wizardGoToStep(step) {
         }
     } else if (step === 4) {
         buildPlpTabs();
-        // Default to PLP0 of Subframe 0
+
         const firstPlp = document.getElementById('plp-0-0');
         if (firstPlp) {
             showSection('plp-0-0');
@@ -254,10 +234,6 @@ function hideSubTabs() {
     if (tabsWrapper) tabsWrapper.style.display = 'none';
 }
 
-// ============================================================
-// PLP AUTO/MANUAL ALLOCATION
-// ============================================================
-
 function togglePlpAllocMode(subframeIndex, plpIndex) {
     const mode = document.getElementById(`plp_alloc_mode_${plpIndex}`)?.value;
     const startInput = document.getElementById(`start_${plpIndex}`);
@@ -280,7 +256,6 @@ async function recalcAutoPlps(subframeIndex) {
     });
 
     if (result.error) {
-        console.warn('recalcAutoPlps: capacity error', result.reason);
         return;
     }
 
@@ -294,7 +269,6 @@ async function recalcAutoPlps(subframeIndex) {
     });
     plps.sort((a, b) => a - b);
 
-    // Gather manual PLPs first to know how much space they consume
     let manualUsed = 0;
     const autoPlps = [];
 
@@ -316,7 +290,7 @@ async function recalcAutoPlps(subframeIndex) {
         const sizeInput = document.getElementById(`size_${idx}`);
 
         if (mode === 'auto') {
-            // First auto PLP gets all available, rest get 0
+
             const isFirstAuto = autoPlps[0] === idx;
             const size = isFirstAuto ? availableForAuto : 0;
 
@@ -324,7 +298,7 @@ async function recalcAutoPlps(subframeIndex) {
             if (sizeInput) sizeInput.value = size;
             currentStart += size;
         } else {
-            // Manual PLP: keep its size, set start sequentially
+
             const size = parseInt(sizeInput?.value || '0', 10);
             if (startInput) startInput.value = currentStart;
             currentStart += size;
@@ -332,10 +306,8 @@ async function recalcAutoPlps(subframeIndex) {
 
     }
 
-    // Update Resultados once for the whole subframe
     updateResultadosSubframeProgress(subframeIndex);
 
-    // Alert if total exceeds capacity
     if (currentStart > totalAvailable) {
         alert(`Alerta: O total alocado (${currentStart.toLocaleString()}) excede a capacidade do subframe (${totalAvailable.toLocaleString()}).`);
     }
@@ -348,15 +320,11 @@ function validatePlpManualSize(subframeIndex, plpIndex) {
     }
 }
 
-// ============================================================
-// ORIGINAL FUNCTIONS (sidebar-specific removed)
-// ============================================================
-
 function toggleL1dBsid() {
     var l1dVersion = document.getElementById('l1d_version');
     var l1dBsidContainer = document.getElementById('l1d_bsid_container');
     var l1dBsidInput = document.getElementById('l1d_bsid');
-    
+
     if (l1dVersion && l1dBsidContainer) {
         if (l1dVersion.value > '0') {
             l1dBsidContainer.style.display = '';
@@ -372,14 +340,10 @@ function toggleL1dBsid() {
     }
 }
 
-// showSection is defined in ui-components.js (calls syncWizardWithSection)
-// toggleGenerateButton is handled by wizard bottom bar
-
 function generateMenus(count) {
     const savedData = saveAllSubframesData();
     const geradorGroup = document.getElementById('gerador-group');
 
-    // Clean up old dynamic sections and menu items
     if (geradorGroup) {
         const subframesAndPlps = geradorGroup.querySelectorAll('[data-subframe], .menu-item');
         subframesAndPlps.forEach(el => el.remove());
@@ -389,7 +353,6 @@ function generateMenus(count) {
     for (let i = 0; i < count; i++) {
         const subframeId = `subframe${i}`;
 
-        // Hidden menu item for compatibility
         if (geradorGroup) {
             const subframeItem = document.createElement('li');
             subframeItem.classList.add('menu-item');
@@ -401,13 +364,13 @@ function generateMenus(count) {
         section.className = 'dynamic-section config-section';
         section.id = subframeId;
         section.style.display = 'none';
-        section.innerHTML = `   
+        section.innerHTML = `
         <form class="custom-form">
             <h3>Subframe ${i}</h3>
             <div class="form-row">
                 <div class="form-group">
                     <label for="plp_mimo_${i}">MIMO:</label>
-                        <select name="plp_mimo_${i}" id="plp_mimo_${i}" required onchange="toggleMimoMixed(${i})">                        
+                        <select name="plp_mimo_${i}" id="plp_mimo_${i}" required onchange="toggleMimoMixed(${i})">
                         <option value="0">Disable</option>
                         <option value="1">Enable</option>
                     </select>
@@ -539,7 +502,6 @@ function generateMenus(count) {
                         <option value="1">ON</option>
                     </select>
                 </div>
-                
 
                 <div class="form-group">
                     <label for="sbs_last_${i}">SBS Last:</label>
@@ -557,15 +519,15 @@ function generateMenus(count) {
             </div>
         </form>
         `;
-        
+
         const sections = document.getElementById('sections');
         sections.appendChild(section);
     }
-    
+
     setTimeout(() => {
     restoreAllData(savedData);
     renumberAllPlps();
-    
+
     for (let i = 0; i < count; i++) {
         toggleMimoMixed(i);
     }
@@ -578,7 +540,6 @@ function generatePLPMenusAndFields(subframeIndex) {
     const plpFieldsContainer = document.getElementById(`plp-fields-${subframeIndex}`);
 
     if (!plpCountInput || !plpFieldsContainer) {
-        console.error(`PLP elements not found for subframe ${subframeIndex}`);
         return;
     }
 
@@ -607,7 +568,6 @@ function generatePLPMenusAndFields(subframeIndex) {
         }
     });
 
-    // Clean up old PLP menu items and sections
     if (geradorGroup) {
         const existingPlps = geradorGroup.querySelectorAll(`[data-subframe="${subframeIndex}"]`);
         existingPlps.forEach(plp => plp.remove());
@@ -617,7 +577,7 @@ function generatePLPMenusAndFields(subframeIndex) {
     for (let plpIndex = 0; plpIndex < plpCount; plpIndex++) {
         const plpId = `plp-${subframeIndex}-${plpIndex}`;
         const plpIdValue = plpIndex;
-        
+
         const plpSection = document.createElement('div');
         plpSection.className = 'dynamic-section config-section';
         plpSection.id = plpId;
@@ -625,7 +585,7 @@ function generatePLPMenusAndFields(subframeIndex) {
         plpSection.innerHTML = `
         <form class="custom-form">
     <h3>Subframe ${subframeIndex} - PLP ${plpIdValue}</h3>
-    
+
     <div class="form-row">
         <div class="form-group">
             <label for="plp_id_${plpIndex}">ID:</label>
@@ -679,7 +639,7 @@ function generatePLPMenusAndFields(subframeIndex) {
         <option value="4">16K LDPC only</option>
         <option value="5">64K LDPC only</option>
     </select>
-    
+
     <label for="mod_order_${plpIndex}">MOD Order:</label>
     <select name="mod_order_${plpIndex}" id="mod_order_${plpIndex}" required>
         <option value="0">QPSK</option>
@@ -689,7 +649,7 @@ function generatePLPMenusAndFields(subframeIndex) {
         <option value="4">1024QAM</option>
         <option value="5">4096QAM</option>
     </select>
-    
+
     <label for="code_rate_${plpIndex}">Code Rate:</label>
     <select name="code_rate_${plpIndex}" id="code_rate_${plpIndex}" required>
         <option value="0">2/15</option>
@@ -711,27 +671,26 @@ function generatePLPMenusAndFields(subframeIndex) {
         <option value="0">non-dispersed</option>
         <option value="1">dispersed</option>
     </select>
-    
+
     <label for="num_subslice_${plpIndex}">Num Subslice:</label>
     <input name="num_subslice_${plpIndex}" id="num_subslice_${plpIndex}" type="number" placeholder="Num Subslice - PLP ${plpIndex}" min="0" required>
 
     <label for="subslice_interval_${plpIndex}">Subslice Interval:</label>
     <input name="subslice_interval_${plpIndex}" id="subslice_interval_${plpIndex}" type="number" placeholder="Subslice Interval - PLP ${plpIndex}" min="0" required>
 
-    
     <label for="ti_mode_${plpIndex}">TI Mode:</label>
     <select name="ti_mode_${plpIndex}" id="ti_mode_${plpIndex}" required onchange="toggleTIFields(${plpIndex})">
         <option value="0">No TI</option>
         <option value="1">CTI</option>
         <option value="2">HTI</option>
     </select>
-    
+
     <label for="ti_extended_${plpIndex}">TI Extended:</label>
     <select name="ti_extended_${plpIndex}" id="ti_extended_${plpIndex}" required>
         <option value="0">OFF</option>
         <option value="1">ON</option>
     </select>
-    
+
     <label for="cti_depth_${plpIndex}">CTI Depth:</label>
     <select name="cti_depth_${plpIndex}" id="cti_depth_${plpIndex}" required>
         <option value="0">512</option>
@@ -739,7 +698,7 @@ function generatePLPMenusAndFields(subframeIndex) {
         <option value="2">887</option>
         <option value="3">1024</option>
     </select>
-     
+
     <label for="cell_intervaler_${plpIndex}">Cell Interleaver:</label>
     <select name="cell_intervaler_${plpIndex}" id="cell_intervaler_${plpIndex}" required>
         <option value="0">OFF</option>
@@ -801,19 +760,19 @@ function generatePLPMenusAndFields(subframeIndex) {
         <option value="0">OFF</option>
         <option value="1">ON</option>
     </select>
-    
+
     <label for="plp_mimo_stream_combining_${plpIndex}">Stream Combining:</label>
     <select name="plp_mimo_stream_combining_${plpIndex}" id="plp_mimo_stream_combining_${plpIndex}" required>
         <option value="0">Disable</option>
         <option value="1">Enable</option>
     </select>
-    
+
     <label for="plp_mimo_IQ_intervaling_${plpIndex}">IQ Interleaving:</label>
     <select name="plp_mimo_IQ_intervaling_${plpIndex}" id="plp_mimo_IQ_intervaling_${plpIndex}" required>
         <option value="0">Disable</option>
         <option value="1">Enable</option>
     </select>
-    
+
     <label for="plp_mimo_PH_${plpIndex}">Phase Hopping:</label>
     <select name="plp_mimo_PH_${plpIndex}" id="plp_mimo_PH_${plpIndex}" required>
         <option value="0">Disable</option>
@@ -821,20 +780,20 @@ function generatePLPMenusAndFields(subframeIndex) {
     </select>
 </form>
         `;
-        
+
         const sections = document.getElementById('sections');
         sections.appendChild(plpSection);
-        
+
         const hiddenFieldset = document.createElement('div');
         hiddenFieldset.innerHTML = `
             <input type="hidden" name="subframe[${subframeIndex}][plp][${plpIndex}][exists]" value="1">
         `;
         plpFieldsContainer.appendChild(hiddenFieldset);
     }
-    
+
     setTimeout(() => {
         renumberAllPlps();
-        
+
         Object.keys(savedPLPData).forEach(plpIndex => {
             const plp = document.getElementById(`plp-${subframeIndex}-${plpIndex}`);
             if (plp) {
@@ -844,8 +803,7 @@ function generatePLPMenusAndFields(subframeIndex) {
                 }
             }
         });
-        
- 
+
     for (let plpIndex = 0; plpIndex < plpCount; plpIndex++) {
         updatePlpProgressBar(subframeIndex, plpIndex);
         toggleEnhancedLayerFields(plpIndex);
@@ -861,30 +819,30 @@ function generatePLPMenusAndFields(subframeIndex) {
 
 function submitForm() {
     var subframeCount = parseInt(document.getElementById('number_of_subframes').value) || 0;
-    
+
     for (let i = 0; i < subframeCount; i++) {
         const mimoSelect = document.getElementById(`plp_mimo_${i}`);
         const mimoMixedSelect = document.getElementById(`plp_mimo_mixed_${i}`);
-        
+
         if (mimoSelect && mimoMixedSelect) {
             if (mimoSelect.value !== "0") {
                 mimoMixedSelect.value = "0";
             }
         }
-        
+
         const plpCountInput = document.getElementById(`plp-count-${i}`);
         const plpCount = plpCountInput ? parseInt(plpCountInput.value) || 1 : 1;
-        
+
         for (let j = 0; j < plpCount; j++) {
             const layerSelect = document.getElementById(`layer_${j}`);
             if (layerSelect && layerSelect.value === "1") {
                 const fieldsToReset = [
-                    'fec_type', 'mod_order', 'code_rate', 'plp_type', 
-                    'num_subslice', 'subslice_interval', 'ti_extended', 
-                    'cti_depth', 'cell_intervaler', 'inter_subframe', 
+                    'fec_type', 'mod_order', 'code_rate', 'plp_type',
+                    'num_subslice', 'subslice_interval', 'ti_extended',
+                    'cti_depth', 'cell_intervaler', 'inter_subframe',
                     'num_ti_blocks', 'num_fec_blocks_max', 'num_fec_blocks'
                 ];
-                
+
                 fieldsToReset.forEach(fieldName => {
                     const field = document.getElementById(`${fieldName}_${j}`);
                     if (field) {
@@ -901,14 +859,14 @@ function submitForm() {
     }
 
     const emptyFields = validateAllFields();
-    
+
     if (emptyFields.length > 0) {
         let alertMessage = 'Os seguintes campos estão vazios:\n\n';
         emptyFields.forEach(field => {
             alertMessage += '-> ' + field + '\n';
         });
         alertMessage += '\nPor favor, preencha todos os campos antes de enviar.';
-        
+
         alert(alertMessage);
         return;
     }
@@ -917,22 +875,21 @@ const frameValidationErrors = validateFrameGeneration();
 
 if (frameValidationErrors.length > 0) {
     let alertMessage = 'ERRO: Configuração invÃ¡lida detectada!\n\n';
-    
-    // Verificar se hÃ¡ erro crÃ­tico de L1B/L1D
-    const hasL1BL1DError = frameValidationErrors.some(error => 
+
+    const hasL1BL1DError = frameValidationErrors.some(error =>
         error.message.includes('L1B Version = 1 e L1D Version = 0')
     );
-    
+
     if (hasL1BL1DError) {
         alertMessage += 'ERRO CRÍTICO DE VERSÃO:\n';
         alertMessage += 'A combinação L1B Version = 1 e L1D Version = 0 não é permitida!\n\n';
     }
-    
+
     frameValidationErrors.forEach(error => {
         alertMessage += '-> ' + error.message + '\n';
     });
     alertMessage += '\nA Configuração não pode ser enviada com erros.\nPor favor, corrija os valores antes de continuar.';
-    
+
     alert(alertMessage);
     return;
 }
@@ -944,7 +901,7 @@ if (frameValidationErrors.length > 0) {
     }
 
     var allData = new FormData();
-    
+
     var botstrapForm = document.getElementById('botstrap_form');
     for (var element of botstrapForm.elements) {
         if (element.name) {
@@ -958,28 +915,28 @@ if (frameValidationErrors.length > 0) {
             allData.append(element.name, element.value);
         }
     }
-    
+
     var subframeCount = parseInt(document.getElementById('number_of_subframes').value) || 0;
-    
+
     for (var i = 0; i < subframeCount; i++) {
         var subframeForm = document.querySelector(`#subframe${i} form`);
         if (subframeForm) {
             for (var element of subframeForm.elements) {
                 if (element.name) {
-                    if (element.name.startsWith('plp_mimo') || 
-                        element.name.startsWith('plp_miso') || 
+                    if (element.name.startsWith('plp_mimo') ||
+                        element.name.startsWith('plp_miso') ||
                         !element.name.includes('plp_')) {
                         allData.append(element.name, element.value);
                     }
                 }
             }
-            
+
             var plpCountInput = document.getElementById(`plp-count-${i}`);
             var plpCount = plpCountInput ? parseInt(plpCountInput.value) || 0 : 0;
-            
+
             if (plpCount > 0) {
                 allData.append(`plp-count-${i}`, plpCount);
-                
+
                 for (var j = 0; j < plpCount; j++) {
                     var plpForm = document.querySelector(`#plp-${i}-${j} form`);
                     if (plpForm) {
@@ -987,7 +944,6 @@ if (frameValidationErrors.length > 0) {
                             if (plpElement.name) {
                                 var newFieldName = plpElement.name.replace(/_(\d+)$/, `_${i}_${j}`);
                                 allData.append(newFieldName, plpElement.value);
-                                console.log(`Enviando campo PLP: ${newFieldName} = ${plpElement.value}`);
                             }
                         }
                     } else {
@@ -999,14 +955,13 @@ if (frameValidationErrors.length > 0) {
                             'inter_subframe', 'num_ti_blocks', 'num_fec_blocks_max',
                             'num_fec_blocks', 'inter_ldm_injection_level'
                         ];
-                        
+
                         plpFields.forEach(fieldName => {
                             var fieldId = `${fieldName}_${j}`;
                             var fieldElement = document.getElementById(fieldId);
                             if (fieldElement) {
                                 var newFieldName = `${fieldName}_${i}_${j}`;
                                 allData.append(newFieldName, fieldElement.value);
-                                console.log(`Enviando campo PLP: ${newFieldName} = ${fieldElement.value}`);
                             }
                         });
                     }
@@ -1014,20 +969,16 @@ if (frameValidationErrors.length > 0) {
             }
         }
     }
-    
+
     allData.append('submit_config', '1');
-    
-    console.log('Dados sendo enviados:');
+
     for (var pair of allData.entries()) {
-        console.log(pair[0] + ': ' + pair[1]);
     }
-    
+
     var xhr = new XMLHttpRequest();
     xhr.open('POST', '', true);
     xhr.onload = function () {
         if (xhr.status === 200) {
-            console.log('Configuração enviada com sucesso ao servidor');
-            console.log('Resposta do servidor:', xhr.responseText);
             showBackupNotification('Configuração enviada com sucesso!', 'success');
 
             setTimeout(async () => {
@@ -1042,36 +993,32 @@ if (frameValidationErrors.length > 0) {
 
             alert('Configuração enviada com sucesso!');
         } else {
-            console.error('Erro ao enviar dados para o servidor');
             showBackupNotification('Erro ao enviar ao servidor. Salvando backup local.', 'error');
-            
+
             saveConfigBackup();
-            
+
             alert('Erro ao enviar Configuração!');
         }
     };
-    
+
     xhr.onerror = function() {
-        console.error('Falha de conexÃ£o com o servidor');
         showBackupNotification('Falha de conexÃ£o. Configuração salva localmente.', 'error');
         serverStatus.available = false;
         serverStatus.usingBackup = true;
         updateServerStatusIndicator();
-        
+
         saveConfigBackup();
-        
+
         alert('Falha de conexÃ£o. Configuração salva localmente.');
     };
-    
+
     xhr.send(allData);
 }
-
 
 function setFieldValue(fieldId, value) {
     var field = document.getElementById(fieldId);
     if (field) {
         field.value = value;
-        console.log(`Campo ${fieldId} definido para: ${value}`);
         if (fieldId.includes('plp_mimo_') && !fieldId.includes('mixed')) {
             const subframeIndex = fieldId.split('_')[2];
             setTimeout(() => toggleMimoMixed(subframeIndex), 10);
@@ -1096,7 +1043,7 @@ function setFieldValue(fieldId, value) {
             const plpIndex = fieldId.split('_')[2];
             setTimeout(() => toggleMimoStreamFields(plpIndex), 10);
         }
-        
+
         if (fieldId.startsWith('size_')) {
             const plpIndexMatch = fieldId.match(/size_(\d+)/);
             if (plpIndexMatch) {
@@ -1113,17 +1060,14 @@ function setFieldValue(fieldId, value) {
             }
         }
     } else {
-        console.log(`Campo ${fieldId} não encontrado`);
     }
 }
 
 function loadSubframesData(subframesData) {
-    console.log('Dados dos subframes recebidos do PHP:', subframesData);
 
     for (var i in subframesData) {
         var subframe = subframesData[i];
-        console.log(`Populando subframe ${i}:`, subframe);
-        
+
         setFieldValue('plp_mimo_' + i, subframe.plp_mimo);
         setFieldValue('plp_mimo_mixed_' + i, subframe.plp_mimo_mixed);
         setFieldValue('plp_miso_' + i, subframe.plp_miso);
@@ -1137,17 +1081,14 @@ function loadSubframesData(subframesData) {
         setFieldValue('sbs_last_' + i, subframe.sbs_last);
         setFieldValue('freq_interleaver_' + i, subframe.freq_interleaver);
         setFieldValue('plp-count-' + i, subframe.plp_count);
-        
+
         if (subframe.plps && Object.keys(subframe.plps).length > 0) {
-            console.log(`Gerando PLPs para subframe ${i}...`);
             generatePLPMenusAndFields(parseInt(i));
-            
+
             setTimeout(function(subframeIndex, plps) {
-                console.log(`Populando PLPs para subframe ${subframeIndex}:`, plps);
                 for (var j in plps) {
                     var plp = plps[j];
-                    console.log(`Populando PLP ${j}:`, plp);
-                    
+
                     setFieldValue('plp_id_' + j, plp.id);
                     setFieldValue('lls_flag_' + j, plp.lls_flag);
                     setFieldValue('layer_' + j, plp.layer);
@@ -1176,7 +1117,7 @@ function loadSubframesData(subframesData) {
             }.bind(null, i, subframe.plps), 500);
         }
     }
-    // Signal that PLP data was loaded from server — prevent autoFillAllPlps from overwriting
+
     window.__plpDataLoaded__ = true;
 
     setTimeout(function() {
@@ -1184,7 +1125,6 @@ function loadSubframesData(subframesData) {
     initializeTIControls();
     initializeMimoControls();
 
-    // Update resultados display with the loaded PLP values (don't recalc, values are already correct from PHP)
     for (var sfIdx in subframesData) {
         updateResultadosSubframeProgress(parseInt(sfIdx));
     }
@@ -1198,24 +1138,22 @@ function parseConfFile(confContent) {
         subframes: {},
         timestamp: Date.now()
     };
-    
+
     const lines = confContent.split('\n');
-    
+
     for (const line of lines) {
         const trimmed = line.trim();
-        
+
         if (!trimmed || trimmed.startsWith('#') || trimmed.startsWith('=')) {
             continue;
         }
-        
+
         const equalIndex = trimmed.indexOf('=');
         if (equalIndex === -1) continue;
-        
+
         const key = trimmed.substring(0, equalIndex).trim();
         const value = trimmed.substring(equalIndex + 1).trim();
-        
-        console.log(`Parsing: ${key} = ${value}`);
-        
+
         if (key === 'major_version') config.bootstrap.major_version = value;
         else if (key === 'minor_version') config.bootstrap.minor_version = value;
         else if (key === 'bootstrap_symbol') config.bootstrap.bootstrap_symbol = value;
@@ -1225,7 +1163,7 @@ function parseConfFile(confContent) {
         else if (key === 'min_time_to_next') config.bootstrap.min_time_to_next = value;
         else if (key === 'preamble_structure') config.bootstrap.preamble_structure = value;
         else if (key === 'number_of_frames') config.bootstrap.number_of_frames = value;
-        
+
         else if (key === 'L1B_version') config.preamble.l1b_version = value;
         else if (key === 'L1B_mimo_scattered_pilot_encoding') config.preamble.l1b_mimo_scatterred_pilot_encoding = value;
         else if (key === 'L1B_L1_Detail_size_bytes') config.preamble.detail_size_bytes = value;
@@ -1237,27 +1175,27 @@ function parseConfFile(confContent) {
         else if (key === 'L1B_preamble_num_symbols') config.preamble.preamble_num_symbols = value;
         else if (key === 'L1D_version') config.preamble.l1d_version = value;
         else if (key === 'L1D_bsid') config.preamble.l1d_bsid = value;
-        
+
         else if (key.startsWith('subframe.')) {
             const subframeMatch = key.match(/subframe\.\[(\d+)\]\.(.+)/);
             if (subframeMatch) {
                 const subframeIndex = subframeMatch[1];
                 const subframeField = subframeMatch[2];
-                
+
                 if (!config.subframes[subframeIndex]) {
                     config.subframes[subframeIndex] = { config: {}, plps: {} };
                 }
-                
+
                 if (subframeField.startsWith('plp.')) {
                     const plpMatch = subframeField.match(/plp\.\[(\d+)\]\.(.+)/);
                     if (plpMatch) {
                         const plpIndex = plpMatch[1];
                         const plpField = plpMatch[2];
-                        
+
                         if (!config.subframes[subframeIndex].plps[plpIndex]) {
                             config.subframes[subframeIndex].plps[plpIndex] = {};
                         }
-                        
+
                         const plpFieldMap = {
                             'L1D_plp_id': `plp_id_${plpIndex}`,
                             'L1D_plp_lls_flag': `lls_flag_${plpIndex}`,
@@ -1284,13 +1222,11 @@ function parseConfFile(confContent) {
                             'L1D_plp_HTI_num_fec_blocks': `num_fec_blocks_${plpIndex}`,
                             'L1D_plp_ldm_injection_level': `inter_ldm_injection_level_${plpIndex}`
                         };
-                        
+
                         const mappedField = plpFieldMap[plpField];
                         if (mappedField) {
                             config.subframes[subframeIndex].plps[plpIndex][mappedField] = value;
-                            console.log(`  PLP ${plpIndex}: ${mappedField} = ${value}`);
                         } else {
-                            console.log(`  Campo PLP não mapeado: ${plpField}`);
                         }
                     }
                 }
@@ -1307,7 +1243,7 @@ function parseConfFile(confContent) {
                         'L1B_first_sub_scattered_pilot_boost': `spilot_boost_${subframeIndex}`,
                         'L1B_first_sub_sbs_first': `sbs_first_${subframeIndex}`,
                         'L1B_first_sub_sbs_last': `sbs_last_${subframeIndex}`,
-                        
+
                         'L1D_mimo': `plp_mimo_${subframeIndex}`,
                         'L1D_mimo_mixed': `plp_mimo_mixed_${subframeIndex}`,
                         'L1D_miso': `plp_miso_${subframeIndex}`,
@@ -1319,26 +1255,22 @@ function parseConfFile(confContent) {
                         'L1D_scattered_pilot_boost': `spilot_boost_${subframeIndex}`,
                         'L1D_sbs_first': `sbs_first_${subframeIndex}`,
                         'L1D_sbs_last': `sbs_last_${subframeIndex}`,
-                        
+
                         'L1D_frequency_interleaver': `freq_interleaver_${subframeIndex}`,
                         'L1D_num_plp': `plp-count-${subframeIndex}`
                     };
-                    
+
                     const mappedField = subframeFieldMap[subframeField];
                     if (mappedField) {
                         config.subframes[subframeIndex].config[mappedField] = value;
-                        console.log(`  Subframe ${subframeIndex}: ${mappedField} = ${value}`);
                     } else {
-                        console.log(`  Campo subframe não mapeado: ${subframeField}`);
                     }
                 }
             }
         } else {
-            console.log(`Campo não reconhecido: ${key}`);
         }
     }
-    
-    console.log('Configuração parseada:', config);
+
     return config;
 }
 
@@ -1359,7 +1291,7 @@ function generateConfFile() {
     const bootstrapForm = document.getElementById('botstrap_form');
     if (bootstrapForm) {
         const bootstrapData = getFormDataAsObject(bootstrapForm);
-        
+
         confContent += `major_version=${bootstrapData.major_version || '0'}\n`;
         confContent += `minor_version=${bootstrapData.minor_version || '0'}\n`;
         confContent += `bootstrap_symbol=${bootstrapData.bootstrap_symbol || '0'}\n`;
@@ -1379,7 +1311,7 @@ function generateConfFile() {
     const preambleForm = document.getElementById('preamble_form');
     if (preambleForm) {
         const preambleData = getFormDataAsObject(preambleForm);
-        
+
         confContent += `L1B_version=${preambleData.l1b_version || '0'}\n`;
         confContent += `L1B_mimo_scattered_pilot_encoding=${preambleData.l1b_mimo_scatterred_pilot_encoding || '0'}\n`;
         confContent += `L1B_lls_flag=0\n`;
@@ -1420,16 +1352,16 @@ function generateConfFile() {
 
     const subframeCountInput = document.getElementById('number_of_subframes');
     const subframeCount = subframeCountInput ? parseInt(subframeCountInput.value) || 1 : 1;
-    
+
     for (let i = 0; i < subframeCount; i++) {
         confContent += `# --- Subframe Basic ${i} ---\n`;
-        
+
         const subframeForm = document.querySelector(`#subframe${i} form`);
         if (subframeForm) {
             const subframeData = getFormDataAsObject(subframeForm);
-            
+
             const prefix = i === 0 ? 'L1B_first_sub' : 'L1D';
-            
+
             confContent += `subframe.[${i}].${prefix}_mimo=${subframeData[`plp_mimo_${i}`] || '0'}\n`;
             if (i === 0) {
                 confContent += `subframe.[${i}].${prefix}_mimo_mixed=${subframeData[`plp_mimo_mixed_${i}`] || '0'}\n`;
@@ -1445,7 +1377,7 @@ function generateConfFile() {
             confContent += `subframe.[${i}].${prefix}_scattered_pilot_boost=${subframeData[`spilot_boost_${i}`] || '0'}\n`;
             confContent += `subframe.[${i}].${prefix}_sbs_first=${subframeData[`sbs_first_${i}`] || '0'}\n`;
             confContent += `subframe.[${i}].${prefix}_sbs_last=${subframeData[`sbs_last_${i}`] || '0'}\n`;
-            
+
             if (i > 0) {
                 confContent += `subframe.[${i}].L1D_subframe_multiplex=0\n`;
             }
@@ -1453,19 +1385,19 @@ function generateConfFile() {
             if (i > 0) {
                 confContent += `subframe.[${i}].L1D_sbs_null_cells=0\n`;
             }
-            
+
             const plpCountInput = document.getElementById(`plp-count-${i}`);
             const plpCount = plpCountInput ? parseInt(plpCountInput.value) || 1 : 1;
-            
+
             confContent += `subframe.[${i}].L1D_num_plp=${plpCount}\n\n`;
-            
+
             for (let j = 0; j < plpCount; j++) {
                 confContent += `# Subframe ${i} - PLP ${j}\n`;
-                
+
                 const plpForm = document.querySelector(`#plp-${i}-${j} form`);
                 if (plpForm) {
                     const plpData = getFormDataAsObject(plpForm);
-                    
+
                     confContent += `subframe.[${i}].plp.[${j}].L1D_plp_id=${plpData[`plp_id_${j}`] || j}\n`;
                     confContent += `subframe.[${i}].plp.[${j}].L1D_plp_lls_flag=${plpData[`lls_flag_${j}`] || '0'}\n`;
                     confContent += `subframe.[${i}].plp.[${j}].L1D_plp_layer=${plpData[`layer_${j}`] || '0'}\n`;
@@ -1514,29 +1446,27 @@ function generateConfFile() {
 function exportConfig() {
     try {
         const confContent = generateConfFile();
-        
+
         const blob = new Blob([confContent], { type: 'text/plain' });
         const url = URL.createObjectURL(blob);
-        
+
         const timestamp = new Date().toISOString().slice(0, 19).replace(/[:-]/g, '');
         const filename = `atsc3_config_${timestamp}.conf`;
-        
+
         const a = document.createElement('a');
         a.href = url;
         a.download = filename;
         a.style.display = 'none';
-        
+
         document.body.appendChild(a);
         a.click();
         document.body.removeChild(a);
-        
+
         URL.revokeObjectURL(url);
-        
+
         showBackupNotification(`Configuração exportada: ${filename}`, 'success');
-        console.log('âœ… Configuração exportada com sucesso');
-        
+
     } catch (error) {
-        console.error('Erro ao exportar Configuração:', error);
         showBackupNotification('Erro ao exportar Configuração!', 'error');
         alert('Erro ao exportar Configuração!');
     }
@@ -1545,38 +1475,32 @@ function exportConfig() {
 function importConfigFile(event) {
     const file = event.target.files[0];
     if (!file) return;
-    
+
     const reader = new FileReader();
     reader.onload = function(e) {
         try {
             let configData;
             const fileContent = e.target.result;
-            
+
             if (file.name.toLowerCase().endsWith('.conf')) {
-                console.log('ðŸ“„ Importando arquivo .conf');
                 configData = parseConfFile(fileContent);
             } else {
-                console.log('ðŸ“„ Importando arquivo JSON');
                 configData = JSON.parse(fileContent);
             }
-            
-            console.log('ðŸ“§ Importando Configuração:', configData);
-            
+
             localStorage.setItem(BACKUP_CONFIG.localStorageKey, JSON.stringify(configData));
             localStorage.setItem(BACKUP_CONFIG.timestampKey, Date.now().toString());
-            
+
             loadConfigBackup();
-            
+
             showBackupNotification('Configuração importada com sucesso!', 'success');
-            console.log('Configuração importada com sucesso');
-            
+
         } catch (error) {
-            console.error('Erro ao importar Configuração:', error);
             alert('Erro ao importar arquivo de Configuração! Verifique se o formato estÃ¡ correto.');
         }
     };
     reader.readAsText(file);
-    
+
     event.target.value = '';
 }
 
@@ -1627,14 +1551,13 @@ window.addEventListener('DOMContentLoaded', () => {
 
             showSection('botstrap');
         }
-        
+
         setTimeout(() => {
             initializeBackupSystem();
             initializeSubsliceControls();
             initializeTIControls();
             initializeMimoControls();
 
-            // Initialize wizard
             wizardGoToStep(1);
 
             setTimeout(() => {
@@ -1647,7 +1570,6 @@ window.addEventListener('DOMContentLoaded', () => {
     }
 });
 
-
 window.addEventListener('hashchange', function () {
     const sectionId = window.location.hash.substring(1);
     if (sectionId) {
@@ -1656,13 +1578,11 @@ window.addEventListener('hashchange', function () {
 });
 
 window.addEventListener('DOMContentLoaded', async function() {
-    console.log('DOM carregado, aguardando dados dos subframes...');
 
     fetchL1dSizeBytesFromLog();
     await Promise.all([fetchFrame2LogData(), fetchFrameDuration()]);
 
     setTimeout(function() {
-        console.log('Tentando popular dados dos subframes...');
 
         if (typeof window.subframesData !== 'undefined') {
             loadSubframesData(window.subframesData);
@@ -1670,15 +1590,14 @@ window.addEventListener('DOMContentLoaded', async function() {
     }, 1500);
 });
 
-
 function toggleFrameLength() {
     var frameLengthMode = document.getElementById('frame_lenght_mode');
     var frameLengthInput = document.getElementById('frame_lenght');
-    
+
     if (frameLengthMode && frameLengthInput) {
         var frameLengthContainer = frameLengthInput.closest('.form-group');
-        
-        if (frameLengthMode.value === '0') { 
+
+        if (frameLengthMode.value === '0') {
             if (frameLengthContainer) {
                 frameLengthContainer.style.display = '';
             }
@@ -1686,7 +1605,7 @@ function toggleFrameLength() {
             if (!frameLengthInput.value || frameLengthInput.value === '') {
                 frameLengthInput.value = '0';
             }
-        } else { 
+        } else {
             if (frameLengthContainer) {
                 frameLengthContainer.style.display = 'none';
             }
@@ -1698,13 +1617,11 @@ function toggleFrameLength() {
 
 function validateFrameGeneration() {
     const errors = [];
-    
+
     const l1bVersion = parseInt(document.getElementById('l1b_version')?.value || '0');
     const l1dVersion = parseInt(document.getElementById('l1d_version')?.value || '0');
     const subframeCount = parseInt(document.getElementById('number_of_subframes')?.value || '1');
-    
-    console.log('Validando frame generation:', { l1bVersion, l1dVersion, subframeCount });
-    
+
     if (l1bVersion === 1 && l1dVersion <= 1) {
         let specificMessage;
         if (l1dVersion === 0) {
@@ -1712,7 +1629,7 @@ function validateFrameGeneration() {
         } else {
             specificMessage = 'Quando L1B Version e igual a 1, L1D Version deve ser maior que 1';
         }
-        
+
         errors.push({
             message: specificMessage,
             location: 'Secao Preamble',
@@ -1720,10 +1637,7 @@ function validateFrameGeneration() {
             action: () => showSection('preamble')
         });
     }
-    
-    // Start values are now configurable by user - no validation enforced
-    
-    console.log('Validacao concluida. Encontrados ' + errors.length + ' erros:', errors);
+
     return errors;
 }
 
@@ -1731,16 +1645,16 @@ function adjustStartValues() {
     const l1dVersion = parseInt(document.getElementById('l1d_version')?.value || '0');
     const subframeCount = parseInt(document.getElementById('number_of_subframes')?.value || '1');
     let adjustedCount = 0;
-    
+
     for (let i = 0; i < subframeCount; i++) {
         const plpCountInput = document.getElementById(`plp-count-${i}`);
         const plpCount = plpCountInput ? parseInt(plpCountInput.value) || 1 : 1;
-        
+
         for (let j = 0; j < plpCount; j++) {
             const startInput = document.getElementById(`start_${j}`);
             if (startInput) {
                 let newStartValue;
-                
+
                 if (l1dVersion === 2) {
                     newStartValue = plpCount === 1 ? 4388 : 3757;
                 } else if (l1dVersion === 1) {
@@ -1748,11 +1662,11 @@ function adjustStartValues() {
                 } else {
                     newStartValue = plpCount === 1 ? 4388 : 3757;
                 }
-                
+
                 if (parseInt(startInput.value) !== newStartValue) {
                     startInput.value = newStartValue;
                     adjustedCount++;
-                    
+
                     if (typeof updatePlpProgressBar === 'function') {
                         updatePlpProgressBar(i, j);
                     }
@@ -1760,7 +1674,7 @@ function adjustStartValues() {
             }
         }
     }
-    
+
     if (adjustedCount > 0) {
         alert(`${adjustedCount} valores START foram ajustados automaticamente`);
     } else {
@@ -1771,18 +1685,18 @@ function adjustStartValues() {
 function showConfigurationWarning() {
     const l1bVersion = parseInt(document.getElementById('l1b_version')?.value || '0');
     const l1dVersion = parseInt(document.getElementById('l1d_version')?.value || '0');
-    
+
     const existingWarning = document.getElementById('config-warning');
     if (existingWarning) {
         existingWarning.remove();
     }
-    
+
     if (l1bVersion === 1 && l1dVersion <= 1) {
         const warning = document.createElement('div');
         warning.id = 'config-warning';
         warning.className = 'config-warning';
         warning.innerHTML = 'âš ï¸ AtenÃ§Ã£o: Com L1B Version = 1, L1D Version deve ser maior que 1';
-        
+
         const l1dVersionContainer = document.getElementById('l1d_version').closest('.form-group');
         if (l1dVersionContainer && l1dVersionContainer.parentNode) {
             l1dVersionContainer.parentNode.insertBefore(warning, l1dVersionContainer.nextSibling);
@@ -1793,31 +1707,29 @@ function showConfigurationWarning() {
 function toggleMimoFieldsBasedOnMixed(subframeIndex) {
     const mimoMixedSelect = document.getElementById(`plp_mimo_mixed_${subframeIndex}`);
     if (!mimoMixedSelect) {
-        console.warn(`Campo plp_mimo_mixed não encontrado para subframe ${subframeIndex}`);
         return;
     }
-    
+
     const isMimoMixedEnabled = mimoMixedSelect.value === "1";
-    console.log(`Toggle MIMO fields para subframe ${subframeIndex}: MIMO Mixed=${mimoMixedSelect.value} (enabled: ${isMimoMixedEnabled})`);
-    
+
     const plpSections = document.querySelectorAll(`[id^="plp-${subframeIndex}-"]`);
-    
+
     plpSections.forEach(section => {
         const match = section.id.match(/plp-\d+-(\d+)/);
         if (match) {
             const plpIndex = parseInt(match[1]);
-            
+
             const mimoFields = [
                 `mimo_plp_${plpIndex}`,
                 `plp_mimo_stream_combining_${plpIndex}`,
                 `plp_mimo_IQ_intervaling_${plpIndex}`,
                 `plp_mimo_PH_${plpIndex}`
             ];
-            
+
             mimoFields.forEach(fieldId => {
                 const field = document.getElementById(fieldId);
                 const label = document.querySelector(`label[for="${fieldId}"]`);
-                
+
                 if (field && label) {
                     if (isMimoMixedEnabled) {
                         label.style.display = '';
@@ -1827,7 +1739,6 @@ function toggleMimoFieldsBasedOnMixed(subframeIndex) {
                         field.style.display = 'none';
                         field.value = "0";
                     }
-                    console.log(`${isMimoMixedEnabled ? 'Mostrado' : 'Ocultado'} MIMO field: ${fieldId}`);
                 }
             });
         }
@@ -1837,19 +1748,17 @@ function toggleMimoFieldsBasedOnMixed(subframeIndex) {
 function initializeMimoControls() {
     setTimeout(() => {
         const mimoMixedSelects = document.querySelectorAll('[id^="plp_mimo_mixed_"]');
-        console.log(`Inicializando controles MIMO para ${mimoMixedSelects.length} subframes`);
-        
+
         mimoMixedSelects.forEach(select => {
             const subframeIndex = select.id.replace('plp_mimo_mixed_', '');
-            
+
             if (!select.hasAttribute('data-mimo-mixed-listener')) {
                 select.addEventListener('change', function() {
                     toggleMimoFieldsBasedOnMixed(subframeIndex);
                 });
                 select.setAttribute('data-mimo-mixed-listener', 'true');
-                
+
                 toggleMimoFieldsBasedOnMixed(subframeIndex);
-                console.log(`MIMO control inicializado para subframe ${subframeIndex}, valor atual: ${select.value}`);
             }
         });
     }, 300);
@@ -1859,14 +1768,13 @@ function toggleMimoMixed(subframeIndex) {
     const mimoSelect = document.getElementById(`plp_mimo_${subframeIndex}`);
     const mimoMixedContainer = document.querySelector(`#subframe${subframeIndex} .form-group:has(#plp_mimo_mixed_${subframeIndex})`);
     const mimoMixedSelect = document.getElementById(`plp_mimo_mixed_${subframeIndex}`);
-    
+
     if (!mimoSelect || !mimoMixedContainer || !mimoMixedSelect) {
-        console.warn(`Elementos MIMO não encontrados para subframe ${subframeIndex}`);
         return;
     }
-    
+
     const mimoValue = mimoSelect.value;
-    
+
     if (mimoValue === "0") {
         mimoMixedContainer.style.display = '';
         if (!mimoMixedSelect.value) {
@@ -1876,71 +1784,65 @@ function toggleMimoMixed(subframeIndex) {
         mimoMixedContainer.style.display = 'none';
         mimoMixedSelect.value = "0";
     }
-    
+
     toggleMimoFieldsBasedOnMixed(subframeIndex);
 }
 
 function toggleEnhancedLayerFields(plpIndex) {
     const layerSelect = document.getElementById(`layer_${plpIndex}`);
     if (!layerSelect) {
-        console.warn(`Campo layer não encontrado para PLP ${plpIndex}`);
         return;
     }
-    
+
     const isEnhancedLayer = layerSelect.value === "1";
-    console.log(`Toggle Enhanced Layer para PLP ${plpIndex}: ${isEnhancedLayer}`);
 
     const fieldsToHideOnEnhanced = [
-        `plp_type_${plpIndex}`, `num_subslice_${plpIndex}`, `subslice_interval_${plpIndex}`, 
-        `ti_extended_${plpIndex}`, `cti_depth_${plpIndex}`, `cell_intervaler_${plpIndex}`, 
-        `inter_subframe_${plpIndex}`, `num_ti_blocks_${plpIndex}`, 
+        `plp_type_${plpIndex}`, `num_subslice_${plpIndex}`, `subslice_interval_${plpIndex}`,
+        `ti_extended_${plpIndex}`, `cti_depth_${plpIndex}`, `cell_intervaler_${plpIndex}`,
+        `inter_subframe_${plpIndex}`, `num_ti_blocks_${plpIndex}`,
         `num_fec_blocks_max_${plpIndex}`, `num_fec_blocks_${plpIndex}`
     ];
-    
+
     const enhancedOnlyFields = [`inter_ldm_injection_level_${plpIndex}`];
-    
+
     function toggleFieldContainer(fieldId, show) {
         const field = document.getElementById(fieldId);
         if (!field) {
-            console.warn(`Campo ${fieldId} não encontrado`);
             return;
         }
-        
+
         const label = document.querySelector(`label[for="${fieldId}"]`);
-        
+
         if (label) {
             label.style.display = show ? '' : 'none';
             field.style.display = show ? '' : 'none';
-            
+
             if (!show) {
                 field.value = "0";
             }
-            
-            console.log(`${show ? 'Mostrado' : 'Ocultado'} container completo: ${fieldId}`);
+
         } else {
             let container = field.parentElement;
-            
+
             if (container && (container.tagName === 'DIV' || container.classList.contains('form-group'))) {
                 container.style.display = show ? '' : 'none';
                 if (!show) {
                     field.value = "0";
                 }
-                console.log(`${show ? 'Mostrado' : 'Ocultado'} container pai: ${fieldId}`);
             } else {
                 field.style.display = show ? '' : 'none';
                 if (!show) {
                     field.value = "0";
                 }
-                console.log(`${show ? 'Mostrado' : 'Ocultado'} campo direto: ${fieldId}`);
             }
         }
     }
-    
+
     if (isEnhancedLayer) {
         fieldsToHideOnEnhanced.forEach(fieldId => {
             toggleFieldContainer(fieldId, false);
         });
-        
+
         enhancedOnlyFields.forEach(fieldId => {
             toggleFieldContainer(fieldId, true);
         });
@@ -1948,47 +1850,42 @@ function toggleEnhancedLayerFields(plpIndex) {
         fieldsToHideOnEnhanced.forEach(fieldId => {
             toggleFieldContainer(fieldId, true);
         });
-        
+
         enhancedOnlyFields.forEach(fieldId => {
             toggleFieldContainer(fieldId, false);
         });
     }
 }
 
-
 function toggleSubsliceFields(plpIndex) {
     const typeSelect = document.getElementById(`plp_type_${plpIndex}`);
     if (!typeSelect) {
-        console.warn(`Campo plp_type não encontrado para PLP ${plpIndex}`);
         return;
     }
-    
-    const isNonDispersed = typeSelect.value === "0"; // 0 = non-dispersed, 1 = dispersed
-    console.log(`Toggle Subslice para PLP ${plpIndex}: Type=${typeSelect.value} (non-dispersed: ${isNonDispersed})`);
-    
+
+    const isNonDispersed = typeSelect.value === "0";
+
     const subsliceFields = [
         `num_subslice_${plpIndex}`,
         `subslice_interval_${plpIndex}`
     ];
-    
+
     function toggleFieldContainer(fieldId, show) {
         const field = document.getElementById(fieldId);
         if (!field) {
-            console.warn(`Campo ${fieldId} não encontrado`);
             return;
         }
-        
+
         const label = document.querySelector(`label[for="${fieldId}"]`);
-        
+
         if (label) {
             label.style.display = show ? '' : 'none';
             field.style.display = show ? '' : 'none';
-            
+
             if (!show) {
                 field.value = "0";
             }
-            
-            console.log(`${show ? 'Mostrado' : 'Ocultado'} subslice field: ${fieldId}`);
+
         } else {
             field.style.display = show ? '' : 'none';
             if (!show) {
@@ -1996,7 +1893,7 @@ function toggleSubsliceFields(plpIndex) {
             }
         }
     }
-    
+
     if (isNonDispersed) {
         subsliceFields.forEach(fieldId => {
             toggleFieldContainer(fieldId, false);
@@ -2011,19 +1908,17 @@ function toggleSubsliceFields(plpIndex) {
 function initializeSubsliceControls() {
     setTimeout(() => {
         const typeSelects = document.querySelectorAll('[id^="plp_type_"]');
-        console.log(`Inicializando controles subslice para ${typeSelects.length} PLPs`);
-        
+
         typeSelects.forEach(select => {
             const plpIndex = select.id.replace('plp_type_', '');
-            
+
             if (!select.hasAttribute('data-subslice-listener')) {
                 select.addEventListener('change', function() {
                     toggleSubsliceFields(plpIndex);
                 });
                 select.setAttribute('data-subslice-listener', 'true');
-                
+
                 toggleSubsliceFields(plpIndex);
-                console.log(`Subslice control inicializado para PLP ${plpIndex}, valor atual: ${select.value}`);
             }
         });
     }, 200);
@@ -2032,55 +1927,50 @@ function initializeSubsliceControls() {
 function toggleTIFields(plpIndex) {
     const tiModeSelect = document.getElementById(`ti_mode_${plpIndex}`);
     const layerSelect = document.getElementById(`layer_${plpIndex}`);
-    
+
     if (!tiModeSelect) {
-        console.warn(`Campo ti_mode não encontrado para PLP ${plpIndex}`);
         return;
     }
-    
+
     const tiModeValue = tiModeSelect.value;
-    const isNoTI = tiModeValue === "0";     // 0 = No TI
-    const isCTI = tiModeValue === "1";      // 1 = CTI
-    const isHTI = tiModeValue === "2";      // 2 = HTI
-    
+    const isNoTI = tiModeValue === "0";
+    const isCTI = tiModeValue === "1";
+    const isHTI = tiModeValue === "2";
+
     const isEnhancedLayer = layerSelect ? layerSelect.value === "1" : false;
-    
-    console.log(`Toggle TI para PLP ${plpIndex}: TI Mode=${tiModeValue} (No TI: ${isNoTI}, CTI: ${isCTI}, HTI: ${isHTI}), Enhanced Layer: ${isEnhancedLayer}`);
-    
+
     const ctiOnlyFields = [
         `cti_depth_${plpIndex}`
     ];
-    
+
     const htiOnlyFields = [
         `cell_intervaler_${plpIndex}`,
         `num_ti_blocks_${plpIndex}`,
         `num_fec_blocks_max_${plpIndex}`,
         `num_fec_blocks_${plpIndex}`
     ];
-    
+
     const neverShowFields = [
         `ti_extended_${plpIndex}`,
         `inter_subframe_${plpIndex}`
     ];
-    
+
     function toggleFieldContainer(fieldId, show) {
         const field = document.getElementById(fieldId);
         if (!field) {
-            console.warn(`Campo ${fieldId} não encontrado`);
             return;
         }
-        
+
         const label = document.querySelector(`label[for="${fieldId}"]`);
-        
+
         if (label) {
             label.style.display = show ? '' : 'none';
             field.style.display = show ? '' : 'none';
-            
+
             if (!show) {
                 field.value = "0";
             }
-            
-            console.log(`${show ? 'Mostrado' : 'Ocultado'} TI field: ${fieldId}`);
+
         } else {
             field.style.display = show ? '' : 'none';
             if (!show) {
@@ -2088,11 +1978,11 @@ function toggleTIFields(plpIndex) {
             }
         }
     }
-    
+
     neverShowFields.forEach(fieldId => {
         toggleFieldContainer(fieldId, false);
     });
-    
+
     if (isNoTI) {
         ctiOnlyFields.forEach(fieldId => {
             toggleFieldContainer(fieldId, false);
@@ -2120,19 +2010,17 @@ function toggleTIFields(plpIndex) {
 function initializeTIControls() {
     setTimeout(() => {
         const tiModeSelects = document.querySelectorAll('[id^="ti_mode_"]');
-        console.log(`Inicializando controles TI para ${tiModeSelects.length} PLPs`);
-        
+
         tiModeSelects.forEach(select => {
             const plpIndex = select.id.replace('ti_mode_', '');
-            
+
             if (!select.hasAttribute('data-ti-listener')) {
                 select.addEventListener('change', function() {
                     toggleTIFields(plpIndex);
                 });
                 select.setAttribute('data-ti-listener', 'true');
-                
+
                 toggleTIFields(plpIndex);
-                console.log(`TI control inicializado para PLP ${plpIndex}, valor atual: ${select.value}`);
             }
         });
     }, 200);

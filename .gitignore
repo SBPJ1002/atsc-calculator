@@ -1,5 +1,9 @@
 /webpage/favicon.ico
 /webpage/assets/images/
+/webpage/assets/dist/
+/webpage/node_modules/
+/webpage/package.json
+/webpage/package-lock.json
 /server_generator/Debug/
 /server_generator/Release/
 /server_generator/pdf/

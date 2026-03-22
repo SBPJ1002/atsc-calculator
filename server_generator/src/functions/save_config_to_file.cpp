@@ -1,7 +1,7 @@
 #include "functions.h"
 
 void save_config_to_file() {
-    // Clamp preamble_num_symbols to valid range 0-3 (1-4 symbols)
+
     if (preamble.L1B_preamble_num_symbols < 0) {
         preamble.L1B_preamble_num_symbols = 0;
     } else if (preamble.L1B_preamble_num_symbols > 3) {

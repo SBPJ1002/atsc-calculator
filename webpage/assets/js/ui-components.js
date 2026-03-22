@@ -119,7 +119,7 @@ function closePercentModal() {
 }
 
 async function updatePlpProgressBar(subframeIndex, plpIndex) {
-    // Trigger full subframe progress update in Resultados
+
     updateResultadosSubframeProgress(subframeIndex);
 }
 
@@ -136,7 +136,7 @@ async function updateResultadosSubframeProgress(subframeIndex) {
     const totalCapacity = plpCapacity.capacity + plpCells;
 	const cellsSBSS = plpCapacity.capacitySBS;
 	const cps = plpCapacity.cps;
-	
+
     const plpElements = document.querySelectorAll(`[id^="plp-${subframeIndex}-"]`);
     const plpRows = [];
     let totalUsed = 0;
@@ -169,7 +169,6 @@ async function updateResultadosSubframeProgress(subframeIndex) {
         const fecEntry = fecStarts[plpIdx];
         const fecDisplay = fecEntry?.fecBlockStart != null ? fecEntry.fecBlockStart.toLocaleString() : '—';
 
-        // Read PLP parameters from form
         const plpIdVal = document.getElementById(`plp_id_${plp.index}`)?.value ?? plp.index;
         const fecType = parseInt(document.getElementById(`fec_type_${plp.index}`)?.value || '0', 10);
         const modOrder = parseInt(document.getElementById(`mod_order_${plp.index}`)?.value || '0', 10);
@@ -179,64 +178,51 @@ async function updateResultadosSubframeProgress(subframeIndex) {
         const numFecBlocksMax = parseInt(document.getElementById(`num_fec_blocks_max_${plp.index}`)?.value || '0', 10);
         const startCell = parseInt(document.getElementById(`start_${plp.index}`)?.value || '0', 10);
 
-        // LDPC size: odd fec_type → 64800 (long), even → 16200 (short)
         const ldpcSize = (fecType % 2 === 1) ? 64800 : 16200;
 
-        // Bits per cell from modulation order
         const bitsPerCell = (modOrder + 1) * 2;
 
-        // FEC Block Size in cells
         const fecBlockSize = ldpcSize / bitsPerCell;
 
-        // Number of FEC blocks that fit in this PLP
         const numFecBlocks = plp.size > 0 ? Math.floor(plp.size / fecBlockSize) : 0;
 
-        // Code rate fraction
         const codeRateNum = codeRateIdx + 2;
         const codeRateDen = 15;
 
-        // Células TI (Time Interleaver cells)
-        // Fórmula: número triangular T = N_rows * (N_rows - 1) / 2
-        // Para TI-Mode None ou CTI: usa CTI depth (default 512 quando None)
-        // Para HTI: usa numFecBlocksMax * fecBlockSize
         const ctiDepthValues = [512, 724, 887, 1024];
         const ctiDepthValuesExtended = [512, 724, 1254, 1448];
         const tiExtended = parseInt(document.getElementById(`ti_extended_${plp.index}`)?.value || '0', 10);
         let celulasTI;
         if (tiMode === 0) {
-            // TI-Mode None: usa default CTI depth 512
+
             celulasTI = 512 * 511 / 2;
         } else if (tiMode === 1) {
-            // CTI: usa o CTI depth configurado
+
             const depthValues = tiExtended ? ctiDepthValuesExtended : ctiDepthValues;
             const N_rows = depthValues[ctiDepthIdx] || 512;
             celulasTI = N_rows * (N_rows - 1) / 2;
         } else {
-            // HTI
+
             celulasTI = numFecBlocksMax * fecBlockSize;
         }
 
-        // Outer code parity bits (BCH/CRC overhead per FEC block)
-        // fec_type: 0=BCH+16K, 1=BCH+64K, 2=CRC+16K, 3=CRC+64K, 4=16K only, 5=64K only
         let outerCodeParity = 0;
-        if (fecType === 0) outerCodeParity = 168;           // BCH + 16K LDPC
-        else if (fecType === 1) outerCodeParity = 192;      // BCH + 64K LDPC
-        else if (fecType === 2 || fecType === 3) outerCodeParity = 32; // CRC-32
+        if (fecType === 0) outerCodeParity = 168;
+        else if (fecType === 1) outerCodeParity = 192;
+        else if (fecType === 2 || fecType === 3) outerCodeParity = 32;
 
-        const bbpHeader = 16; // 2 bytes BBP header
+        const bbpHeader = 16;
         const kLdpc = ldpcSize * (codeRateNum / codeRateDen);
         const kPayload = kLdpc - outerCodeParity - bbpHeader;
         const payloadEff = (kLdpc > 0) ? (kPayload / kLdpc) : 1;
 
-        // BBFramerate and Bitrate (uses frame duration for average data rate)
         let bbFrameRateDisplay = '—';
         let bitrateDisplay = '—';
-        const frameDurSec = (window.__frameDurationMs__ || 0) / 1000;
-        if (frameDurSec > 0 && plp.size > 0) {
-            const bbfr = Math.trunc(numFecBlocks / frameDurSec);
+        if (sfDurSec > 0 && plp.size > 0) {
+            const bbfr = Math.trunc(numFecBlocks / sfDurSec);
             bbFrameRateDisplay = bbfr + ' fps';
-            // Data Rate = PLP_cells × bits_per_cell × code_rate × payload_efficiency / frame_duration
-            const bitrateBps = plp.size * bitsPerCell * (codeRateNum / codeRateDen) * payloadEff / frameDurSec;
+
+            const bitrateBps = plp.size * bitsPerCell * (codeRateNum / codeRateDen) * payloadEff / sfDurSec;
             bitrateDisplay = (bitrateBps / 1e6).toFixed(3) + ' Mbps';
         }
 
@@ -400,13 +386,11 @@ async function updateResultadosSubframeProgress(subframeIndex) {
         <div class="sf-plp-breakdown">${plpBreakdownHTML}</div>
     `;
 
-    // Update preamble cells and store calculated numSymbols for config export
     if (preambleFields && preambleFields.numSymbols != null) {
         window.__preambleNumSymbols__ = preambleFields.numSymbols - 1;
     }
     updateResultadosPreambleCells(preambleFields);
 
-    // Re-apply frame duration values after re-render
     if (typeof applyFrameDurationToDOM === 'function') {
         applyFrameDurationToDOM();
     }
@@ -496,9 +480,7 @@ function sendAction(action) {
     xhr.onreadystatechange = function () {
         if (xhr.readyState === XMLHttpRequest.DONE) {
             if (xhr.status === 200) {
-                console.log(xhr.responseText);
             } else {
-                console.error("Erro ao enviar a acao: " + action);
             }
         }
     };

@@ -3,13 +3,11 @@ session_start();
 $login_error = "";
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['username']) && isset($_POST['password'])) {
-    $validUsername = 'admin';
-    $validPassword = 'admin';
-
     $username = $_POST['username'];
     $password = $_POST['password'];
 
-    if ($username === $validUsername && $password === $validPassword) {
+    $validPasswordHash = '$2y$12$k9QpSbIl.n05eIpnjM5IYuvRQbMYpaU9GyENxfisnqr.r6oLKW6NG';
+    if ($username === 'admin' && password_verify($password, $validPasswordHash)) {
         $_SESSION['loggedin'] = true;
         header("Location: webpage.php");
         exit;
@@ -27,12 +25,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['username']) && isset($
     <title>SIGNALING</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link href="https://fonts.googleapis.com/css2?family=Sansation&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style_index.css">
+    <link rel="stylesheet" href="assets/dist/login.min.css">
     <link rel="icon" href="favicon.ico" type="image/x-icon">
 </head>
 <body class="d-flex justify-content-center align-items-center vh-100 bg-light">
     <div class="sticky-md-top"> <img src="assets/images/logo.png" class="rounded mx-auto d-block" alt="Logo"> </div>
-    
+
     <form id="loginForm" action="" method="post">
         <div class="mb-3">
             <input type="text" class="form-control" id="User" name="username" placeholder="Usuário" required>

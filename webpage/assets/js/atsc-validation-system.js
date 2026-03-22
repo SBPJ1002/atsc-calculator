@@ -63,10 +63,8 @@ async function loadValidationTables() {
         });
 
         _validationTablesLoaded = true;
-        console.log('Validation tables loaded from API');
         return true;
     } catch (err) {
-        console.error('Failed to load validation tables from API:', err);
         return false;
     }
 }
@@ -118,11 +116,8 @@ class ATSC3ValidationSystem {
         this.currentPreambleConfig = PREAMBLE_CONFIGURATIONS[preambleIndex];
 
         if (!this.currentPreambleConfig) {
-            console.warn('Preamble configuration not found:', preambleIndex);
             return;
         }
-
-        console.log('New preamble configuration:', this.currentPreambleConfig);
 
         this.applyPreambleConfigToAllSubframes();
         this.filterAllSubframePilotPatterns();
@@ -172,7 +167,6 @@ class ATSC3ValidationSystem {
             }
         }
 
-        console.log(`FFT Size (${this.currentPreambleConfig.fft}) and Guard Interval (${this.currentPreambleConfig.gi}) applied to ${subframeCount} subframe(s)`);
     }
 
     applyPreambleConfigToSubframe(subframeIndex) {
@@ -257,7 +251,6 @@ class ATSC3ValidationSystem {
             this.removeWarningTooltip(subframeIndex);
         }
 
-        console.log(`Subframe ${subframeIndex}: Scattered Pilot validation - ${allowedPatterns.length} patterns allowed by standard`);
     }
 
     showWarningTooltip(selectElement, subframeIndex, allowedPatterns) {
@@ -322,8 +315,6 @@ class ATSC3ValidationSystem {
         const { fft, gi, dx, mode } = this.currentPreambleConfig;
 
         this.removeExistingAlerts();
-
-        console.log(`ATSC Validation enabled: ${fft}, ${gi}, Dx_${dx}, L1-Basic Mode ${mode}`);
 
         this.addValidationIndicator();
 

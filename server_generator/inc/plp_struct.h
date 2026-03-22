@@ -5,7 +5,6 @@
 #include <vector>
 #include <cstdint>
 
-
 struct st_boostrap{
     int major_version = 137;
     int minor_version = 0;
@@ -50,7 +49,6 @@ struct PLP {
     int L1D_plp_mimo_stream_combining = 0;
     int L1D_plp_mimo_IQ_interleaving = 0;
     int L1D_plp_mimo_PH = 0;
-
 
 };
 
@@ -108,8 +106,6 @@ struct st_preamble{
     int L1B_L1_Detail_total_cells;
     long long L1B_reserved = 0;
 
-
-
     int L1D_version = 0;
 	int L1D_num_rf;
 	int L1D_rf_id;
@@ -123,9 +119,7 @@ struct st_preamble{
     long long L1D_reserved = 0;
     int L1D_crc;
 
-
     std::vector<st_subframes> sub_frames;
 };
-
 
 #endif

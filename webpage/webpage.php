@@ -1,5 +1,9 @@
 <?php
 session_start();
+header('X-SourceMap: none');
+header('SourceMap: none');
+header('X-Content-Type-Options: nosniff');
+header('X-Frame-Options: DENY');
 
 function is_server_available($host = '127.0.0.1', $port = 6000, $timeout = 2) {
     $socket = @socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
@@ -40,7 +44,7 @@ $config = array(
     'min_time_to_next' => 0,
     'preamble_structure' => 0,
     'number_of_frames' => 0,
-    
+
     'l1b_version' => 0,
     'l1b_mimo_scatterred_pilot_encoding' => 0,
     'l1d_version' => 0,
@@ -114,7 +118,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit_config'])) {
 
     error_log("Dados POST recebidos: " . print_r($_POST, true));
 
-    // Convert indices to actual values for backend compatibility
     $major_version_map = [0 => 137, 1 => 400];
     $bootstrap_symbol_map = [0 => 4, 1 => 5];
     $system_bandwidth_map = [0 => 6, 1 => 7, 2 => 8];
@@ -142,7 +145,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit_config'])) {
         if ($number_of_frames > 100) $number_of_frames = 100;
         $message .= "SET_FRAME_COUNT=" . $_POST["number_of_frames"] . "\n";
     }
-    
+
     if (isset($_POST["l1b_version"])) $message .= "SET_L1B_VERSION=" . $_POST["l1b_version"] . "\n";
     if (isset($_POST["l1b_mimo_scatterred_pilot_encoding"])) $message .= "SET_L1B_MIMO_SCATTERRED_PILOT_ENCODING=" . $_POST["l1b_mimo_scatterred_pilot_encoding"] . "\n";
     if (isset($_POST["l1d_version"])) $message .= "SET_L1D_VERSION=" . $_POST["l1d_version"] . "\n";
@@ -154,9 +157,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit_config'])) {
     if (isset($_POST["frame_lenght_mode"])) $message .= "SET_FRAME_LENGHT_MODE=" . $_POST["frame_lenght_mode"] . "\n";
     if (isset($_POST["frame_lenght"])) $message .= "SET_FRAME_LENGHT=" . $_POST["frame_lenght"] . "\n";
     if (isset($_POST["number_of_subframes"])) $message .= "SET_NUMBER_OF_SUBFRAMES=" . $_POST["number_of_subframes"] . "\n";
-    
+
     $num_subframes = isset($_POST["number_of_subframes"]) ? intval($_POST["number_of_subframes"]) : 0;
-    
+
     for ($i = 0; $i < $num_subframes; $i++) {
         if($i==0){
             if (isset($_POST["plp_mimo_$i"]))$message .= "SET_SUBFRAME_{$i}_L1B_first_sub_mimo=" . $_POST["plp_mimo_$i"] . "\n";
@@ -188,24 +191,24 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit_config'])) {
         $plp_count_key = "plp-count-$i";
         $plp_count_key_alt = "plp_count_$i";
         $num_plps = 0;
-        
+
         if (isset($_POST[$plp_count_key])) {
             $num_plps = intval($_POST[$plp_count_key]);
         } elseif (isset($_POST[$plp_count_key_alt])) {
             $num_plps = intval($_POST[$plp_count_key_alt]);
         }
-        
+
         error_log("Subframe $i: numero de PLPs = $num_plps");
-        
+
         if ($num_plps > 0) {
             $message .= "SET_SUBFRAME_{$i}_PLP_COUNT=" . $num_plps . "\n";
-            
+
             for ($j = 0; $j < $num_plps; $j++) {
                 error_log("Processando PLP $j do subframe $i");
-                
+
                 $plp_params = [
                     'plp_id' => 'ID',
-                    'lls_flag' => 'LLS_FLAG', 
+                    'lls_flag' => 'LLS_FLAG',
                     'layer' => 'LAYER',
                     'start' => 'START',
                     'size' => 'SIZE',
@@ -229,10 +232,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit_config'])) {
                     'num_fec_blocks' => 'NUM_FEC_BLOCKS',
                     'inter_ldm_injection_level' => 'LDM_INJECTION_LEVEL'
                 ];
-                
+
                 foreach ($plp_params as $param_name => $command_suffix) {
                     $field_key = "{$param_name}_{$i}_{$j}";
-                    
+
                     if (isset($_POST[$field_key])) {
                         $value = $_POST[$field_key];
                         $command = "SET_SUBFRAME_{$i}_PLP_{$j}_{$command_suffix}=" . $value . "\n";
@@ -245,9 +248,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit_config'])) {
             }
         }
     }
-    
+
     error_log("Mensagem completa para servidor TCP: " . $message);
-    
+
     $response = send_data_to_server('127.0.0.1', 6000, $message);
     echo $response;
     exit;
@@ -259,7 +262,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit_config'])) {
     if ($server_available) {
         $response = get_config_from_server('127.0.0.1', 6000);
         $lines = explode("\n", $response);
-        
+
         $subframes_data = array();
 
         error_log("Resposta completa do servidor TCP: " . $response);
@@ -299,35 +302,35 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit_config'])) {
 
             $config['l1d_version'] = trim($lines[$line_index++]);
             $config['l1d_bsid'] = trim($lines[$line_index++]);
-            
+
             error_log("Configuracoes basicas carregadas. Andice atual: $line_index");
-            
+
             while ($line_index < count($lines) && trim($lines[$line_index]) != "SUBFRAMES_START") {
                 error_log("Procurando SUBFRAMES_START, linha atual: '" . trim($lines[$line_index]) . "'");
                 $line_index++;
             }
-            
+
             if ($line_index < count($lines) && trim($lines[$line_index]) == "SUBFRAMES_START") {
                 $line_index++;
                 error_log("SUBFRAMES_START encontrado. Iniciando parse dos subframes.");
-                
+
                 $current_subframe = -1;
-                
+
                 while ($line_index < count($lines) && trim($lines[$line_index]) != "CONFIG_END") {
                     $line = trim($lines[$line_index]);
                     error_log("Processando linha: '$line' (indice: $line_index)");
-                    
+
                     if (preg_match('/^SUBFRAME (Basic|Detail):(\d+)$/', $line, $matches)) {
                         $subframe_type = $matches[1];
                         $current_subframe = intval($matches[2]);
-                        
+
                         error_log("Subframe encontrado: tipo=$subframe_type, indice=$current_subframe");
                         $line_index++;
-                        
+
                         if (!isset($subframes_data[$current_subframe])) {
                             $subframes_data[$current_subframe] = array();
                         }
-                        
+
                         $subframes_data[$current_subframe]['plp_mimo'] = trim($lines[$line_index++]);
                         $subframes_data[$current_subframe]['plp_miso'] = trim($lines[$line_index++]);
                         $subframes_data[$current_subframe]['fft_size'] = trim($lines[$line_index++]);
@@ -341,19 +344,19 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit_config'])) {
                         $subframes_data[$current_subframe]['plp_mimo_mixed'] = trim($lines[$line_index++]);
                         $subframes_data[$current_subframe]['freq_interleaver'] = trim($lines[$line_index++]);
                         $subframes_data[$current_subframe]['plp_count'] = trim($lines[$line_index++]);
-                        
+
                         $subframes_data[$current_subframe]['plps'] = array();
-                        
+
                         error_log("Subframe $current_subframe: PLP count = " . $subframes_data[$current_subframe]['plp_count']);
-                        
+
                         continue;
                     }
-                    
+
                     if (preg_match('/^PLP:(\d+)$/', $line, $matches)) {
                         $current_plp = intval($matches[1]);
                         error_log("PLP encontrado: indice=$current_plp para subframe=$current_subframe");
                         $line_index++;
-                        
+
                         if ($current_subframe >= 0) {
                             $subframes_data[$current_subframe]['plps'][$current_plp] = array(
                                 'id' => trim($lines[$line_index++]),
@@ -381,12 +384,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit_config'])) {
                                 'num_fec_blocks' => trim($lines[$line_index++]),
                                 'ldm_injection_level' => trim($lines[$line_index++])
                             );
-                            
+
                             error_log("PLP $current_plp dados carregados para subframe $current_subframe");
                         }
                         continue;
                     }
-                    
+
                     $line_index++;
                 }
             } else {
@@ -395,7 +398,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit_config'])) {
         } else {
             error_log("Resposta do servidor muito curta: " . count($lines) . " linhas");
         }
-        
+
         error_log("Configuracao final: " . print_r($config, true));
         error_log("Subframes final: " . print_r($subframes_data, true));
     } else {
@@ -415,7 +418,7 @@ function selected($value, $option) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ATSC 3.0 - Signaling</title>
-    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/dist/app.min.css">
     <link rel="icon" href="assets/images/favicon.ico" type="image/x-icon">
 </head>
 
@@ -431,13 +434,13 @@ function selected($value, $option) {
                 <?php echo $server_available ? 'Servidor Online' : 'Modo Offline (Backup)'; ?>
             </div>
         </div>
-        
+
         <div class="header-center">
             <button class="header-btn" onclick="document.getElementById('import-file').click()">Importar Config</button>
             <button class="header-btn" onclick="exportConfig()">Exportar Config</button>
             <input type="file" id="import-file" accept=".conf,.json" style="display: none;" onchange="importConfigFile(event)">
         </div>
-        
+
         <button class="logout-btn" onclick="document.getElementById('logout-form').submit();">Logout</button>
     </div>
 
@@ -446,7 +449,7 @@ function selected($value, $option) {
     </form>
 
     <div id="main-container">
-        <!-- Wizard Progress Bar -->
+
         <div class="wizard-progress">
             <div class="wizard-step active" data-step="1" onclick="wizardGoToStep(1)">
                 <div class="wizard-step-circle"></div>
@@ -469,7 +472,6 @@ function selected($value, $option) {
             </div>
         </div>
 
-        <!-- Hidden menu list for compatibility with generateMenus/generatePLPMenusAndFields -->
         <ul id="menuList" style="display:none;">
             <li class="menu-item"><ul id="gerador-group"></ul></li>
         </ul>
@@ -477,7 +479,7 @@ function selected($value, $option) {
         <div class="split-layout">
             <div class="left-panel">
                 <div class="content-layout">
-                    <!-- Sub-tabs sidebar for Subframes (step 3) and PLPs (step 4) -->
+
                     <div class="wizard-sub-tabs" id="wizard-sub-tabs" style="display: none;">
                         <div class="sub-tabs-container" id="sub-tabs-container"></div>
                     </div>
@@ -488,7 +490,7 @@ function selected($value, $option) {
                     <div id="botstrap" class="config-section" style="display: block;">
                         <form id="botstrap_form" method="POST" action="">
                             <h3>Bootstrap</h3>
-                            
+
                             <div class="form-row">
                                 <div class="form-group">
                                     <label for="major_version">Major Version:</label>
@@ -497,7 +499,7 @@ function selected($value, $option) {
                                         <option value="1" <?php echo selected($config['major_version'], "1"); ?>>400</option>
                                     </select>
                                 </div>
-                                
+
                                 <div class="form-group">
                                     <label for="minor_version">Minor Version:</label>
                                     <select name="minor_version" id="minor_version" required>
@@ -522,7 +524,7 @@ function selected($value, $option) {
                                         <option value="1" <?php echo selected($config['bootstrap_symbol'], "1"); ?>>5</option>
                                     </select>
                                 </div>
-                                
+
                                 <div class="form-group">
                                     <label for="ea_wakeup">EA Wakeup:</label>
                                     <select name="ea_wakeup" id="ea_wakeup" required>
@@ -541,7 +543,7 @@ function selected($value, $option) {
                                         <option value="2" <?php echo selected($config['system_bandwidth'], "2"); ?>>8 MHz</option>
                                     </select>
                                 </div>
-                                
+
                                 <div class="form-group">
                                     <label for="bsr_coefficient">BSR Coefficient(MHz):</label>
                                     <select name="bsr_coefficient" id="bsr_coefficient" required>
@@ -783,7 +785,7 @@ function selected($value, $option) {
                                     <label for="l1b_version">L1B Version:</label>
                                     <input name="l1b_version" id="l1b_version" type="number" placeholder="L1B Version" min="0" max="1" required value="<?php echo htmlspecialchars($config['l1b_version']); ?>">
                                 </div>
-                                
+
                                 <div class="form-group">
                                     <label for="l1b_mimo_scatterred_pilot_encoding">L1B Mimo Scattered Pilot Encoding:</label>
                                     <select name="l1b_mimo_scatterred_pilot_encoding" id="l1b_mimo_scatterred_pilot_encoding" required>
@@ -833,7 +835,7 @@ function selected($value, $option) {
                                         <option value="1" <?php echo selected($config['frame_lenght_mode'], "1"); ?>>Symbol-aligned</option>
                                     </select>
                                 </div>
-                                
+
                                 <div class="form-group" id="frame_lenght_container">
                                     <label for="frame_lenght">Frame Length:</label>
                                     <input name="frame_lenght" id="frame_lenght" type="number" placeholder="Frame Length" required value="<?php echo htmlspecialchars($config['frame_lenght']); ?>">
@@ -845,7 +847,7 @@ function selected($value, $option) {
                                     <label for="l1d_version">L1D Version:</label>
                                     <input name="l1d_version" id="l1d_version" type="number" placeholder="L1D Version" min="0" max="2" required value="<?php echo htmlspecialchars($config['l1d_version']); ?>">
                                 </div>
-                                
+
                                 <div class="form-group" id="l1d_bsid_container" style="<?php echo ($config['l1d_version'] == 1) ? '' : 'display: none;'; ?>">
                                     <label for="l1d_bsid">L1D BSID:</label>
                                     <input name="l1d_bsid" id="l1d_bsid" type="number" placeholder="L1D BSID" min="0" max="65535" value="<?php echo htmlspecialchars($config['l1d_bsid']); ?>">
@@ -860,13 +862,11 @@ function selected($value, $option) {
                         </form>
                     </div>
 
-
-
                         </div>
                     </div>
                 </div>
-                </div> <!-- /.content-layout -->
-            </div> <!-- /.left-panel -->
+                </div>
+            </div>
 
             <div class="right-panel">
                 <div id="resultados">
@@ -900,10 +900,9 @@ function selected($value, $option) {
 
                     <div id="resultados-content"></div>
                 </div>
-            </div> <!-- /.right-panel -->
-        </div> <!-- /.split-layout -->
+            </div>
+        </div>
 
-    <!-- Wizard Bottom Navigation Bar -->
     <div class="wizard-bottom-bar">
         <button class="wizard-btn wizard-btn-prev" id="wizard-prev-btn" onclick="wizardPrev()" disabled>Anterior</button>
         <div class="wizard-step-info" id="wizard-step-info">Step 1 of 4 - Bootstrap</div>
@@ -912,18 +911,7 @@ function selected($value, $option) {
             <button class="wizard-btn wizard-btn-generate" id="submit-btn" onclick="submitForm()">Gerar</button>
         </div>
     </div>
-<script src="assets/js/atsc-calculator.js"></script>
-<script src="assets/js/cnr-tables.js"></script>
-<script src="assets/js/ui-components.js"></script>
-<script src="assets/js/form-handler.js"></script>
-<script src="assets/js/backup-system.js"></script>
-<script src="assets/js/main.js"></script>
-<script src="assets/js/config-manager.js"></script>
-<script src="assets/js/atsc-validation-system.js"></script>
-<script src="assets/js/validation-integration.js"></script> 
-
-
-
+<script src="assets/dist/app.min.js"></script>
 
     <script>
         window.subframesData = <?php echo json_encode($subframes_data); ?>;

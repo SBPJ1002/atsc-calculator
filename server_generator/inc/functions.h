@@ -84,8 +84,6 @@ extern st_boostrap bootstrap_info;
 extern st_preamble preamble;
 extern cl_tcp_socket web_server;
 
-
-
 const std::string CONFIG_FILE = "config/config.conf";
 const std::string BASIC_FILE_BINARY = "config/basic.bin";
 const std::string BASIC_FILE_HEX = "config/basic.hex";

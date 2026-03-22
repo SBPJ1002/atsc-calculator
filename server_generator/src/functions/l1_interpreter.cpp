@@ -96,7 +96,6 @@ void l1_interpreter(const std::string& hex_value_detail,const std::string& hex_v
 	    	        throw std::runtime_error("Could not create output file");
 	    	    }
 
-
 	    	outFile << "--- L1 Basic --- \n";
 	    	std::cout << "--- L1 Basic --- \n";
 
@@ -263,7 +262,6 @@ void l1_interpreter(const std::string& hex_value_detail,const std::string& hex_v
 	        std::string L1B_crc = process_segment(binary_string_basic, l1b.L1B_crc);
 	        outFile << "L1B_crc → " << bin_to_decimal(L1B_crc) << "\n";
 	        std::cout << "L1B_crc → " << bin_to_decimal(L1B_crc) << "\n";
-
 
 	        outFile << "\n-- L1 Detail --- \n";
 
@@ -451,7 +449,6 @@ void l1_interpreter(const std::string& hex_value_detail,const std::string& hex_v
 	            			int L1D_plp_fec_type_dec = bin_to_decimal(L1D_plp_fec_type);
 	            			outFile << " 	L1D_plp_fec_type → " << search_in_dicionary(L1D_plp_fec_type_dicionary,L1D_plp_fec_type) << "\n";
 	            			std::cout << " 	L1D_plp_fec_type → " << search_in_dicionary(L1D_plp_fec_type_dicionary,L1D_plp_fec_type) << "\n";
-
 
 	            			if (L1D_plp_fec_type_dec >= 0 && L1D_plp_fec_type_dec <=5){
 	            				L1D_plp_mod = process_segment(binary_string_detail, l1d.L1D_plp_mod);
@@ -664,7 +661,6 @@ void l1_interpreter(const std::string& hex_value_detail,const std::string& hex_v
 	        		    std::cout << "\n[Verification] ERRO! Diferenca: " << (total_L1D_bits - total_processed) << " bits\n";
 	        		}
 		}
-
 
 	        outFile.close();
 	        std::cout << "Data saved at '" << filename << "' with success!\n";

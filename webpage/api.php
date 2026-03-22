@@ -3,6 +3,8 @@ header('Content-Type: application/json');
 header('Access-Control-Allow-Origin: *');
 header('Access-Control-Allow-Methods: POST');
 header('Access-Control-Allow-Headers: Content-Type');
+header('X-Content-Type-Options: nosniff');
+header('X-Frame-Options: DENY');
 
 if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
     http_response_code(200);
@@ -21,7 +23,6 @@ if (!$input || !isset($input['action'])) {
     echo json_encode(['error' => 'Missing action parameter']);
     exit;
 }
-
 
 $TABLE_7_2_PREAMBLE = [
     "8K" => [
@@ -228,10 +229,6 @@ $SP_PATTERN_MAP = [
     '12' => 'SP24_2', '13' => 'SP24_4', '14' => 'SP32_2', '15' => 'SP32_4',
 ];
 
-// ============================================================
-// CALCULATION FUNCTIONS
-// ============================================================
-
 function getPreambleDxFromStructure($preambleStructure) {
     if (($preambleStructure >= 130 && $preambleStructure <= 134) ||
         ($preambleStructure >= 140 && $preambleStructure <= 144)) {
@@ -332,7 +329,6 @@ function doCalculatePreambleFields($params) {
     $preambleStructure = (int)($params['preambleStructure'] ?? 0);
     $l1dFecMode = (int)($params['l1dFecMode'] ?? 0);
     $l1dBytes = (int)($params['l1dBytes'] ?? 25);
-    // Preamble num symbols é sempre calculado automaticamente
 
     $fftName = isset($FFT_VALUE_TO_NAME[$fftValue]) ? $FFT_VALUE_TO_NAME[$fftValue] : "8K";
     $giSamples = isset($GI_VALUE_TO_SAMPLES[$giValue]) ? $GI_VALUE_TO_SAMPLES[$giValue] : 1024;
@@ -486,10 +482,6 @@ function doBatchFillAllPlps($params) {
     ];
 }
 
-// ============================================================
-// LOG READER
-// ============================================================
-
 function doGetL1dSizeBytes() {
     $logDir = __DIR__ . '/../server_generator/config/log/';
 
@@ -497,7 +489,6 @@ function doGetL1dSizeBytes() {
         return ['error' => 'Log directory not found', 'bytes' => 25];
     }
 
-    // Find the most recent Frame_*.log
     $logFiles = glob($logDir . 'Frame_*.log');
     if (empty($logFiles)) {
         return ['error' => 'No log files found', 'bytes' => 25];
@@ -512,7 +503,6 @@ function doGetL1dSizeBytes() {
         return ['error' => 'Cannot read log file', 'bytes' => 25];
     }
 
-    // Parse: L1B_L1_Detail_size_bytes → 28 bytes (224 bits)
     if (preg_match('/L1B_L1_Detail_size_bytes\s*→\s*(\d+)\s*bytes/', $content, $matches)) {
         return ['bytes' => max(25, (int)$matches[1]), 'source' => basename($logFiles[0])];
     }
@@ -533,16 +523,14 @@ function doGetFrame2LogData() {
         return ['error' => 'Cannot read Frame_2.log'];
     }
 
-    // Extract L1B_time_offset
     $timeOffset = null;
     if (preg_match('/L1B_time_offset\s*→\s*(\d+)/', $content, $m)) {
         $timeOffset = (int)$m[1];
     }
 
-    // Extract L1D_plp_fec_block_start per PLP (ordered by appearance)
     $fecBlockStarts = [];
     $plpIds = [];
-    // Split into PLP sections by L1D_plp_id
+
     if (preg_match_all('/L1D_plp_id\s*→\s*(\d+)(.*?)(?=L1D_plp_id|L1D_reserved|$)/s', $content, $plpMatches, PREG_SET_ORDER)) {
         foreach ($plpMatches as $plpMatch) {
             $plpId = (int)$plpMatch[1];
@@ -561,10 +549,6 @@ function doGetFrame2LogData() {
         'source' => 'Frame_2.log'
     ];
 }
-
-// ============================================================
-// FRAME DURATION READER
-// ============================================================
 
 function doGetFrameDuration() {
     $durationFile = __DIR__ . '/../server_generator/config/log/frame_duration.txt';
@@ -597,10 +581,6 @@ function doGetFrameDuration() {
         'subframeDurations' => $subframeDurations,
     ];
 }
-
-// ============================================================
-// VALIDATION TABLES (only data NOT already in api.php)
-// ============================================================
 
 function doGetValidationTables() {
     global $SP_PATTERN_MAP;
@@ -851,10 +831,6 @@ function doGetValidationTables() {
         ],
     ];
 }
-
-// ============================================================
-// DISPATCH
-// ============================================================
 
 $action = $input['action'];
 

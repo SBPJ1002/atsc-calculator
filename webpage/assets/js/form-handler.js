@@ -1,7 +1,7 @@
 function saveFormData(formElement) {
     const formData = {};
     if (!formElement) return formData;
-    
+
     const inputs = formElement.querySelectorAll('input, select, textarea');
     inputs.forEach(input => {
         if (input.name || input.id) {
@@ -36,7 +36,7 @@ function restoreFormData(formElement, formData) {
 
 function saveAllSubframesData() {
     const savedData = { subframes: {}, plps: {} };
-    
+
     document.querySelectorAll('[id^="subframe"]').forEach(subframe => {
         const match = subframe.id.match(/subframe(\d+)/);
         if (match) {
@@ -47,7 +47,7 @@ function saveAllSubframesData() {
             }
         }
     });
-    
+
     document.querySelectorAll('[id^="plp-"]').forEach(plp => {
         const match = plp.id.match(/plp-(\d+)-(\d+)/);
         if (match) {
@@ -62,13 +62,13 @@ function saveAllSubframesData() {
             }
         }
     });
-    
+
     return savedData;
 }
 
 function restoreAllData(savedData) {
     if (!savedData) return;
-    
+
     Object.keys(savedData.subframes || {}).forEach(subframeIndex => {
         const subframe = document.getElementById(`subframe${subframeIndex}`);
         if (subframe) {
@@ -78,7 +78,7 @@ function restoreAllData(savedData) {
             }
         }
     });
-    
+
     Object.keys(savedData.plps || {}).forEach(subframeIndex => {
         Object.keys(savedData.plps[subframeIndex] || {}).forEach(plpIndex => {
             const plp = document.getElementById(`plp-${subframeIndex}-${plpIndex}`);
@@ -92,14 +92,13 @@ function restoreAllData(savedData) {
     });
 }
 
-
 function handleSubframeCountChange() {
     const input = document.getElementById('number_of_subframes');
     const count = parseInt(input.value) || 1;
-    
+
     const savedData = saveAllSubframesData();
     generateMenus(count);
-    
+
     for (let i = 0; i < count; i++) {
         setTimeout(() => {
             const plpCountInput = document.getElementById(`plp-count-${i}`);
@@ -108,11 +107,10 @@ function handleSubframeCountChange() {
             }
         }, 100);
     }
-    
+
     setTimeout(() => {
         restoreAllData(savedData);
-        
-        // Aplicar configurações do preâmbulo nos novos subframes
+
         if (window.atscValidation && window.atscValidation.currentPreambleConfig) {
             window.atscValidation.applyPreambleConfigToAllSubframes();
             window.atscValidation.filterAllSubframePilotPatterns();
@@ -122,10 +120,10 @@ function handleSubframeCountChange() {
 
 function validateAllFields() {
     const emptyFields = [];
-    
+
     function checkForm(form, formName) {
         if (!form) return;
-        
+
         const inputs = form.querySelectorAll('input[required], select[required], textarea[required]');
         inputs.forEach(input => {
             if (!input.value || input.value.trim() === '') {
@@ -135,27 +133,27 @@ function validateAllFields() {
             }
         });
     }
-    
+
     const bootstrapForm = document.getElementById('botstrap_form');
     checkForm(bootstrapForm, 'Bootstrap');
-    
+
     const preambleForm = document.getElementById('preamble_form');
     checkForm(preambleForm, 'Preamble');
-    
+
     const subframeCount = parseInt(document.getElementById('number_of_subframes').value) || 0;
-    
+
     for (let i = 0; i < subframeCount; i++) {
         const subframeForm = document.querySelector(`#subframe${i} form`);
         checkForm(subframeForm, `Subframe ${i}`);
-        
+
         const plpCountInput = document.getElementById(`plp-count-${i}`);
         const plpCount = plpCountInput ? parseInt(plpCountInput.value) || 0 : 0;
-        
+
         for (let j = 0; j < plpCount; j++) {
             const plpForm = document.querySelector(`#plp-${i}-${j} form`);
             checkForm(plpForm, `Subframe ${i} - PLP ${j}`);
         }
     }
-    
+
     return emptyFields;
 }

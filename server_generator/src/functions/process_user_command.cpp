@@ -26,7 +26,6 @@ std::string process_user_command(std::string command) {
         reply += std::to_string(bootstrap_info.preamble_structure) + "\n";
         reply += std::to_string(global_frame_count) + "\n";
 
-
         reply += std::to_string(preamble.L1B_version) + "\n";
         reply += std::to_string(preamble.L1B_mimo_scattered_pilot_encoding) + "\n";
 

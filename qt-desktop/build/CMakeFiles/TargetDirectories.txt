@@ -1,0 +1,5 @@
+/home/joao-pedro/Projetos/Mestrado/atsc-calculator/qt-desktop/build/CMakeFiles/atsc_calculator.dir
+/home/joao-pedro/Projetos/Mestrado/atsc-calculator/qt-desktop/build/CMakeFiles/edit_cache.dir
+/home/joao-pedro/Projetos/Mestrado/atsc-calculator/qt-desktop/build/CMakeFiles/rebuild_cache.dir
+/home/joao-pedro/Projetos/Mestrado/atsc-calculator/qt-desktop/build/CMakeFiles/atsc_calculator_autogen_timestamp_deps.dir
+/home/joao-pedro/Projetos/Mestrado/atsc-calculator/qt-desktop/build/CMakeFiles/atsc_calculator_autogen.dir

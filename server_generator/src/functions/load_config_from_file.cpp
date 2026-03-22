@@ -305,8 +305,6 @@ void load_config_from_file() {
         std::cout << "Loaded subframes: " << subframes_loaded << std::endl;
         std::cout << "Loaded PLPs: " << plps_loaded << std::endl;
 
-
-        // Clamp preamble_num_symbols to valid range 0-3 (1-4 symbols)
         if (preamble.L1B_preamble_num_symbols < 0) {
             std::cout << "[LOAD] L1B_preamble_num_symbols adjusted from " << preamble.L1B_preamble_num_symbols << " to 0." << std::endl;
             preamble.L1B_preamble_num_symbols = 0;

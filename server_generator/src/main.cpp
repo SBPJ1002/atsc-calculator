@@ -66,7 +66,6 @@ int main(int argc, char *argv[]) {
                     write_frame_duration_file(calculate_frame_duration_ms());
                 }
 
-
                 if (reply.length() != 0) {
                     std::cout << "Enviando resposta (" << reply.length() << " bytes)" << std::endl;
                     web_server.message->length = reply.length();

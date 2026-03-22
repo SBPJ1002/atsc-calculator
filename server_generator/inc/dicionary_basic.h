@@ -40,9 +40,6 @@ struct syntax_l1_basic {
     int32_t L1B_crc = 32;
 };
 
-
-
-
 const std::unordered_map<std::string, std::string> L1B_version_dicionary = {
     {"000", "Version 0"},
     {"001", "Version 1"},

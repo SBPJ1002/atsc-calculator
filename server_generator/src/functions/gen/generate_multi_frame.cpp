@@ -6,7 +6,6 @@ const int TIME_OFFSET_MODULO = 6912;
 const int LDPC_SIZE_LONG = 64800;
 const int LDPC_SIZE_SHORT = 16200;
 
-
 int get_fft_size_samples(int fft_index) {
     switch (fft_index) {
         case 0: return 8192;
@@ -59,7 +58,6 @@ int get_guard_interval_samples(int gi_index, int fft_samples) {
     return 512;
 }
 
-
 int get_bits_per_cell(int mod_index) {
     switch (mod_index) {
         case 0:  return 2;
@@ -104,10 +102,8 @@ struct FecBlockStartParams {
     bool initialized;
 };
 
-
 static TimeOffsetParams g_time_offset_params = {0, 0, 0, 0, 0, false};
 static std::map<int, FecBlockStartParams> g_fec_params;
-
 
 void calculate_time_offset_params() {
     g_time_offset_params.fft_samples = get_fft_size_samples(
@@ -207,8 +203,7 @@ void reset_variable_field_params() {
 }
 
 void validate_and_adjust_preamble_num_symbols() {
-    // L1B_preamble_num_symbols is a 3-bit field (0-7), representing 1-8 symbols.
-    // For the calculator, we allow up to 4 symbols (field values 0-3).
+
     if (preamble.L1B_preamble_num_symbols < 0) {
         std::cout << "[VALIDATION] L1B_preamble_num_symbols=" << preamble.L1B_preamble_num_symbols
                   << " is below minimum. Adjusting to 0 (1 symbol)." << std::endl;
@@ -221,20 +216,17 @@ void validate_and_adjust_preamble_num_symbols() {
 }
 
 double calculate_frame_duration_ms() {
-    // Elementary period: Ts = 1 / Fs, where Fs = 384000 * (bsr_coefficient + 16)
+
     double Fs = 384000.0 * (bootstrap_info.bsr_coefficient + 16);
     double Ts = 1.0 / Fs;
 
-    // Bootstrap duration: Fs_bs = system_bandwidth * 1024000 Hz
-    // bootstrap_symbol field indicates N CAB symbols; total symbols in time domain = N + 1
-    // First symbol (CAS): 2048 samples (no guard), remaining N symbols: 2048 + 512 = 2560 samples each
     double Fs_bs = bootstrap_info.system_bandwidth * 1024000.0;
     int bs_num_symbols = bootstrap_info.bootstrap_symbol + 1;
     int bs_total_samples = 2048 + (bs_num_symbols - 1) * (2048 + 512);
     double T_BS = bs_total_samples / Fs_bs;
 
     if (preamble.L1B_frame_length_mode == 0) {
-        // Time-aligned: duration = L1B_frame_length * 5ms
+
         double duration_ms = preamble.L1B_frame_length * 5.0;
         std::cout << "=== Frame Duration (Time-Aligned) ===" << std::endl;
         std::cout << "  L1B_frame_length = " << preamble.L1B_frame_length << std::endl;
@@ -242,10 +234,6 @@ double calculate_frame_duration_ms() {
         return duration_ms;
     }
 
-    // Symbol-aligned (mode 1):
-    // duration = T_BS + preamble_symbols * T_symbol_preamble + Σ(subframe_symbols * T_symbol_subframe) + additional_samples * Ts
-
-    // Preamble symbols
     int preamble_num_symbols = preamble.L1B_preamble_num_symbols + 1;
     int preamble_fft = get_fft_size_samples(preamble.sub_frames[0].L1B_first_sub_fft_size);
     int preamble_gi = get_guard_interval_samples(preamble.sub_frames[0].L1B_first_sub_guard_interval, preamble_fft);
@@ -261,7 +249,6 @@ double calculate_frame_duration_ms() {
     std::cout << "  Preamble: " << preamble_num_symbols << " symbols, T_symbol = "
               << T_symbol_preamble * 1000.0 << " ms" << std::endl;
 
-    // Subframe OFDM symbols
     for (int i = 0; i < preamble.L1B_num_subframes; i++) {
         int fft_idx, gi_idx, num_ofdm;
 
@@ -285,7 +272,6 @@ double calculate_frame_duration_ms() {
                   << T_symbol_sf * 1000.0 << " ms, subtotal = " << num_ofdm * T_symbol_sf * 1000.0 << " ms" << std::endl;
     }
 
-    // Additional samples
     duration_s += preamble.L1B_additional_samples * Ts;
 
     double duration_ms = duration_s * 1000.0;
@@ -305,7 +291,6 @@ void write_frame_duration_file(double total_duration_ms) {
     durationFile << std::fixed << std::setprecision(6);
     durationFile << "frame_duration_ms=" << total_duration_ms << std::endl;
 
-    // Per-subframe durations
     double Fs = 384000.0 * (bootstrap_info.bsr_coefficient + 16);
     double Ts = 1.0 / Fs;
 
@@ -450,7 +435,6 @@ void generate_L1_Detail_multi_frame() {
 
         compute_and_set_L1B_L1_Detail_total_cells(preamble.L1B_L1_Detail_fec_type);
         compute_and_set_all_sbs_null_cells();
-
 
         frame_binarySequence += to_binary(preamble.L1D_version, 4);
         frame_binarySequence += to_binary(preamble.L1D_num_rf, 3);

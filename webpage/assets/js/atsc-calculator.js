@@ -68,10 +68,6 @@ function renumberAllPlps() {
     });
 }
 
-// ============================================================
-// API CLIENT
-// ============================================================
-
 const API_URL = 'api.php';
 
 let _apiDebounceTimers = {};
@@ -103,7 +99,6 @@ async function fetchL1dSizeBytesFromLog() {
         }
         return result.bytes || 25;
     } catch (e) {
-        console.error('Failed to fetch L1D size bytes from log:', e);
         return 25;
     }
 }
@@ -115,37 +110,30 @@ async function fetchFrame2LogData() {
             window.__frame2LogData__ = result;
         }
     } catch (e) {
-        console.error('Failed to fetch Frame 2 log data:', e);
     }
 }
 
 async function fetchFrameDuration() {
     try {
         const result = await apiCall('getFrameDuration', {});
-        console.log('fetchFrameDuration result:', result);
 
         if (result.error) {
-            console.warn('fetchFrameDuration: ', result.error);
             return null;
         }
 
         if (result.totalDurationMs == null) {
-            console.warn('fetchFrameDuration: totalDurationMs is null');
             return null;
         }
 
         if (!window.__sfExtraData__) window.__sfExtraData__ = {};
 
-        // Store total frame duration globally
         window.__frameDurationMs__ = result.totalDurationMs;
 
-        // Update the frame duration display above preamble
         const frameDurEl = document.getElementById('resultados-frame-duration');
         if (frameDurEl) {
             frameDurEl.textContent = result.totalDurationMs.toFixed(4) + ' ms';
         }
 
-        // Per-subframe durations for the "Duração" field
         const numSf = parseInt(document.getElementById('number_of_subframes')?.value || '1', 10);
         const durations = result.subframeDurations || {};
         for (let i = 0; i < numSf; i++) {
@@ -156,24 +144,21 @@ async function fetchFrameDuration() {
             }
         }
 
-        // Force update DOM elements that may already be rendered
         applyFrameDurationToDOM();
 
         return result;
     } catch (e) {
-        console.error('Failed to fetch frame duration:', e);
         return null;
     }
 }
 
 function applyFrameDurationToDOM() {
-    // Update frame duration card
+
     const frameDurEl = document.getElementById('resultados-frame-duration');
     if (frameDurEl && window.__frameDurationMs__ != null) {
         frameDurEl.textContent = Number(window.__frameDurationMs__).toFixed(4) + ' ms';
     }
 
-    // Update per-subframe duration fields
     if (!window.__sfExtraData__) return;
     const numSf = parseInt(document.getElementById('number_of_subframes')?.value || '1', 10);
     for (let i = 0; i < numSf; i++) {
@@ -184,10 +169,6 @@ function applyFrameDurationToDOM() {
         }
     }
 }
-
-// ============================================================
-// GATHER PARAMS FROM DOM
-// ============================================================
 
 function gatherPreambleParams() {
     const fftSel = document.getElementById('fft_size_0');
@@ -231,10 +212,6 @@ function gatherSubframeConfig(subIdx) {
     };
 }
 
-// ============================================================
-// ASYNC API FUNCTIONS (same names as before)
-// ============================================================
-
 async function calculatePreambleFields(subframeIndex) {
     const params = gatherPreambleParams();
     return apiCall('calculatePreambleFields', params);
@@ -246,11 +223,9 @@ async function computePlpIndividualCapacity(subframeIndex, plpIndex) {
 }
 
 async function fillPlpSize(subframeIndex, plpIndex) {
-    console.log(`Fill PLP ${plpIndex} no subframe ${subframeIndex}`);
 
     const sizeInput = document.getElementById(`size_${plpIndex}`);
     if (!sizeInput) {
-        console.error(`Input size_${plpIndex} not found`);
         return;
     }
 
@@ -265,7 +240,6 @@ async function fillPlpSize(subframeIndex, plpIndex) {
     }
 
     sizeInput.value = result.totalSize;
-    console.log(`Fill applied: ${result.plpCapacity.capacity} (subframe) + ${result.plpCells} (preamble) = ${result.totalSize} cells`);
 
     await updatePlpProgressBar(subframeIndex, plpIndex);
 }
@@ -280,7 +254,6 @@ async function autoFillPlpSize(subframeIndex, plpIndex) {
     });
 
     if (result.error) {
-        console.warn(`Auto-fill: invalid capacity for PLP ${plpIndex}`);
         return;
     }
 
@@ -307,15 +280,13 @@ async function autoFillAllPlpsInSubframe(subframeIndex) {
 }
 
 async function autoFillAllPlps() {
-    // Skip if PLP data was just loaded from the server (page reload)
+
     if (window.__plpDataLoaded__) {
-        console.log('autoFillAllPlps skipped: PLP data already loaded from server');
         window.__plpDataLoaded__ = false;
         return;
     }
     const numSubframes = parseInt(document.getElementById('number_of_subframes')?.value || '1', 10);
 
-    // Build batch request
     const preambleConfig = gatherPreambleParams();
     const subframesConfigs = [];
 
@@ -364,7 +335,6 @@ async function autoFillAllPlps() {
             });
         }
 
-        // Update all progress bars
         for (let sf = 0; sf < numSubframes; sf++) {
             const plpElements = document.querySelectorAll(`[id^="plp-${sf}-"]`);
             plpElements.forEach(plpEl => {
@@ -378,14 +348,12 @@ async function autoFillAllPlps() {
             });
         }
     } catch (err) {
-        console.error('Batch fill error:', err);
-        // Fallback: fill one by one
+
         for (let sf = 0; sf < numSubframes; sf++) {
             await autoFillAllPlpsInSubframe(sf);
         }
     }
 
-    console.log(`All PLPs recalculated (${numSubframes} subframes)`);
 }
 
 function setupPlpAutoSizeListeners() {
@@ -412,7 +380,6 @@ function setupPlpAutoSizeListeners() {
         const fieldId = e.target.id || '';
 
         if (globalTriggerFields.includes(fieldId)) {
-            console.log(`Global field ${fieldId} changed, recalculating all PLPs...`);
             debounce('global-recalc', () => {
                 const numSf = parseInt(document.getElementById('number_of_subframes')?.value || '1', 10);
                 for (let sf = 0; sf < numSf; sf++) recalcAutoPlps(sf);
@@ -426,13 +393,11 @@ function setupPlpAutoSizeListeners() {
             const subframeIndex = parseInt(fieldId.replace(matchingPrefix, ''), 10);
 
             if (!isNaN(subframeIndex)) {
-                console.log(`Field ${fieldId} changed, recalculating PLPs for subframe ${subframeIndex}...`);
                 debounce(`sf-recalc-${subframeIndex}`, () => recalcAutoPlps(subframeIndex), 150);
             }
         }
     });
 
-    console.log('PLP Size auto-calculation enabled');
 }
 
 window.autoFillAllPlps = autoFillAllPlps;
