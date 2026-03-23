@@ -4,6 +4,8 @@
 #include <QHBoxLayout>
 #include <QScrollArea>
 #include <QVBoxLayout>
+#include <algorithm>
+#include <map>
 
 PlpPage::PlpPage(QWidget* parent) : QWidget(parent) {
     m_tabs = new QTabWidget;
@@ -36,12 +38,19 @@ QWidget* PlpPage::createPlpTab(int sfIdx, int plpIdx) {
     w.llsFlag->addItem("ON", 1);
     form->addRow("LLS Flag:", w.llsFlag);
 
+    w.allocMode = new QComboBox;
+    w.allocMode->addItem("Auto", 0);
+    w.allocMode->addItem("Manual", 1);
+    form->addRow("Start/Size:", w.allocMode);
+
     w.start = new QSpinBox;
-    w.start->setRange(0, 65535);
+    w.start->setRange(0, 999999999);
+    w.start->setReadOnly(true);
     form->addRow("Start:", w.start);
 
     w.size = new QSpinBox;
-    w.size->setRange(0, 65535);
+    w.size->setRange(0, 999999999);
+    w.size->setReadOnly(true);
     form->addRow("Size:", w.size);
 
     w.fecType = new QComboBox;
@@ -69,11 +78,27 @@ QWidget* PlpPage::createPlpTab(int sfIdx, int plpIdx) {
         w.codeRate->addItem(crNames[i], i);
     form->addRow("Code Rate:", w.codeRate);
 
+    w.fecBlockStart = new QSpinBox;
+    w.fecBlockStart->setRange(0, 999999999);
+    w.fecBlockStartRow = new QWidget;
+    auto* fbsLayout = new QHBoxLayout(w.fecBlockStartRow);
+    fbsLayout->setContentsMargins(0, 0, 0, 0);
+    fbsLayout->addWidget(w.fecBlockStart);
+    form->addRow("FEC Block Start:", w.fecBlockStartRow);
+
     w.tiMode = new QComboBox;
     w.tiMode->addItem("No TI", 0);
     w.tiMode->addItem("CTI", 1);
     w.tiMode->addItem("HTI", 2);
     form->addRow("TI Mode:", w.tiMode);
+
+    w.ctiFecBlockStart = new QSpinBox;
+    w.ctiFecBlockStart->setRange(0, 999999999);
+    w.ctiFecBlockStartRow = new QWidget;
+    auto* cfbsLayout = new QHBoxLayout(w.ctiFecBlockStartRow);
+    cfbsLayout->setContentsMargins(0, 0, 0, 0);
+    cfbsLayout->addWidget(w.ctiFecBlockStart);
+    form->addRow("CTI FEC Block Start:", w.ctiFecBlockStartRow);
 
     w.tiExtended = new QComboBox;
     w.tiExtended->addItem("OFF", 0);
@@ -225,17 +250,24 @@ QWidget* PlpPage::createPlpTab(int sfIdx, int plpIdx) {
         if (idx < (int)m_widgets.size())
             updateFieldVisibility(m_widgets[idx]);
     });
+    connect(w.allocMode, QOverload<int>::of(&QComboBox::currentIndexChanged), [this, idx = (int)m_widgets.size()](int) {
+        if (idx < (int)m_widgets.size())
+            updateAllocModeUi(m_widgets[idx]);
+    });
 
     auto emitChanged = [this]() { emit configChanged(); };
     connect(w.layer, QOverload<int>::of(&QComboBox::currentIndexChanged), this, emitChanged);
     connect(w.id, QOverload<int>::of(&QSpinBox::valueChanged), this, emitChanged);
     connect(w.llsFlag, QOverload<int>::of(&QComboBox::currentIndexChanged), this, emitChanged);
+    connect(w.allocMode, QOverload<int>::of(&QComboBox::currentIndexChanged), this, emitChanged);
     connect(w.start, QOverload<int>::of(&QSpinBox::valueChanged), this, emitChanged);
     connect(w.size, QOverload<int>::of(&QSpinBox::valueChanged), this, emitChanged);
     connect(w.fecType, QOverload<int>::of(&QComboBox::currentIndexChanged), this, emitChanged);
     connect(w.modOrder, QOverload<int>::of(&QComboBox::currentIndexChanged), this, emitChanged);
     connect(w.codeRate, QOverload<int>::of(&QComboBox::currentIndexChanged), this, emitChanged);
+    connect(w.fecBlockStart, QOverload<int>::of(&QSpinBox::valueChanged), this, emitChanged);
     connect(w.tiMode, QOverload<int>::of(&QComboBox::currentIndexChanged), this, emitChanged);
+    connect(w.ctiFecBlockStart, QOverload<int>::of(&QSpinBox::valueChanged), this, emitChanged);
     connect(w.plpType, QOverload<int>::of(&QComboBox::currentIndexChanged), this, emitChanged);
     connect(w.ctiDepth, QOverload<int>::of(&QComboBox::currentIndexChanged), this, emitChanged);
     connect(w.numFecBlocksMax, QOverload<int>::of(&QSpinBox::valueChanged), this, emitChanged);
@@ -259,6 +291,7 @@ void PlpPage::updateFieldVisibility(PlpWidgets& w) {
     w.ldmInjectionRow->setVisible(isEnhanced);
     w.plpTypeRow->setVisible(!isEnhanced);
     w.tiExtendedRow->setVisible(!isEnhanced);
+    w.fecBlockStartRow->setVisible(!isEnhanced);
 
     bool showSubslice = !isEnhanced && (plpType == 1);
     w.numSubsliceRow->setVisible(showSubslice);
@@ -266,6 +299,7 @@ void PlpPage::updateFieldVisibility(PlpWidgets& w) {
 
     bool showCti = !isEnhanced && (tiMode == 1);
     w.ctiDepthRow->setVisible(showCti);
+    w.ctiFecBlockStartRow->setVisible(showCti);
 
     bool showHti = !isEnhanced && (tiMode == 2);
     w.cellInterleaverRow->setVisible(showHti);
@@ -276,6 +310,7 @@ void PlpPage::updateFieldVisibility(PlpWidgets& w) {
 
     if (isEnhanced) {
         w.ctiDepthRow->setVisible(false);
+        w.ctiFecBlockStartRow->setVisible(false);
         w.cellInterleaverRow->setVisible(false);
         w.interSubframeRow->setVisible(false);
         w.numTiBlocksRow->setVisible(false);
@@ -313,12 +348,15 @@ void PlpPage::loadFromConfig(const AtscConfig& config) {
         w.layer->setCurrentIndex(plp.layer);
         w.id->setValue(plp.id);
         w.llsFlag->setCurrentIndex(plp.lls_flag);
+        w.allocMode->setCurrentIndex(plp.alloc_mode);
         w.start->setValue(plp.start);
         w.size->setValue(plp.size);
         w.fecType->setCurrentIndex(plp.fec_type);
         w.modOrder->setCurrentIndex(plp.mod);
         w.codeRate->setCurrentIndex(plp.cod);
+        w.fecBlockStart->setValue(plp.fec_block_start);
         w.tiMode->setCurrentIndex(plp.ti_mode);
+        w.ctiFecBlockStart->setValue(plp.cti_fec_block_start);
         w.tiExtended->setCurrentIndex(plp.ti_extended_interleaving);
         w.ctiDepth->setCurrentIndex(plp.cti_depth);
         w.cellInterleaver->setCurrentIndex(plp.hti_cell_interleaver);
@@ -336,6 +374,7 @@ void PlpPage::loadFromConfig(const AtscConfig& config) {
         w.phaseHopping->setCurrentIndex(plp.mimo_ph);
 
         updateFieldVisibility(w);
+        updateAllocModeUi(w);
     }
 }
 
@@ -353,12 +392,15 @@ void PlpPage::saveToConfig(AtscConfig& config) {
         plp.layer = w.layer->currentData().toInt();
         plp.id = w.id->value();
         plp.lls_flag = w.llsFlag->currentData().toInt();
+        plp.alloc_mode = w.allocMode->currentData().toInt();
         plp.start = w.start->value();
         plp.size = w.size->value();
         plp.fec_type = w.fecType->currentData().toInt();
         plp.mod = w.modOrder->currentData().toInt();
         plp.cod = w.codeRate->currentData().toInt();
+        plp.fec_block_start = w.fecBlockStart->value();
         plp.ti_mode = w.tiMode->currentData().toInt();
+        plp.cti_fec_block_start = w.ctiFecBlockStart->value();
         plp.ti_extended_interleaving = w.tiExtended->currentData().toInt();
         plp.cti_depth = w.ctiDepth->currentData().toInt();
         plp.hti_cell_interleaver = w.cellInterleaver->currentData().toInt();
@@ -374,5 +416,74 @@ void PlpPage::saveToConfig(AtscConfig& config) {
         plp.mimo_stream_combining = w.streamCombining->currentData().toInt();
         plp.mimo_iq_interleaving = w.iqInterleaving->currentData().toInt();
         plp.mimo_ph = w.phaseHopping->currentData().toInt();
+    }
+}
+
+void PlpPage::updateAllocModeUi(PlpWidgets& w) {
+    bool isManual = (w.allocMode->currentData().toInt() == 1);
+    w.start->setReadOnly(!isManual);
+    w.size->setReadOnly(!isManual);
+
+    QString style = isManual
+        ? ""
+        : "QSpinBox { background-color: #1c2128; color: #8b949e; }";
+    w.start->setStyleSheet(style);
+    w.size->setStyleSheet(style);
+}
+
+void PlpPage::recalcAutoPlps(const std::vector<int>& totalCapacities) {
+    // Group widgets by subframe
+    std::map<int, std::vector<int>> sfToWidgetIndices;
+    for (int t = 0; t < (int)m_tabMapping.size(); t++) {
+        sfToWidgetIndices[m_tabMapping[t].first].push_back(t);
+    }
+
+    for (auto& [sfIdx, widgetIndices] : sfToWidgetIndices) {
+        int totalAvailable = (sfIdx < (int)totalCapacities.size()) ? totalCapacities[sfIdx] : 0;
+
+        // Calculate manual usage and find auto PLPs
+        int manualUsed = 0;
+        std::vector<int> autoIndices;
+
+        for (int t : widgetIndices) {
+            auto& w = m_widgets[t];
+            bool isManual = (w.allocMode->currentData().toInt() == 1);
+            if (isManual) {
+                manualUsed += w.size->value();
+            } else {
+                autoIndices.push_back(t);
+            }
+        }
+
+        int availableForAuto = std::max(0, totalAvailable - manualUsed);
+        int currentStart = 0;
+
+        // Distribute: first auto PLP gets all remaining, others get 0
+        for (int t : widgetIndices) {
+            auto& w = m_widgets[t];
+            bool isManual = (w.allocMode->currentData().toInt() == 1);
+
+            if (!isManual) {
+                bool isFirstAuto = (!autoIndices.empty() && autoIndices[0] == t);
+                int size = isFirstAuto ? availableForAuto : 0;
+
+                w.start->blockSignals(true);
+                w.size->blockSignals(true);
+                w.start->setValue(currentStart);
+                w.size->setValue(size);
+                w.start->blockSignals(false);
+                w.size->blockSignals(false);
+
+                currentStart += size;
+            } else {
+                int size = w.size->value();
+
+                w.start->blockSignals(true);
+                w.start->setValue(currentStart);
+                w.start->blockSignals(false);
+
+                currentStart += size;
+            }
+        }
     }
 }

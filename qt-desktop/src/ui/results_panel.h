@@ -16,6 +16,7 @@ struct PlpResult {
     double bitrateMbps = 0.0;
     int numCells = 0;
     int startCell = 0;
+    int fecBlockStart = 0;
     int tiCells = 0;
     int fecBlockSize = 0;
     int numFecBlocks = 0;
@@ -41,6 +42,7 @@ struct FrameResult {
     int l1dSizeBytes = 0;
     int plpCells = 0;
     int numPreambleSymbols = 0;
+    int timeOffset = 0;
     std::vector<SubframeResult> subframes;
 };
 
@@ -49,10 +51,10 @@ class ResultsPanel : public QWidget {
 public:
     explicit ResultsPanel(QWidget* parent = nullptr);
     void updateResults(const AtscConfig& config);
+    FrameResult computeResults(const AtscConfig& config);
 
 private:
     void clearLayout(QLayout* layout);
-    FrameResult computeResults(const AtscConfig& config);
     QString formatCnr(double v);
 
     QLabel* m_frameDuration;
@@ -63,6 +65,7 @@ private:
     QLabel* m_l1dBytes;
     QLabel* m_numSymbols;
     QLabel* m_plpCells;
+    QLabel* m_timeOffset;
 
     QVBoxLayout* m_subframesLayout;
     QWidget* m_subframesContainer;

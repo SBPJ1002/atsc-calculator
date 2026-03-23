@@ -8,6 +8,7 @@ struct PlpConfig {
     int id = 0;
     int lls_flag = 0;
     int layer = 0;
+    int alloc_mode = 0; // 0=auto, 1=manual
     int start = 0;
     int size = 0;
     int scrambler_type = 0;

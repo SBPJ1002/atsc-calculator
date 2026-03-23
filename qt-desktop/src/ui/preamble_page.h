@@ -28,6 +28,11 @@ private:
     QSpinBox* m_numSubframes;
     QComboBox* m_l1dVersion;
     QSpinBox* m_l1dBsid;
+    QSpinBox* m_timeOffset;
+    QSpinBox* m_preambleNumSymbols;
+    QComboBox* m_preambleReducedCarriers;
+    QSpinBox* m_additionalSamples;
+    QSpinBox* m_excessSamples;
     QWidget* m_frameLengthRow;
     QWidget* m_bsidRow;
 };

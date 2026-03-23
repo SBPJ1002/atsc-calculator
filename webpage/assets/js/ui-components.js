@@ -1,3 +1,50 @@
+function computeFrameDurationSec() {
+    const giAbsolute = [0,192,384,512,768,1024,1536,2048,2432,3072,3648,4096,4864];
+    const fftSamples = [8192, 16384, 32768];
+    const bsSymbolMap = {0: 4, 1: 5};
+    const sysBwMap = {0: 6, 1: 7, 2: 8};
+
+    const bsrCoeff = parseInt(document.getElementById('bsr_coefficient')?.value || '2', 10);
+    const sysBwRaw = parseInt(document.getElementById('system_bandwidth')?.value || '0', 10);
+    const sysBw = sysBwMap[sysBwRaw] ?? sysBwRaw;
+    const bsSymbolRaw = parseInt(document.getElementById('bootstrap_symbol')?.value || '0', 10);
+    const bsSymbol = bsSymbolMap[bsSymbolRaw] ?? bsSymbolRaw;
+    const frameLengthMode = parseInt(document.getElementById('frame_lenght_mode')?.value || '1', 10);
+    const frameLength = parseInt(document.getElementById('frame_lenght')?.value || '0', 10);
+    const preambleNumSymbols = window.__preambleNumSymbols__ ?? 0;
+    const numSubframes = parseInt(document.getElementById('number_of_subframes')?.value || '1', 10);
+
+    if (frameLengthMode === 0) {
+        return frameLength * 5.0 / 1000.0;
+    }
+
+    const Fs = 384000.0 * (bsrCoeff + 16);
+    const Ts = 1.0 / Fs;
+    const FsBs = sysBw * 1024000.0;
+    const bsNumSymbols = bsSymbol + 1;
+    const bsTotalSamples = 2048 + (bsNumSymbols - 1) * (2048 + 512);
+    const T_BS = bsTotalSamples / FsBs;
+
+    const fft0 = parseInt(document.getElementById('fft_size_0')?.value || '0', 10);
+    const gi0 = parseInt(document.getElementById('guard_interval_0')?.value || '5', 10);
+    const preambleFft = fftSamples[fft0] || 8192;
+    const preambleGi = giAbsolute[gi0] || 0;
+    const TSymbolPreamble = (preambleFft + preambleGi) * Ts;
+
+    let duration = T_BS + (preambleNumSymbols + 1) * TSymbolPreamble;
+
+    for (let i = 0; i < numSubframes; i++) {
+        const fftIdx = parseInt(document.getElementById(`fft_size_${i}`)?.value || '0', 10);
+        const giIdx = parseInt(document.getElementById(`guard_interval_${i}`)?.value || '5', 10);
+        const numOfdm = parseInt(document.getElementById(`num_ofdm_${i}`)?.value || '0', 10);
+        const sfFft = fftSamples[fftIdx] || 8192;
+        const sfGi = giAbsolute[giIdx] || 0;
+        duration += numOfdm * (sfFft + sfGi) * Ts;
+    }
+
+    return duration;
+}
+
 function updateActiveMenu(activeId) {
     document.querySelectorAll('.wizard-tab, .sub-tab').forEach(item => {
         item.classList.remove('active');
@@ -162,6 +209,7 @@ async function updateResultadosSubframeProgress(subframeIndex) {
     const fecStarts = window.__frame2LogData__?.fecBlockStarts || [];
     const sfDurMs = parseFloat(sfExtra.duracao) || 0;
     const sfDurSec = sfDurMs / 1000;
+    const frameDurSec = computeFrameDurationSec();
 
     for (let plpIdx = 0; plpIdx < plpRows.length; plpIdx++) {
         const plp = plpRows[plpIdx];
@@ -222,7 +270,8 @@ async function updateResultadosSubframeProgress(subframeIndex) {
             const bbfr = Math.trunc(numFecBlocks / sfDurSec);
             bbFrameRateDisplay = bbfr + ' fps';
 
-            const bitrateBps = plp.size * bitsPerCell * (codeRateNum / codeRateDen) * payloadEff / sfDurSec;
+            const bitrateDiv = frameDurSec > 0 ? frameDurSec : sfDurSec;
+            const bitrateBps = plp.size * bitsPerCell * (codeRateNum / codeRateDen) * payloadEff / bitrateDiv;
             bitrateDisplay = (bitrateBps / 1e6).toFixed(3) + ' Mbps';
         }
 

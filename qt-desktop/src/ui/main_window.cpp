@@ -192,6 +192,22 @@ void MainWindow::syncConfigToUi() {
 
 void MainWindow::recalculate() {
     syncConfigFromUi();
+
+    // Compute results and write back auto-calculated fields
+    FrameResult result = m_resultsPanel->computeResults(m_config);
+    m_config.preamble.l1b_preamble_num_symbols = std::max(0, result.numPreambleSymbols - 1);
+    m_config.preamble.l1b_detail_size_bytes = result.l1dSizeBytes;
+    m_config.preamble.l1b_detail_total_cells = result.l1dCells;
+    m_config.preamble.l1b_time_offset = result.timeOffset;
+
+    // Auto-allocate PLP sizes
+    std::vector<int> totalCapacities;
+    for (const auto& sfr : result.subframes)
+        totalCapacities.push_back(sfr.totalCapacity);
+    m_plpPage->recalcAutoPlps(totalCapacities);
+
+    // Re-sync after auto-allocation and update results
+    m_plpPage->saveToConfig(m_config);
     m_resultsPanel->updateResults(m_config);
 }
 

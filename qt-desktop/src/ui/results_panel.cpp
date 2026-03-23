@@ -135,6 +135,10 @@ ResultsPanel::ResultsPanel(QWidget* parent) : QWidget(parent) {
     preambleForm->addRow("L1D Cells:", m_l1dCells);
     preambleForm->addRow("Cells in Next:", m_cellsNext);
     preambleForm->addRow("PLP Cells:", m_plpCells);
+
+    m_timeOffset = makeValueLabel();
+    preambleForm->addRow("Time Offset:", m_timeOffset);
+
     mainLayout->addWidget(preambleGroup);
 
     m_subframesContainer = new QWidget;
@@ -193,6 +197,8 @@ FrameResult ResultsPanel::computeResults(const AtscConfig& config) {
     result.numPreambleSymbols = (l1Total > result.cellsInFirst) ? 2 : 1;
     int totalPreambleCells = result.cellsInFirst + (result.numPreambleSymbols - 1) * result.cellsInNext;
     result.plpCells = std::max(0, totalPreambleCells - result.l1bCells - (int)result.l1dCells);
+
+    result.timeOffset = Calculator::calcTimeOffset(b.bsr_coefficient, p.l1d_time_usec, p.l1d_time_nsec);
 
     double Fs = 384000.0 * (b.bsr_coefficient + 16);
     double Ts = 1.0 / Fs;
@@ -256,6 +262,7 @@ FrameResult ResultsPanel::computeResults(const AtscConfig& config) {
             pr.plpId = plp.id;
             pr.numCells = plp.size;
             pr.startCell = plp.start;
+            pr.fecBlockStart = plp.fec_block_start;
             totalPlpUsed += plp.size;
 
             int ldpcSize = (plp.fec_type % 2 == 1) ? 64800 : 16200;
@@ -281,7 +288,8 @@ FrameResult ResultsPanel::computeResults(const AtscConfig& config) {
             }
 
             double sfDurSec = sfr.durationMs / 1000.0;
-            if (sfDurSec > 0 && pr.numFecBlocks > 0) {
+            double frameDurSec = result.totalDurationMs / 1000.0;
+            if (sfDurSec > 0 && frameDurSec > 0 && pr.numFecBlocks > 0) {
                 pr.bbFrameRate = (int)(pr.numFecBlocks / sfDurSec);
 
                 int codeRateNum = plp.cod + 2;
@@ -297,7 +305,7 @@ FrameResult ResultsPanel::computeResults(const AtscConfig& config) {
                 double kPayload = kLdpc - outerCodeParity - bbpHeader;
                 double payloadEff = (kLdpc > 0) ? (kPayload / kLdpc) : 1.0;
 
-                double bitrateBps = plp.size * bitsPerCell * ((double)codeRateNum / codeRateDen) * payloadEff / sfDurSec;
+                double bitrateBps = plp.size * bitsPerCell * ((double)codeRateNum / codeRateDen) * payloadEff / frameDurSec;
                 pr.bitrateMbps = bitrateBps / 1e6;
             }
 
@@ -324,6 +332,7 @@ void ResultsPanel::updateResults(const AtscConfig& config) {
     m_l1dBytes->setText(QString::number(r.l1dSizeBytes));
     m_l1dCells->setText(QString::number(r.l1dCells));
     m_plpCells->setText(QString::number(r.plpCells));
+    m_timeOffset->setText(QString::number(r.timeOffset));
 
     clearLayout(m_subframesLayout);
 
@@ -395,6 +404,7 @@ void ResultsPanel::updateResults(const AtscConfig& config) {
             plpForm->addRow("Bitrate:", makeVal(bitrateText));
             plpForm->addRow(QString::fromUtf8("Quantidade de Células:"), makeVal(QString::number(pr.numCells)));
             plpForm->addRow(QString::fromUtf8("Célula de Início:"), makeVal(QString::number(pr.startCell)));
+            plpForm->addRow("FEC Block Start:", makeVal(QString::number(pr.fecBlockStart)));
             plpForm->addRow(QString::fromUtf8("Células TI:"), makeVal(QString::number(pr.tiCells)));
             plpForm->addRow("FEC Block Size:", makeVal(QString::number(pr.fecBlockSize) + " cells"));
             plpForm->addRow("#FEC Blocks:", makeVal(QString::number(pr.numFecBlocks)));

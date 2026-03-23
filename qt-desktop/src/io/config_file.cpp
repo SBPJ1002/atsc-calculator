@@ -101,6 +101,7 @@ bool load(const QString& path, AtscConfig& config) {
                 if (prop == "L1D_plp_id") plp.id = v;
                 else if (prop == "L1D_plp_lls_flag") plp.lls_flag = v;
                 else if (prop == "L1D_plp_layer") plp.layer = v;
+                else if (prop == "L1D_plp_alloc_mode") plp.alloc_mode = v;
                 else if (prop == "L1D_plp_start") plp.start = v;
                 else if (prop == "L1D_plp_size") plp.size = v;
                 else if (prop == "L1D_plp_scrambler_type") plp.scrambler_type = v;
@@ -263,6 +264,7 @@ bool save(const QString& path, const AtscConfig& config) {
                 out << "subframe.[" << i << "].plp.[" << j << "].L1D_plp_id=" << plp.id << "\n";
                 out << "subframe.[" << i << "].plp.[" << j << "].L1D_plp_lls_flag=" << plp.lls_flag << "\n";
                 out << "subframe.[" << i << "].plp.[" << j << "].L1D_plp_layer=" << plp.layer << "\n";
+                out << "subframe.[" << i << "].plp.[" << j << "].L1D_plp_alloc_mode=" << plp.alloc_mode << "\n";
                 out << "subframe.[" << i << "].plp.[" << j << "].L1D_plp_start=" << plp.start << "\n";
                 out << "subframe.[" << i << "].plp.[" << j << "].L1D_plp_size=" << plp.size << "\n";
                 out << "subframe.[" << i << "].plp.[" << j << "].L1D_plp_scrambler_type=" << plp.scrambler_type << "\n";

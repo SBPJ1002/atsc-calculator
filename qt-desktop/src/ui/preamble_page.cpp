@@ -48,6 +48,30 @@ PreamblePage::PreamblePage(QWidget* parent) : QWidget(parent) {
     flLayout->addWidget(m_frameLength);
     g->addRow("Frame Length:", m_frameLengthRow);
 
+    m_preambleNumSymbols = new QSpinBox;
+    m_preambleNumSymbols->setRange(0, 65535);
+    g->addRow("Preamble Num Symbols:", m_preambleNumSymbols);
+
+    m_preambleReducedCarriers = new QComboBox;
+    m_preambleReducedCarriers->addItem("0 (97.2%)", 0);
+    m_preambleReducedCarriers->addItem("1 (95.9%)", 1);
+    m_preambleReducedCarriers->addItem("2 (94.5%)", 2);
+    m_preambleReducedCarriers->addItem("3 (93.2%)", 3);
+    m_preambleReducedCarriers->addItem("4 (91.8%)", 4);
+    g->addRow("Preamble Reduced Carriers:", m_preambleReducedCarriers);
+
+    m_timeOffset = new QSpinBox;
+    m_timeOffset->setRange(0, 65535);
+    g->addRow("Time Offset:", m_timeOffset);
+
+    m_excessSamples = new QSpinBox;
+    m_excessSamples->setRange(0, 65535);
+    g->addRow("Excess Samples/Symbol:", m_excessSamples);
+
+    m_additionalSamples = new QSpinBox;
+    m_additionalSamples->setRange(0, 65535);
+    g->addRow("Additional Samples:", m_additionalSamples);
+
     m_numSubframes = new QSpinBox;
     m_numSubframes->setRange(1, 8);
     m_numSubframes->setValue(1);
@@ -91,6 +115,11 @@ PreamblePage::PreamblePage(QWidget* parent) : QWidget(parent) {
     connect(m_mimoScatteredPilotEncoding, QOverload<int>::of(&QComboBox::currentIndexChanged), this, emitChanged);
     connect(m_detailFecType, QOverload<int>::of(&QComboBox::currentIndexChanged), this, emitChanged);
     connect(m_timeInfoFlag, QOverload<int>::of(&QComboBox::currentIndexChanged), this, emitChanged);
+    connect(m_preambleNumSymbols, QOverload<int>::of(&QSpinBox::valueChanged), this, emitChanged);
+    connect(m_preambleReducedCarriers, QOverload<int>::of(&QComboBox::currentIndexChanged), this, emitChanged);
+    connect(m_timeOffset, QOverload<int>::of(&QSpinBox::valueChanged), this, emitChanged);
+    connect(m_excessSamples, QOverload<int>::of(&QSpinBox::valueChanged), this, emitChanged);
+    connect(m_additionalSamples, QOverload<int>::of(&QSpinBox::valueChanged), this, emitChanged);
     connect(m_numSubframes, QOverload<int>::of(&QSpinBox::valueChanged), this, emitChanged);
 }
 
@@ -102,6 +131,11 @@ void PreamblePage::loadFromConfig(const AtscConfig& config) {
     m_timeInfoFlag->setCurrentIndex(p.l1b_time_info_flag);
     m_frameLengthMode->setCurrentIndex(p.l1b_frame_length_mode);
     m_frameLength->setValue(p.l1b_frame_length);
+    m_preambleNumSymbols->setValue(p.l1b_preamble_num_symbols);
+    m_preambleReducedCarriers->setCurrentIndex(p.l1b_preamble_reduced_carriers);
+    m_timeOffset->setValue(p.l1b_time_offset);
+    m_excessSamples->setValue(p.l1b_excess_samples_per_symbol);
+    m_additionalSamples->setValue(p.l1b_additional_samples);
     m_numSubframes->setValue(p.l1b_num_subframes);
     m_l1dVersion->setCurrentIndex(p.l1d_version);
     m_l1dBsid->setValue(p.l1d_bsid);
@@ -117,6 +151,11 @@ void PreamblePage::saveToConfig(AtscConfig& config) {
     p.l1b_time_info_flag = m_timeInfoFlag->currentData().toInt();
     p.l1b_frame_length_mode = m_frameLengthMode->currentData().toInt();
     p.l1b_frame_length = m_frameLength->value();
+    p.l1b_preamble_num_symbols = m_preambleNumSymbols->value();
+    p.l1b_preamble_reduced_carriers = m_preambleReducedCarriers->currentData().toInt();
+    p.l1b_time_offset = m_timeOffset->value();
+    p.l1b_excess_samples_per_symbol = m_excessSamples->value();
+    p.l1b_additional_samples = m_additionalSamples->value();
     p.l1b_num_subframes = m_numSubframes->value();
     p.l1d_version = m_l1dVersion->currentData().toInt();
     p.l1d_bsid = m_l1dBsid->value();

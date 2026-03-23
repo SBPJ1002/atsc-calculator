@@ -11,6 +11,7 @@ struct PlpWidgets {
     QComboBox* layer;
     QSpinBox* id;
     QComboBox* llsFlag;
+    QComboBox* allocMode;
     QSpinBox* start;
     QSpinBox* size;
     QComboBox* fecType;
@@ -19,6 +20,8 @@ struct PlpWidgets {
     QComboBox* tiMode;
     QComboBox* tiExtended;
     QComboBox* ctiDepth;
+    QSpinBox* fecBlockStart;
+    QSpinBox* ctiFecBlockStart;
     QComboBox* cellInterleaver;
     QComboBox* interSubframe;
     QSpinBox* numTiBlocks;
@@ -33,6 +36,8 @@ struct PlpWidgets {
     QComboBox* iqInterleaving;
     QComboBox* phaseHopping;
 
+    QWidget* fecBlockStartRow;
+    QWidget* ctiFecBlockStartRow;
     QWidget* ctiDepthRow;
     QWidget* cellInterleaverRow;
     QWidget* interSubframeRow;
@@ -57,6 +62,7 @@ public:
     void rebuildTabs(const AtscConfig& config);
     void loadFromConfig(const AtscConfig& config);
     void saveToConfig(AtscConfig& config);
+    void recalcAutoPlps(const std::vector<int>& totalCapacities);
 
 signals:
     void configChanged();
@@ -64,6 +70,7 @@ signals:
 private:
     QWidget* createPlpTab(int sfIdx, int plpIdx);
     void updateFieldVisibility(PlpWidgets& w);
+    void updateAllocModeUi(PlpWidgets& w);
 
     QTabWidget* m_tabs;
     std::vector<PlpWidgets> m_widgets;
