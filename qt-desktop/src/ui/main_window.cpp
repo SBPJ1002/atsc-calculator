@@ -193,6 +193,9 @@ void MainWindow::syncConfigToUi() {
 void MainWindow::recalculate() {
     syncConfigFromUi();
 
+    // Update MIMO mixed visibility on PLP page
+    m_plpPage->updateMimoMixed(m_config);
+
     // Compute results and write back auto-calculated fields
     FrameResult result = m_resultsPanel->computeResults(m_config);
     m_config.preamble.l1b_preamble_num_symbols = std::max(0, result.numPreambleSymbols - 1);

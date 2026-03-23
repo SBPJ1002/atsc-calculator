@@ -63,6 +63,7 @@ public:
     void loadFromConfig(const AtscConfig& config);
     void saveToConfig(AtscConfig& config);
     void recalcAutoPlps(const std::vector<int>& totalCapacities);
+    void updateMimoMixed(const AtscConfig& config);
 
 signals:
     void configChanged();
@@ -76,6 +77,7 @@ private:
     std::vector<PlpWidgets> m_widgets;
 
     std::vector<std::pair<int,int>> m_tabMapping;
+    std::map<int,bool> m_mimoMixedPerSubframe;
 };
 
 #endif

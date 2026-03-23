@@ -288,35 +288,47 @@ void PlpPage::updateFieldVisibility(PlpWidgets& w) {
 
     bool isEnhanced = (layer == 1);
 
+    // ti_extended and inter_subframe are ALWAYS hidden per ATSC A/322
+    w.tiExtendedRow->setVisible(false);
+    w.interSubframeRow->setVisible(false);
+
+    // Enhanced layer: show LDM injection, hide core-only fields
     w.ldmInjectionRow->setVisible(isEnhanced);
     w.plpTypeRow->setVisible(!isEnhanced);
-    w.tiExtendedRow->setVisible(!isEnhanced);
     w.fecBlockStartRow->setVisible(!isEnhanced);
 
+    // Subslice fields: only when dispersed type and core layer
     bool showSubslice = !isEnhanced && (plpType == 1);
     w.numSubsliceRow->setVisible(showSubslice);
     w.subsliceIntervalRow->setVisible(showSubslice);
 
+    // CTI fields: only when ti_mode=CTI and core layer
     bool showCti = !isEnhanced && (tiMode == 1);
     w.ctiDepthRow->setVisible(showCti);
     w.ctiFecBlockStartRow->setVisible(showCti);
 
+    // HTI fields: only when ti_mode=HTI and core layer
     bool showHti = !isEnhanced && (tiMode == 2);
     w.cellInterleaverRow->setVisible(showHti);
-    w.interSubframeRow->setVisible(showHti);
     w.numTiBlocksRow->setVisible(showHti);
     w.numFecBlocksMaxRow->setVisible(showHti);
     w.numFecBlocksRow->setVisible(showHti);
 
-    if (isEnhanced) {
-        w.ctiDepthRow->setVisible(false);
-        w.ctiFecBlockStartRow->setVisible(false);
-        w.cellInterleaverRow->setVisible(false);
-        w.interSubframeRow->setVisible(false);
-        w.numTiBlocksRow->setVisible(false);
-        w.numFecBlocksMaxRow->setVisible(false);
-        w.numFecBlocksRow->setVisible(false);
+    // MIMO PLP fields: visible only when subframe has MIMO Mixed enabled
+    // Get the subframe index for this widget
+    int widgetIdx = -1;
+    for (int i = 0; i < (int)m_widgets.size(); i++) {
+        if (&m_widgets[i] == &w) { widgetIdx = i; break; }
     }
+    bool showMimo = false;
+    if (widgetIdx >= 0 && widgetIdx < (int)m_tabMapping.size()) {
+        showMimo = m_mimoMixedPerSubframe.count(m_tabMapping[widgetIdx].first) &&
+                   m_mimoMixedPerSubframe[m_tabMapping[widgetIdx].first];
+    }
+    w.mimoPlpRow->setVisible(showMimo);
+    w.streamCombiningRow->setVisible(showMimo);
+    w.iqInterleavingRow->setVisible(showMimo);
+    w.phaseHoppingRow->setVisible(showMimo);
 }
 
 void PlpPage::rebuildTabs(const AtscConfig& config) {
@@ -389,6 +401,11 @@ void PlpPage::saveToConfig(AtscConfig& config) {
         auto& plp = sfConfig.plps[p];
         const auto& w = m_widgets[t];
 
+        bool isEnhanced = (w.layer->currentData().toInt() == 1);
+        int tiMode = w.tiMode->currentData().toInt();
+        int plpType = w.plpType->currentData().toInt();
+        bool mimoMixed = m_mimoMixedPerSubframe.count(sf) && m_mimoMixedPerSubframe[sf];
+
         plp.layer = w.layer->currentData().toInt();
         plp.id = w.id->value();
         plp.lls_flag = w.llsFlag->currentData().toInt();
@@ -398,24 +415,54 @@ void PlpPage::saveToConfig(AtscConfig& config) {
         plp.fec_type = w.fecType->currentData().toInt();
         plp.mod = w.modOrder->currentData().toInt();
         plp.cod = w.codeRate->currentData().toInt();
-        plp.fec_block_start = w.fecBlockStart->value();
-        plp.ti_mode = w.tiMode->currentData().toInt();
-        plp.cti_fec_block_start = w.ctiFecBlockStart->value();
-        plp.ti_extended_interleaving = w.tiExtended->currentData().toInt();
-        plp.cti_depth = w.ctiDepth->currentData().toInt();
-        plp.hti_cell_interleaver = w.cellInterleaver->currentData().toInt();
-        plp.hti_inter_subframe = w.interSubframe->currentData().toInt();
-        plp.hti_num_ti_blocks = w.numTiBlocks->value();
-        plp.hti_num_fec_blocks_max = w.numFecBlocksMax->value();
-        plp.hti_num_fec_blocks = w.numFecBlocks->value();
-        plp.type = w.plpType->currentData().toInt();
-        plp.num_subslices = w.numSubslice->value();
-        plp.subslice_interval = w.subsliceInterval->value();
-        plp.ldm_injection_level = w.ldmInjectionLevel->currentData().toInt();
-        plp.mimo = w.mimoPlp->currentData().toInt();
-        plp.mimo_stream_combining = w.streamCombining->currentData().toInt();
-        plp.mimo_iq_interleaving = w.iqInterleaving->currentData().toInt();
-        plp.mimo_ph = w.phaseHopping->currentData().toInt();
+        plp.ti_mode = tiMode;
+
+        // ti_extended and inter_subframe always 0 per A/322
+        plp.ti_extended_interleaving = 0;
+        plp.hti_inter_subframe = 0;
+
+        // FEC Block Start: only for core layer
+        plp.fec_block_start = isEnhanced ? 0 : w.fecBlockStart->value();
+
+        // CTI fields: only when ti_mode=CTI and core layer
+        bool isCti = !isEnhanced && (tiMode == 1);
+        plp.cti_fec_block_start = isCti ? w.ctiFecBlockStart->value() : 0;
+        plp.cti_depth = isCti ? w.ctiDepth->currentData().toInt() : 0;
+
+        // HTI fields: only when ti_mode=HTI and core layer
+        bool isHti = !isEnhanced && (tiMode == 2);
+        plp.hti_cell_interleaver = isHti ? w.cellInterleaver->currentData().toInt() : 0;
+        plp.hti_num_ti_blocks = isHti ? w.numTiBlocks->value() : 0;
+        plp.hti_num_fec_blocks_max = isHti ? w.numFecBlocksMax->value() : 0;
+        plp.hti_num_fec_blocks = isHti ? w.numFecBlocks->value() : 0;
+
+        // PLP type and subslice: only for core layer
+        plp.type = isEnhanced ? 0 : plpType;
+        bool showSubslice = !isEnhanced && (plpType == 1);
+        plp.num_subslices = showSubslice ? w.numSubslice->value() : 0;
+        plp.subslice_interval = showSubslice ? w.subsliceInterval->value() : 0;
+
+        // LDM injection: only for enhanced layer
+        plp.ldm_injection_level = isEnhanced ? w.ldmInjectionLevel->currentData().toInt() : 0;
+
+        // MIMO PLP fields: only when mimo_mixed enabled
+        plp.mimo = mimoMixed ? w.mimoPlp->currentData().toInt() : 0;
+        plp.mimo_stream_combining = mimoMixed ? w.streamCombining->currentData().toInt() : 0;
+        plp.mimo_iq_interleaving = mimoMixed ? w.iqInterleaving->currentData().toInt() : 0;
+        plp.mimo_ph = mimoMixed ? w.phaseHopping->currentData().toInt() : 0;
+    }
+}
+
+void PlpPage::updateMimoMixed(const AtscConfig& config) {
+    m_mimoMixedPerSubframe.clear();
+    for (int i = 0; i < (int)config.subframes.size(); i++) {
+        const auto& sf = config.subframes[i];
+        // MIMO PLP fields visible when mimo_mixed == 1
+        m_mimoMixedPerSubframe[i] = (sf.mimo_mixed == 1);
+    }
+    // Refresh visibility for all widgets
+    for (int t = 0; t < (int)m_widgets.size(); t++) {
+        updateFieldVisibility(m_widgets[t]);
     }
 }
 
