@@ -1,108 +1,135 @@
 #include "atsc_server.h"
 #include <iostream>
 #include <unistd.h>
+#include <thread>
+#include <sys/socket.h>
+#include <netinet/in.h>
+#include <arpa/inet.h>
+#include <fcntl.h>
+#include <cstring>
 
 ATSC_Server::ATSC_Server(int port, int timeout_ms)
     : config(),
       calculator(config),
       generator(config, calculator),
       interpreter(config),
+      json_handler(config, calculator, generator, interpreter),
       port(port),
       timeout_ms(timeout_ms)
 {
 }
 
 void ATSC_Server::run() {
-    std::cout << "ATSC 3.0 Server" << std::endl;
+    std::cout << "ATSC 3.0 Server (JSON API)" << std::endl;
     std::cout << "Starting server on port " << port << "..." << std::endl;
 
     config.load();
 
-    web_server.port = port;
-    web_server.timeout_ms = timeout_ms;
+    // Create socket
+    int server_fd = socket(AF_INET, SOCK_STREAM, 0);
+    if (server_fd < 0) {
+        std::cerr << "ERROR: Failed to create socket" << std::endl;
+        exit(-1);
+    }
 
-    if (web_server.init() != SUCCESS) {
-        std::cout << "ERROR: Failed to initialize TCP sockets. Exiting..." << std::endl;
+    // Set socket options
+    int enable = 1;
+    setsockopt(server_fd, SOL_SOCKET, SO_REUSEADDR, &enable, sizeof(int));
+    setsockopt(server_fd, SOL_SOCKET, SO_REUSEPORT, &enable, sizeof(int));
+
+    // Bind
+    struct sockaddr_in server_addr{};
+    server_addr.sin_family = AF_INET;
+    server_addr.sin_addr.s_addr = htonl(INADDR_ANY);
+    server_addr.sin_port = htons((uint16_t)port);
+
+    if (bind(server_fd, (struct sockaddr*)&server_addr, sizeof(server_addr)) < 0) {
+        std::cerr << "ERROR: Failed to bind socket" << std::endl;
+        close(server_fd);
+        exit(-1);
+    }
+
+    // Listen
+    if (listen(server_fd, 10) < 0) {
+        std::cerr << "ERROR: Failed to listen" << std::endl;
+        close(server_fd);
         exit(-1);
     }
 
     std::cout << "TCP server initialized successfully!" << std::endl;
     std::cout << "Configuration file: " << config.config_file << std::endl;
-    std::cout << "Awaiting connections..." << std::endl;
+    std::cout << "Awaiting connections on port " << port << "..." << std::endl;
 
-    while (1) {
-        if (web_server.get_status() == TCP_STATUS_ACCEPTED) {
-            if (web_server.timer.counting == 0) {
-                web_server.timer.start();
-            }
-            int nBytes_received = web_server.receive();
-            if (nBytes_received > 0) {
-                web_server.timer.start();
-                std::string data = "";
-                for (int i = 0; i < web_server.message->length; i++) {
-                    data += web_server.message->buffer[i];
-                }
+    // Accept loop - spawn thread per connection
+    while (true) {
+        struct sockaddr_in client_addr{};
+        socklen_t client_len = sizeof(client_addr);
 
-                std::cout << "Data received (" << nBytes_received << " bytes)" << std::endl;
-
-                std::string reply = process_received_data(data);
-
-                if (reply.length() != 0) {
-                    std::cout << "Enviando resposta (" << reply.length() << " bytes)" << std::endl;
-                    web_server.message->length = reply.length();
-                    for (int i = 0; i < web_server.message->length; i++) {
-                        web_server.message->buffer[i] = *(reply.c_str() + i);
-                    }
-
-                    if (web_server.get_status() == TCP_STATUS_ACCEPTED) {
-                        web_server.transmit();
-                    }
-                }
-            } else if (nBytes_received == 0 || (web_server.timer.get_elapsed_time_ms() >= web_server.timeout_ms && web_server.timeout_ms != -1)) {
-                web_server.check_incomming_connection();
-                if (web_server.get_status() == TCP_STATUS_ACCEPTED) {
-                    web_server.timer.start();
-                }
-            }
-        } else {
-            web_server.check_incomming_connection();
-            if (web_server.get_status() == TCP_STATUS_ACCEPTED) {
-                std::cout << "New connection established!" << std::endl;
-                web_server.timer.start();
-            }
+        int client_fd = accept(server_fd, (struct sockaddr*)&client_addr, &client_len);
+        if (client_fd < 0) {
+            std::cerr << "WARNING: Failed to accept connection" << std::endl;
+            continue;
         }
-        usleep(5000);
+
+        std::cout << "New connection from " << inet_ntoa(client_addr.sin_addr) << std::endl;
+
+        // Set read timeout on client socket
+        struct timeval tv;
+        tv.tv_sec = 2;
+        tv.tv_usec = 0;
+        setsockopt(client_fd, SOL_SOCKET, SO_RCVTIMEO, &tv, sizeof(tv));
+
+        // Spawn thread to handle client
+        std::thread(&ATSC_Server::handle_client, this, client_fd).detach();
     }
 }
 
-std::string ATSC_Server::process_received_data(const std::string& data) {
-    std::string buffer = data;
-    std::string command, reply = "";
-    size_t pos = std::string::npos;
-    int commands_processed = 0;
+std::string ATSC_Server::read_until_newline(int fd) {
+    std::string buffer;
+    char c;
 
-    do {
-        pos = buffer.find('\n');
-        if (pos != std::string::npos) {
-            command = buffer.substr(0, pos);
-            if (!command.empty()) {
-                std::string cmd_reply = config.process_command(command);
-                reply += cmd_reply;
-                commands_processed++;
-            }
-            buffer = buffer.substr(pos + 1, std::string::npos);
+    while (true) {
+        int n = recv(fd, &c, 1, 0);
+        if (n <= 0) {
+            break;
         }
-    } while (pos != std::string::npos);
-
-    std::cout << "Commands processed: " << commands_processed << std::endl;
-
-    if (commands_processed > 0) {
-        config.save();
-        generator.generate_basic_multi_frame();
-        generator.generate_detail_multi_frame();
-        interpreter.run();
-        calculator.write_frame_duration_file(calculator.calculate_frame_duration_ms());
+        if (c == '\n') {
+            break;
+        }
+        buffer += c;
     }
 
-    return reply;
+    return buffer;
+}
+
+void ATSC_Server::handle_client(int client_fd) {
+    std::string data = read_until_newline(client_fd);
+
+    if (data.empty()) {
+        close(client_fd);
+        return;
+    }
+
+    std::cout << "Received (" << data.size() << " bytes)" << std::endl;
+
+    // Process JSON request with mutex protection
+    std::string reply;
+    {
+        std::lock_guard<std::mutex> lock(config_mutex);
+        reply = json_handler.processRequest(data);
+    }
+
+    // Send response
+    if (!reply.empty()) {
+        std::cout << "Sending response (" << reply.size() << " bytes)" << std::endl;
+        size_t total_sent = 0;
+        while (total_sent < reply.size()) {
+            int n = send(client_fd, reply.c_str() + total_sent, reply.size() - total_sent, 0);
+            if (n <= 0) break;
+            total_sent += n;
+        }
+    }
+
+    close(client_fd);
+    std::cout << "Connection closed" << std::endl;
 }

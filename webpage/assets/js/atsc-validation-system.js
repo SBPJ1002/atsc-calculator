@@ -16,7 +16,7 @@ async function loadValidationTables() {
         const resp = await fetch('api.php', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ action: 'getValidationTables' })
+            body: JSON.stringify({ flag: 'getValidationTables' })
         });
         const data = await resp.json();
 

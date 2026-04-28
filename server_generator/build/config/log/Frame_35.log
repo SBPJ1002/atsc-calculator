@@ -1,0 +1,63 @@
+--- L1 Basic --- 
+
+L1B_version → Version 0
+L1B_mimo_scattered_pilot_encoding → Null pilots
+L1B_lls_flag → No LLS signaling in the current frame
+L1B_time_info_flag → Time information is not included in the current frame
+L1B_return_channel_flag → DRC is not supported in the current frame of the current frequency band and current broadcast network
+L1B_papr_reduction → No PAPR reduction used
+L1B_frame_length_mode → The current frame is symbol-aligned with no excess sample distribution
+L1B_time_offset → 512
+L1B_additional_samples → 5
+L1B_num_subframes → 1
+L1B_preamble_num_symbols → 1
+L1B_preamble_reduced_carriers ↓ 
+ Number of Carriers: 
+  8K FFT: 6721
+  16K FFT: 13441
+  32K FFT: 26881
+ Occupied Bandwidth: 
+  bsr_coefficient = 2: 5.670844
+  bsr_coefficient = 5: 6.615984
+  bsr_coefficient = 8: 7.561125
+L1B_L1_Detail_content_tag → 0
+L1B_L1_Detail_size_bytes → 25 bytes (200 bits)
+L1B_L1_Detail_fec_type → Mode 1
+L1B_L1_Detail_additional_parity_mode → K = 2
+L1B_L1_Detail_total_cells → 1
+L1B_first_sub_mimo → MIMO is not used
+L1B_first_sub_miso → No MISO
+L1B_first_sub_fft_size → 32K
+L1B_first_sub_reduced_carriers → 0
+L1B_first_sub_guard_interval → GI6_1536
+L1B_first_sub_num_ofdm_symbols → 18
+L1B_first_sub_scattered_pilot_pattern → SP8_2
+L1B_first_sub_scattered_pilot_boost(power) → 0.00 dB
+L1B_first_sub_scattered_pilot_boost(amplitude) → 1.000
+L1B_first_sub_sbs_first → The first symbol of the first subframe of the current frame is not a subframe boundary symbol
+L1B_first_sub_sbs_last → The last symbol of the first subframe of the current frame is not a subframe boundary symbol
+L1B_first_sub_mimo_mixed → PLPs using and not using MIMO are multiplexed within the subframe
+L1B_reserved → 140737488355327
+L1B_crc → 222864251
+
+-- L1 Detail --- 
+L1D_version → Version 0
+L1D_num_rf → 0
+L1D_frequency_interleaver → The frequency interleaver is enabled
+L1D_num_plp → 1
+ L1D_plp_id → 0
+ 	L1D_plp_lls_flag → The current PLP does not carry LLS information
+ 	L1D_plp_layer → Core Layer
+ 	L1D_plp_start → 0
+ 	L1D_plp_size → 478177
+ 	L1D_plp_scrambler_type → The value specifying the PRBS scramber type with polynomial [1 0 0 1 1 1 0 0 0 1 1 0 0 1 0 1] and initial state 0xF180, as defined in the applicable standard (e.g., DVB-S2X, DVB-T2).
+ 	L1D_plp_fec_type → BCH + 64K LDPC
+ 	L1D_plp_mod → 16QAM-NUC
+ 	L1D_plp_cod → 9/15
+ 	L1D_plp_TI_mode → No time interleaving mode (neither CTI nor HTI)
+ 	L1D_plp_fec_block_start → 6782
+ 	L1D_plp_type → PLP is non-dispersed
+L1D_reserved → 0xffffffffffffffff1 (hexadecimal), 65 bits
+L1D_crc → 725070609
+
+[Verification] Total bits processed: 200, Expected: 200 OK

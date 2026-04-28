@@ -5,17 +5,11 @@ header('SourceMap: none');
 header('X-Content-Type-Options: nosniff');
 header('X-Frame-Options: DENY');
 
-function is_server_available($host = '127.0.0.1', $port = 6000, $timeout = 2) {
-    $socket = @socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
-    if ($socket === false) return false;
-    socket_set_option($socket, SOL_SOCKET, SO_RCVTIMEO, array('sec' => $timeout, 'usec' => 0));
-    socket_set_option($socket, SOL_SOCKET, SO_SNDTIMEO, array('sec' => $timeout, 'usec' => 0));
-    $result = @socket_connect($socket, $host, $port);
-    @socket_close($socket);
-    return $result !== false;
-}
+require_once __DIR__ . '/classes/ServerConnection.php';
+require_once __DIR__ . '/classes/ConfigManager.php';
 
-$server_available = is_server_available();
+$server = new ServerConnection();
+$server_available = $server->isAvailable();
 
 if ($_SERVER['REQUEST_METHOD'] == 'GET' && isset($_GET['check_server'])) {
     header('Content-Type: application/json');
@@ -23,387 +17,42 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET' && isset($_GET['check_server'])) {
     exit;
 }
 
-function logout() {
+if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['logout'])) {
     session_unset();
     session_destroy();
     header("Location: index.php");
     exit;
 }
 
-if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['logout'])) {
-    logout();
-}
-
-$config = array(
-    'major_version' => 0,
-    'minor_version' => 0,
-    'bootstrap_symbol' => 0,
-    'ea_wakeup' => 0,
-    'system_bandwidth' => 0,
-    'bsr_coefficient' => 0,
-    'min_time_to_next' => 0,
-    'preamble_structure' => 0,
-    'number_of_frames' => 0,
-
-    'l1b_version' => 0,
-    'l1b_mimo_scatterred_pilot_encoding' => 0,
-    'l1d_version' => 0,
-    'l1d_bsid' => 0,
-
-    'detail_size_bytes' => 25,
-    'detail_fec_type' => 0,
-    'time_info_flag' => 0,
-    'frame_lenght_mode' => 0,
-    'frame_lenght' => 0,
-    'number_of_subframes' => 1,
-
-    'about' => ''
-);
-
-function configure_socket_timeout($socket, $timeoutSeconds = 1) {
-    $timeout = ['sec' => $timeoutSeconds, 'usec' => 0];
-    socket_set_option($socket, SOL_SOCKET, SO_RCVTIMEO, $timeout);
-    socket_set_option($socket, SOL_SOCKET, SO_SNDTIMEO, $timeout);
-}
-
-function communicate_with_server($host, $port, $message) {
-    $socket = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
-    if ($socket === false) {
-        return "Erro ao criar o socket: " . socket_strerror(socket_last_error()) . "\n";
-    }
-
-    configure_socket_timeout($socket);
-
-    if (!socket_connect($socket, $host, $port)) {
-        $errMsg = socket_strerror(socket_last_error($socket));
-        socket_close($socket);
-        return "Erro ao conectar ao servidor: " . $errMsg . "\n";
-    }
-
-    if (socket_write($socket, $message, strlen($message)) === false) {
-        $errMsg = socket_strerror(socket_last_error($socket));
-        socket_close($socket);
-        return "Erro ao enviar dados: " . $errMsg . "\n";
-    }
-
-    $response = '';
-    while (true) {
-        $buf = '';
-        $bytes = socket_recv($socket, $buf, 2048, MSG_WAITALL);
-        if ($bytes === false || $bytes === 0) {
-            break;
-        }
-        $response .= $buf;
-        if ($bytes < 2048) break;
-    }
-
-    socket_close($socket);
-    return $response;
-}
-
-function get_config_from_server($host, $port) {
-    return communicate_with_server($host, $port, "GET_CONFIG\n");
-}
-
-function send_data_to_server($host, $port, $message) {
-    return communicate_with_server($host, $port, $message);
-}
+$config = ConfigManager::getDefaultConfig();
+$subframes_data = [];
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit_config'])) {
+    header('Content-Type: application/json');
     if (!$server_available) {
-        echo "SERVIDOR_OFFLINE: Configuracao salva apenas localmente.";
+        echo json_encode(['status' => 'erro', 'mensagem' => 'Servidor offline']);
         exit;
     }
-    $message = "";
 
-    error_log("Dados POST recebidos: " . print_r($_POST, true));
+    $payload = ConfigManager::buildJsonPayload($_POST);
 
-    $major_version_map = [0 => 137, 1 => 400];
-    $bootstrap_symbol_map = [0 => 4, 1 => 5];
-    $system_bandwidth_map = [0 => 6, 1 => 7, 2 => 8];
-
-    if (isset($_POST["major_version"])) {
-        $value = isset($major_version_map[$_POST["major_version"]]) ? $major_version_map[$_POST["major_version"]] : $_POST["major_version"];
-        $message .= "SET_MAJOR_VERSION=" . $value . "\n";
+    try {
+        $response = $server->sendJson($payload);
+        echo json_encode($response);
+    } catch (\RuntimeException $e) {
+        echo json_encode(['status' => 'erro', 'mensagem' => $e->getMessage()]);
     }
-    if (isset($_POST["minor_version"])) $message .= "SET_MINOR_VERSION=" . $_POST["minor_version"] . "\n";
-    if (isset($_POST["bootstrap_symbol"])) {
-        $value = isset($bootstrap_symbol_map[$_POST["bootstrap_symbol"]]) ? $bootstrap_symbol_map[$_POST["bootstrap_symbol"]] : $_POST["bootstrap_symbol"];
-        $message .= "SET_BOOTSTRAP_SYMBOL=" . $value . "\n";
-    }
-    if (isset($_POST["ea_wakeup"])) $message .= "SET_EA_WAKEUP=" . $_POST["ea_wakeup"] . "\n";
-    if (isset($_POST["system_bandwidth"])) {
-        $value = isset($system_bandwidth_map[$_POST["system_bandwidth"]]) ? $system_bandwidth_map[$_POST["system_bandwidth"]] : $_POST["system_bandwidth"];
-        $message .= "SET_SYSTEM_BANDWIDTH=" . $value . "\n";
-    }
-    if (isset($_POST["bsr_coefficient"])) $message .= "SET_BSR_COEFFICIENT=" . $_POST["bsr_coefficient"] . "\n";
-    if (isset($_POST["min_time_to_next"])) $message .= "SET_MIN_TIME_TO_NEXT=" . $_POST["min_time_to_next"] . "\n";
-    if (isset($_POST["preamble_structure"])) $message .= "SET_PREAMBLE_STRUCTURE=" . $_POST["preamble_structure"] . "\n";
-    if (isset($_POST['number_of_frames'])) {
-        $number_of_frames = isset($_POST['number_of_frames']);
-        if ($number_of_frames < 1) $number_of_frames = 1;
-        if ($number_of_frames > 100) $number_of_frames = 100;
-        $message .= "SET_FRAME_COUNT=" . $_POST["number_of_frames"] . "\n";
-    }
-
-    if (isset($_POST["l1b_version"])) $message .= "SET_L1B_VERSION=" . $_POST["l1b_version"] . "\n";
-    if (isset($_POST["l1b_mimo_scatterred_pilot_encoding"])) $message .= "SET_L1B_MIMO_SCATTERRED_PILOT_ENCODING=" . $_POST["l1b_mimo_scatterred_pilot_encoding"] . "\n";
-    if (isset($_POST["l1d_version"])) $message .= "SET_L1D_VERSION=" . $_POST["l1d_version"] . "\n";
-    if (isset($_POST["l1d_bsid"])) $message .= "SET_L1D_BSID=" . $_POST["l1d_bsid"] . "\n";
-
-    if (isset($_POST["detail_size_bytes"])) $message .= "SET_DETAIL_SIZE_BYTES=" . $_POST["detail_size_bytes"] . "\n";
-    if (isset($_POST["detail_fec_type"])) $message .= "SET_DETAIL_FEC_TYPE=" . $_POST["detail_fec_type"] . "\n";
-    if (isset($_POST["time_info_flag"])) $message .= "SET_TIME_INFO_FLAG=" . $_POST["time_info_flag"] . "\n";
-    if (isset($_POST["frame_lenght_mode"])) $message .= "SET_FRAME_LENGHT_MODE=" . $_POST["frame_lenght_mode"] . "\n";
-    if (isset($_POST["frame_lenght"])) $message .= "SET_FRAME_LENGHT=" . $_POST["frame_lenght"] . "\n";
-    if (isset($_POST["number_of_subframes"])) $message .= "SET_NUMBER_OF_SUBFRAMES=" . $_POST["number_of_subframes"] . "\n";
-
-    $num_subframes = isset($_POST["number_of_subframes"]) ? intval($_POST["number_of_subframes"]) : 0;
-
-    for ($i = 0; $i < $num_subframes; $i++) {
-        if($i==0){
-            if (isset($_POST["plp_mimo_$i"]))$message .= "SET_SUBFRAME_{$i}_L1B_first_sub_mimo=" . $_POST["plp_mimo_$i"] . "\n";
-            if (isset($_POST["plp_mimo_mixed_$i"])) $message .= "SET_SUBFRAME_{$i}_L1B_first_sub_mimo_mixed=" . $_POST["plp_mimo_mixed_$i"] . "\n";
-            if (isset($_POST["plp_miso_$i"]))$message .= "SET_SUBFRAME_{$i}_L1B_first_sub_miso=" . $_POST["plp_miso_$i"] . "\n";
-            if (isset($_POST["fft_size_$i"])) $message .= "SET_SUBFRAME_{$i}_L1B_first_sub_fft_size=" . $_POST["fft_size_$i"] . "\n";
-            if (isset($_POST["reduced_carrier_$i"])) $message .= "SET_SUBFRAME_{$i}_L1B_first_sub_reduced_carriers=" . $_POST["reduced_carrier_$i"] . "\n";
-            if (isset($_POST["guard_interval_$i"])) $message .= "SET_SUBFRAME_{$i}_L1B_first_sub_guard_interval=" . $_POST["guard_interval_$i"] . "\n";
-            if (isset($_POST["num_ofdm_$i"])) $message .= "SET_SUBFRAME_{$i}_L1B_first_sub_num_ofdm_symbols=" . $_POST["num_ofdm_$i"] . "\n";
-            if (isset($_POST["spilot_pattern_$i"])) $message .= "SET_SUBFRAME_{$i}_L1B_first_sub_scattered_pilot_pattern=" . $_POST["spilot_pattern_$i"] . "\n";
-            if (isset($_POST["spilot_boost_$i"])) $message .= "SET_SUBFRAME_{$i}_L1B_first_sub_scattered_pilot_boost=" . $_POST["spilot_boost_$i"] . "\n";
-            if (isset($_POST["sbs_first_$i"])) $message .= "SET_SUBFRAME_{$i}_L1B_first_sub_sbs_first=" . $_POST["sbs_first_$i"] . "\n";
-            if (isset($_POST["sbs_last_$i"])) $message .= "SET_SUBFRAME_{$i}_L1B_first_sub_sbs_last=" . $_POST["sbs_last_$i"] . "\n";
-        } else {
-            if (isset($_POST["plp_mimo_$i"]))$message .= "SET_SUBFRAME_{$i}_L1D_mimo=" . $_POST["plp_mimo_$i"] . "\n";
-            if (isset($_POST["plp_mimo_mixed_$i"])) $message .= "SET_SUBFRAME_{$i}_L1D_mimo_mixed=" . $_POST["plp_mimo_mixed_$i"] . "\n";
-            if (isset($_POST["plp_miso_$i"]))$message .= "SET_SUBFRAME_{$i}_L1D_miso=" . $_POST["plp_miso_$i"] . "\n";
-            if (isset($_POST["fft_size_$i"])) $message .= "SET_SUBFRAME_{$i}_L1D_fft_size=" . $_POST["fft_size_$i"] . "\n";
-            if (isset($_POST["reduced_carrier_$i"])) $message .= "SET_SUBFRAME_{$i}_L1D_reduced_carriers=" . $_POST["reduced_carrier_$i"] . "\n";
-            if (isset($_POST["guard_interval_$i"])) $message .= "SET_SUBFRAME_{$i}_L1D_guard_interval=" . $_POST["guard_interval_$i"] . "\n";
-            if (isset($_POST["num_ofdm_$i"])) $message .= "SET_SUBFRAME_{$i}_L1D_num_ofdm_symbols=" . $_POST["num_ofdm_$i"] . "\n";
-            if (isset($_POST["spilot_pattern_$i"])) $message .= "SET_SUBFRAME_{$i}_L1D_scattered_pilot_pattern=" . $_POST["spilot_pattern_$i"] . "\n";
-            if (isset($_POST["spilot_boost_$i"])) $message .= "SET_SUBFRAME_{$i}_L1D_scattered_pilot_boost=" . $_POST["spilot_boost_$i"] . "\n";
-            if (isset($_POST["sbs_first_$i"])) $message .= "SET_SUBFRAME_{$i}_L1D_sbs_first=" . $_POST["sbs_first_$i"] . "\n";
-            if (isset($_POST["sbs_last_$i"])) $message .= "SET_SUBFRAME_{$i}_L1D_sbs_last=" . $_POST["sbs_last_$i"] . "\n";
-        }
-
-        if (isset($_POST["freq_interleaver_$i"])) $message .= "SET_SUBFRAME_{$i}_L1D_frequency_interleaver=" . $_POST["freq_interleaver_$i"] . "\n";
-        $plp_count_key = "plp-count-$i";
-        $plp_count_key_alt = "plp_count_$i";
-        $num_plps = 0;
-
-        if (isset($_POST[$plp_count_key])) {
-            $num_plps = intval($_POST[$plp_count_key]);
-        } elseif (isset($_POST[$plp_count_key_alt])) {
-            $num_plps = intval($_POST[$plp_count_key_alt]);
-        }
-
-        error_log("Subframe $i: numero de PLPs = $num_plps");
-
-        if ($num_plps > 0) {
-            $message .= "SET_SUBFRAME_{$i}_PLP_COUNT=" . $num_plps . "\n";
-
-            for ($j = 0; $j < $num_plps; $j++) {
-                error_log("Processando PLP $j do subframe $i");
-
-                $plp_params = [
-                    'plp_id' => 'ID',
-                    'lls_flag' => 'LLS_FLAG',
-                    'layer' => 'LAYER',
-                    'start' => 'START',
-                    'size' => 'SIZE',
-                    'fec_type' => 'FEC_TYPE',
-                    'mod_order' => 'MOD_ORDER',
-                    'code_rate' => 'CODE_RATE',
-                    'ti_mode' => 'TI_MODE',
-                    'ti_extended' => 'TI_EXTENDED',
-                    'cti_depth' => 'CTI_DEPTH',
-                    'mimo_plp' => 'MIMO_PLP',
-                    'plp_mimo_stream_combining' => 'STREAM_COMBINING',
-                    'plp_mimo_IQ_intervaling' => 'IQ_INTERVALING',
-                    'plp_mimo_PH' => 'PHASE_HOPPING',
-                    'plp_type' => 'TYPE',
-                    'num_subslice' => 'NUM_SUBSLICE',
-                    'subslice_interval' => 'SUBSLICE_INTERVAL',
-                    'cell_intervaler' => 'CELL_INTERVALER',
-                    'inter_subframe' => 'INTER_SUBFRAME',
-                    'num_ti_blocks' => 'NUM_TI_BLOCKS',
-                    'num_fec_blocks_max' => 'NUM_FEC_BLOCKS_MAX',
-                    'num_fec_blocks' => 'NUM_FEC_BLOCKS',
-                    'inter_ldm_injection_level' => 'LDM_INJECTION_LEVEL'
-                ];
-
-                foreach ($plp_params as $param_name => $command_suffix) {
-                    $field_key = "{$param_name}_{$i}_{$j}";
-
-                    if (isset($_POST[$field_key])) {
-                        $value = $_POST[$field_key];
-                        $command = "SET_SUBFRAME_{$i}_PLP_{$j}_{$command_suffix}=" . $value . "\n";
-                        $message .= $command;
-                        error_log("Adicionando comando PLP: $command");
-                    } else {
-                        error_log("Campo PLP nao encontrado: $field_key");
-                    }
-                }
-            }
-        }
-    }
-
-    error_log("Mensagem completa para servidor TCP: " . $message);
-
-    $response = send_data_to_server('127.0.0.1', 6000, $message);
-    echo $response;
-    exit;
-} elseif ($_SERVER['REQUEST_METHOD'] == 'GET' && isset($_GET['action']) && $_GET['action'] == 'get_logs') {
-    $logs = get_status_from_server('127.0.0.1', 6000);
-    echo $logs;
     exit;
 } else {
     if ($server_available) {
-        $response = get_config_from_server('127.0.0.1', 6000);
-        $lines = explode("\n", $response);
-
-        $subframes_data = array();
-
-        error_log("Resposta completa do servidor TCP: " . $response);
-        error_log("Numero de linhas recebidas: " . count($lines));
-
-        if (count($lines) >= 18) {
-            $line_index = 0;
-
-            $major_version_reverse_map = [137 => 0, 400 => 1];
-            $bootstrap_symbol_reverse_map = [4 => 0, 5 => 1];
-            $system_bandwidth_reverse_map = [6 => 0, 7 => 1, 8 => 2];
-
-            $major_version_value = trim($lines[$line_index++]);
-            $config['major_version'] = isset($major_version_reverse_map[$major_version_value]) ? $major_version_reverse_map[$major_version_value] : $major_version_value;
-
-            $config['minor_version'] = trim($lines[$line_index++]);
-
-            $bootstrap_symbol_value = trim($lines[$line_index++]);
-            $config['bootstrap_symbol'] = isset($bootstrap_symbol_reverse_map[$bootstrap_symbol_value]) ? $bootstrap_symbol_reverse_map[$bootstrap_symbol_value] : $bootstrap_symbol_value;
-
-            $config['ea_wakeup'] = trim($lines[$line_index++]);
-
-            $system_bandwidth_value = trim($lines[$line_index++]);
-            $config['system_bandwidth'] = isset($system_bandwidth_reverse_map[$system_bandwidth_value]) ? $system_bandwidth_reverse_map[$system_bandwidth_value] : $system_bandwidth_value;
-            $config['bsr_coefficient'] = trim($lines[$line_index++]);
-            $config['min_time_to_next'] = trim($lines[$line_index++]);
-            $config['preamble_structure'] = trim($lines[$line_index++]);
-            $config['number_of_frames'] = trim($lines[$line_index++]);
-
-            $config['l1b_version'] = trim($lines[$line_index++]);
-            $config['l1b_mimo_scatterred_pilot_encoding'] = trim($lines[$line_index++]);
-            $config['detail_fec_type'] = trim($lines[$line_index++]);
-            $config['time_info_flag'] = trim($lines[$line_index++]);
-            $config['frame_lenght_mode'] = trim($lines[$line_index++]);
-            $config['frame_lenght'] = trim($lines[$line_index++]);
-            $config['number_of_subframes'] = trim($lines[$line_index++]);
-
-            $config['l1d_version'] = trim($lines[$line_index++]);
-            $config['l1d_bsid'] = trim($lines[$line_index++]);
-
-            error_log("Configuracoes basicas carregadas. Andice atual: $line_index");
-
-            while ($line_index < count($lines) && trim($lines[$line_index]) != "SUBFRAMES_START") {
-                error_log("Procurando SUBFRAMES_START, linha atual: '" . trim($lines[$line_index]) . "'");
-                $line_index++;
-            }
-
-            if ($line_index < count($lines) && trim($lines[$line_index]) == "SUBFRAMES_START") {
-                $line_index++;
-                error_log("SUBFRAMES_START encontrado. Iniciando parse dos subframes.");
-
-                $current_subframe = -1;
-
-                while ($line_index < count($lines) && trim($lines[$line_index]) != "CONFIG_END") {
-                    $line = trim($lines[$line_index]);
-                    error_log("Processando linha: '$line' (indice: $line_index)");
-
-                    if (preg_match('/^SUBFRAME (Basic|Detail):(\d+)$/', $line, $matches)) {
-                        $subframe_type = $matches[1];
-                        $current_subframe = intval($matches[2]);
-
-                        error_log("Subframe encontrado: tipo=$subframe_type, indice=$current_subframe");
-                        $line_index++;
-
-                        if (!isset($subframes_data[$current_subframe])) {
-                            $subframes_data[$current_subframe] = array();
-                        }
-
-                        $subframes_data[$current_subframe]['plp_mimo'] = trim($lines[$line_index++]);
-                        $subframes_data[$current_subframe]['plp_miso'] = trim($lines[$line_index++]);
-                        $subframes_data[$current_subframe]['fft_size'] = trim($lines[$line_index++]);
-                        $subframes_data[$current_subframe]['reduced_carrier'] = trim($lines[$line_index++]);
-                        $subframes_data[$current_subframe]['guard_interval'] = trim($lines[$line_index++]);
-                        $subframes_data[$current_subframe]['num_ofdm'] = trim($lines[$line_index++]);
-                        $subframes_data[$current_subframe]['spilot_pattern'] = trim($lines[$line_index++]);
-                        $subframes_data[$current_subframe]['spilot_boost'] = trim($lines[$line_index++]);
-                        $subframes_data[$current_subframe]['sbs_first'] = trim($lines[$line_index++]);
-                        $subframes_data[$current_subframe]['sbs_last'] = trim($lines[$line_index++]);
-                        $subframes_data[$current_subframe]['plp_mimo_mixed'] = trim($lines[$line_index++]);
-                        $subframes_data[$current_subframe]['freq_interleaver'] = trim($lines[$line_index++]);
-                        $subframes_data[$current_subframe]['plp_count'] = trim($lines[$line_index++]);
-
-                        $subframes_data[$current_subframe]['plps'] = array();
-
-                        error_log("Subframe $current_subframe: PLP count = " . $subframes_data[$current_subframe]['plp_count']);
-
-                        continue;
-                    }
-
-                    if (preg_match('/^PLP:(\d+)$/', $line, $matches)) {
-                        $current_plp = intval($matches[1]);
-                        error_log("PLP encontrado: indice=$current_plp para subframe=$current_subframe");
-                        $line_index++;
-
-                        if ($current_subframe >= 0) {
-                            $subframes_data[$current_subframe]['plps'][$current_plp] = array(
-                                'id' => trim($lines[$line_index++]),
-                                'lls_flag' => trim($lines[$line_index++]),
-                                'layer' => trim($lines[$line_index++]),
-                                'start' => trim($lines[$line_index++]),
-                                'size' => trim($lines[$line_index++]),
-                                'fec_type' => trim($lines[$line_index++]),
-                                'mod_order' => trim($lines[$line_index++]),
-                                'code_rate' => trim($lines[$line_index++]),
-                                'ti_mode' => trim($lines[$line_index++]),
-                                'ti_extended' => trim($lines[$line_index++]),
-                                'cti_depth' => trim($lines[$line_index++]),
-                                'mimo_plp' => trim($lines[$line_index++]),
-                                'stream_combining' => trim($lines[$line_index++]),
-                                'iq_intervaling' => trim($lines[$line_index++]),
-                                'phase_hopping' => trim($lines[$line_index++]),
-                                'type' => trim($lines[$line_index++]),
-                                'num_subslice' => trim($lines[$line_index++]),
-                                'subslice_interval' => trim($lines[$line_index++]),
-                                'cell_intervaler' => trim($lines[$line_index++]),
-                                'inter_subframe' => trim($lines[$line_index++]),
-                                'num_ti_blocks' => trim($lines[$line_index++]),
-                                'num_fec_blocks_max' => trim($lines[$line_index++]),
-                                'num_fec_blocks' => trim($lines[$line_index++]),
-                                'ldm_injection_level' => trim($lines[$line_index++])
-                            );
-
-                            error_log("PLP $current_plp dados carregados para subframe $current_subframe");
-                        }
-                        continue;
-                    }
-
-                    $line_index++;
-                }
-            } else {
-                error_log("SUBFRAMES_START nao encontrado!");
-            }
-        } else {
-            error_log("Resposta do servidor muito curta: " . count($lines) . " linhas");
+        try {
+            $response = $server->getConfig();
+            $parsed = ConfigManager::parseServerResponse($response);
+            $config = $parsed['config'];
+            $subframes_data = $parsed['subframes'];
+        } catch (\RuntimeException $e) {
+            $subframes_data = [];
         }
-
-        error_log("Configuracao final: " . print_r($config, true));
-        error_log("Subframes final: " . print_r($subframes_data, true));
-    } else {
-        $config = array('major_version' => 0, 'minor_version' => 0);
-        $subframes_data = array();
     }
 }
 

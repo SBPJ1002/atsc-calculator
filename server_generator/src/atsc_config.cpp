@@ -25,6 +25,7 @@ ATSC_Config::ATSC_Config(const std::string& file)
       frame_count(1)
 {
     preamble.sub_frames.resize(1);
+    preamble.sub_frames[0].plps.resize(1);
 }
 
 void ATSC_Config::load() {
@@ -369,7 +370,7 @@ void ATSC_Config::save() {
         file << "# =============================================\n";
         file << "L1B_version=" << preamble.L1B_version << "\n";
         file << "L1B_mimo_scattered_pilot_encoding=" << preamble.L1B_mimo_scattered_pilot_encoding << "\n";
-        file << "L1B_lls_flag=" << preamble.sub_frames[0].plps[0].L1D_plp_lls_flag << "\n";
+        file << "L1B_lls_flag=" << (preamble.sub_frames.size() > 0 && preamble.sub_frames[0].plps.size() > 0 ? preamble.sub_frames[0].plps[0].L1D_plp_lls_flag : 0) << "\n";
         file << "L1B_time_info_flag=" << preamble.L1B_time_info_flag << "\n";
         file << "L1B_return_channel_flag=" << preamble.L1B_return_channel_flag << "\n";
         file << "L1B_papr_reduction=" << preamble.L1B_papr_reduction << "\n";

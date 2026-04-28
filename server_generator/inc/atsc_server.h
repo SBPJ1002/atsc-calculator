@@ -5,11 +5,13 @@
 #include "l1_calculator.h"
 #include "l1_generator.h"
 #include "l1_interpreter_class.h"
-#include "tcp_socket.h"
+#include "json_handler.h"
+#include <string>
+#include <mutex>
 
 class ATSC_Server {
 public:
-    ATSC_Server(int port = 7000, int timeout_ms = 1000);
+    ATSC_Server(int port = 6000, int timeout_ms = -1);
     void run();
 
 private:
@@ -17,12 +19,13 @@ private:
     L1_Calculator calculator;
     L1_Generator generator;
     L1_Interpreter interpreter;
-    cl_tcp_socket web_server;
+    JsonHandler json_handler;
     int port;
     int timeout_ms;
+    std::mutex config_mutex;
 
-    void handle_connection();
-    std::string process_received_data(const std::string& data);
+    void handle_client(int client_fd);
+    std::string read_until_newline(int fd);
 };
 
 #endif
