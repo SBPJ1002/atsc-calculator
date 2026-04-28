@@ -6,10 +6,10 @@ class ServerConnection
     private int $port;
     private int $timeout;
 
-    public function __construct(string $host = '127.0.0.1', int $port = 6000, int $timeout = 2)
+    public function __construct(?string $host = null, ?int $port = null, int $timeout = 2)
     {
-        $this->host = $host;
-        $this->port = $port;
+        $this->host = $host ?? (getenv('ATSC_SERVER_HOST') ?: '127.0.0.1');
+        $this->port = $port ?? (int)(getenv('ATSC_SERVER_PORT') ?: 6000);
         $this->timeout = $timeout;
     }
 

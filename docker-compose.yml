@@ -1,0 +1,48 @@
+services:
+  db:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${DB_NAME:-atsc}
+      POSTGRES_USER: ${DB_USER:-atsc}
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-atsc}
+    volumes:
+      - db_data:/var/lib/postgresql/data
+      - ./webpage/db/migrations:/docker-entrypoint-initdb.d:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${DB_USER:-atsc} -d ${DB_NAME:-atsc}"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+  server:
+    build:
+      context: .
+      dockerfile: docker/server.Dockerfile
+    restart: unless-stopped
+    expose:
+      - "6000"
+
+  web:
+    build:
+      context: .
+      dockerfile: docker/web.Dockerfile
+    restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy
+      server:
+        condition: service_started
+    environment:
+      DB_HOST: db
+      DB_PORT: 5432
+      DB_NAME: ${DB_NAME:-atsc}
+      DB_USER: ${DB_USER:-atsc}
+      DB_PASSWORD: ${DB_PASSWORD:-atsc}
+      ATSC_SERVER_HOST: server
+      ATSC_SERVER_PORT: 6000
+    ports:
+      - "${WEB_PORT:-8080}:80"
+
+volumes:
+  db_data:

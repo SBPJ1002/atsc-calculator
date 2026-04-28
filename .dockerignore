@@ -1,0 +1,11 @@
+**/node_modules
+**/build
+**/cmake-build-debug
+**/Debug
+**/Release
+**/build_test
+.git
+.idea
+.vscode
+*.log
+.env
