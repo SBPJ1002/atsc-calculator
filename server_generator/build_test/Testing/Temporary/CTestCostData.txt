@@ -1,8 +1,0 @@
-Scenario: 0 1
-Scenario: 0 1
-Scenario: 0 1
-Scenario: 0 1
-Scenario: 0 1
-Scenario: 0 1
-Scenario: T1: 1 subframe 16K-QPSK-CR9/15 64K-LDPC, 1 PLP de 632933 cells 1 0.0562023
----

@@ -1,5 +1,0 @@
-if(EXISTS "/home/joao-pedro/Projetos/mestrado/atsc-calculator/server_generator/build_test/tests/atsc_tests-b12d07c_tests.cmake")
-  include("/home/joao-pedro/Projetos/mestrado/atsc-calculator/server_generator/build_test/tests/atsc_tests-b12d07c_tests.cmake")
-else()
-  add_test(atsc_tests_NOT_BUILT-b12d07c atsc_tests_NOT_BUILT-b12d07c)
-endif()

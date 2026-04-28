@@ -1,3 +1,0 @@
-/home/joao-pedro/Projetos/Mestrado/atsc-calculator/server_generator/build/CMakeFiles/server_generator.dir
-/home/joao-pedro/Projetos/Mestrado/atsc-calculator/server_generator/build/CMakeFiles/edit_cache.dir
-/home/joao-pedro/Projetos/Mestrado/atsc-calculator/server_generator/build/CMakeFiles/rebuild_cache.dir

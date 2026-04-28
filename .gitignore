@@ -8,3 +8,8 @@
 /server_generator/Release/
 /server_generator/pdf/
 /server_generator/.metadata/
+/server_generator/tests/
+/server_generator/build/
+/server_generator/build_test/
+/server_generator/cmake-build-debug/
+.env

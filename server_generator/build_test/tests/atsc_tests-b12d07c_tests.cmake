@@ -1,3 +1,0 @@
-add_test( [==[Scenario: T1: 1 subframe 16K-QPSK-CR9/15 64K-LDPC, 1 PLP de 632933 cells]==] /home/joao-pedro/Projetos/mestrado/atsc-calculator/server_generator/build_test/tests/atsc_tests [==[Scenario: T1: 1 subframe 16K-QPSK-CR9/15 64K-LDPC\, 1 PLP de 632933 cells]==]  )
-set_tests_properties( [==[Scenario: T1: 1 subframe 16K-QPSK-CR9/15 64K-LDPC, 1 PLP de 632933 cells]==] PROPERTIES WORKING_DIRECTORY /home/joao-pedro/Projetos/mestrado/atsc-calculator/server_generator/build_test/test_runtime)
-set( atsc_tests_TESTS [==[Scenario: T1: 1 subframe 16K-QPSK-CR9/15 64K-LDPC, 1 PLP de 632933 cells]==])
