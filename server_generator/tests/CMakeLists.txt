@@ -13,6 +13,7 @@ add_executable(atsc_tests
     test_atsc_config.cpp
     test_l1_calculator.cpp
     test_json_handler.cpp
+    test_table83_siso.cpp
     ${CMAKE_SOURCE_DIR}/src/atsc_config.cpp
     ${CMAKE_SOURCE_DIR}/src/binary_utils.cpp
     ${CMAKE_SOURCE_DIR}/src/l1_calculator.cpp
