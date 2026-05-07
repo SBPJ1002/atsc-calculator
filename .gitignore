@@ -13,3 +13,4 @@
 /server_generator/build_test/
 /server_generator/cmake-build-debug/
 .env
+.claude/
