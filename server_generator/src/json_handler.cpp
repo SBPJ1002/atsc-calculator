@@ -789,6 +789,10 @@ json JsonHandler::handleGetConfig(const json& req) {
     cfg["l1b_version"] = config.preamble.L1B_version;
     cfg["l1b_mimo_scatterred_pilot_encoding"] = config.preamble.L1B_mimo_scattered_pilot_encoding;
     cfg["detail_fec_type"] = config.preamble.L1B_L1_Detail_fec_type;
+    // Espelha o clamp aplicado em ATSC_Config::save() (atsc_config.cpp:386-388):
+    // o minimo legal pelo padrao ATSC e 25 bytes. Sem isso o form recebe 0
+    // (default em memoria) e dispara a validacao min=25 do <input>.
+    cfg["detail_size_bytes"] = std::max(25, config.preamble.L1B_L1_Detail_size_bytes);
     cfg["time_info_flag"] = config.preamble.L1B_time_info_flag;
     cfg["frame_lenght_mode"] = config.preamble.L1B_frame_length_mode;
     cfg["frame_lenght"] = config.preamble.L1B_frame_length;

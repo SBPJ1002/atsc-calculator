@@ -122,12 +122,15 @@ class ConfigManager
 
     public static function parseServerResponse(array $response): array
     {
-        if (!isset($response['config'])) {
-            return ['config' => self::getDefaultConfig(), 'subframes' => []];
-        }
+        // Merge com defaults para que chaves omitidas pelo servidor nao virem
+        // null no template (htmlspecialchars() em PHP 8.1+ deprecia null).
+        $defaults = self::getDefaultConfig();
+        $config = isset($response['config']) && is_array($response['config'])
+            ? array_merge($defaults, $response['config'])
+            : $defaults;
 
         return [
-            'config' => $response['config'],
+            'config' => $config,
             'subframes' => $response['subframes'] ?? [],
         ];
     }
