@@ -457,11 +457,6 @@ function selected($value, $option) {
                                         <option value="6" <?php echo selected($config['detail_fec_type'], "6"); ?>>Mode 7</option>
                                     </select>
                                 </div>
-
-                                <div class="form-group">
-                                    <label for="detail_size_bytes">Detail Size Bytes:</label>
-                                    <input name="detail_size_bytes" id="detail_size_bytes" type="number" min="25" value="<?php echo htmlspecialchars($config['detail_size_bytes']); ?>" readonly>
-                                </div>
                             </div>
 
                             <div class="form-row">
