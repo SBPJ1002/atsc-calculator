@@ -291,6 +291,91 @@ SCENARIO("Table 8.3 SISO: combos validos preservam invariantes do calculador") {
 
 
 // =============================================================================
+// Varredura MIMO — mesmos combos (FFT, GI, SP) da SISO, mas com plp_mimo=1
+// nos niveis de subframe + PLP, alternando o encoding (Walsh-Hadamard / Null-
+// pilot). Invariantes do calculador devem se manter (capacity > 0, identidade
+// aritmetica, l1d >= 25). Nao checa Table 8.4/8.5 do A/322 ainda — esse
+// enforcement vive no frontend e nao esta exposto via getValidationTables.
+// =============================================================================
+
+namespace {
+
+struct MimoEncoding {
+    int code;            // 0 = Walsh-Hadamard, 1 = Null-pilot
+    const char* name;
+};
+
+const std::vector<MimoEncoding> MIMO_ENCODINGS = {
+    {0, "Walsh-Hadamard"},
+    {1, "Null-pilot"},
+};
+
+json buildSetConfigMimo(const SisoScenario& s, int encoding) {
+    json req = buildSetConfig(s);
+    req["l1b_mimo_scatterred_pilot_encoding"] = encoding;
+    auto& sub = req["subframes"][0];
+    sub["plp_mimo"] = 1;
+    sub["plp_mimo_mixed"] = 0;
+    sub["plp_miso"] = 0;
+    sub["plps"][0]["plp_mimo"] = 1;
+    sub["plps"][0]["stream_combining"] = 0;
+    sub["plps"][0]["iq_intervaling"] = 0;
+    sub["plps"][0]["phase_hopping"] = 0;
+    return req;
+}
+
+} // namespace
+
+
+SCENARIO("Varredura MIMO Walsh-Hadamard / Null-pilot: invariantes do calculador") {
+    std::filesystem::create_directories("config/log");
+
+    for (const auto& enc : MIMO_ENCODINGS) {
+        for (const auto& s : SISO_VALID) {
+            DYNAMIC_SECTION(std::string(enc.name) + " | " + scenarioName(s)) {
+                Bench b;
+
+                auto setRes = b.call(buildSetConfigMimo(s, enc.code));
+                REQUIRE(setRes["status"] == "ok");
+
+                auto res = b.call(buildComputeResults(s));
+                REQUIRE(res["status"] == "ok");
+
+                // Frame duration positivo
+                REQUIRE(res["frameDuration"]["status"] == "ok");
+                CHECK(res["frameDuration"]["totalDurationMs"].get<double>() > 0.0);
+
+                // L1D size respeita o minimo de 25 bytes
+                REQUIRE(res["l1dSizeBytes"]["status"] == "ok");
+                CHECK(res["l1dSizeBytes"]["bytes"].get<int>() >= 25);
+
+                // Preamble fields
+                REQUIRE(res["preambleFields"]["status"] == "ok");
+                CHECK(res["preambleFields"]["l1dCells"].get<int>() > 0);
+
+                // Capacity + identidade
+                auto& cap = res["subframeResults"][0]["plpCapacity"];
+                REQUIRE(cap["status"] == "ok");
+                REQUIRE(cap.contains("cps"));
+                CHECK(cap["cps"].get<int>() > 0);
+                CHECK(cap["capacity"].get<int>() > 0);
+
+                int expected = cap["nDataSymbols"].get<int>() * cap["cps"].get<int>()
+                             + cap["nSbsSymbols"].get<int>() * cap["sbsDataCells"].get<int>();
+                CHECK(cap["capacity"].get<int>() == expected);
+
+                // PLP[0] em modo MIMO ainda produz bitrate positivo
+                auto& plp0 = res["subframeResults"][0]["plpResults"][0];
+                CHECK(plp0["bitrateMbps"].get<double>() > 0.0);
+                CHECK(plp0["ldpcSize"].get<int>() == 64800);   // fec_type=1 fixo
+                CHECK(plp0["bitsPerCell"].get<int>()  == 2);   // QPSK fixo
+            }
+        }
+    }
+}
+
+
+// =============================================================================
 // Tabela 8.3 e enforced no frontend via getValidationTables (allowedPatternsSiso).
 // O calculador em si nao rejeita combos N/A — a tabela interna de cells/symbol
 // e mais densa que a permitida pelo padrao. Entao a fonte da verdade testavel
