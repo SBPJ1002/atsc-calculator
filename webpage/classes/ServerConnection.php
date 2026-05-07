@@ -6,11 +6,13 @@ class ServerConnection
     private int $port;
     private int $timeout;
 
-    public function __construct(?string $host = null, ?int $port = null, int $timeout = 2)
+    public function __construct(?string $host = null, ?int $port = null, ?int $timeout = null)
     {
         $this->host = $host ?? (getenv('ATSC_SERVER_HOST') ?: '127.0.0.1');
         $this->port = $port ?? (int)(getenv('ATSC_SERVER_PORT') ?: 6000);
-        $this->timeout = $timeout;
+        // setConfig dispara calculo multi-frame + escrita de varios logs no
+        // C++; 2s nao da. 15s e folga generosa pro pior caso.
+        $this->timeout = $timeout ?? (int)(getenv('ATSC_SERVER_TIMEOUT') ?: 15);
     }
 
     public function isAvailable(): bool
