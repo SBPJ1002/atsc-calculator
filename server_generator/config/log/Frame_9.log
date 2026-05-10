@@ -24,7 +24,7 @@ L1B_L1_Detail_content_tag → 0
 L1B_L1_Detail_size_bytes → 25 bytes (200 bits)
 L1B_L1_Detail_fec_type → Mode 1
 L1B_L1_Detail_additional_parity_mode → K = 0
-L1B_L1_Detail_total_cells → 2787
+L1B_L1_Detail_total_cells → 0
 L1B_first_sub_mimo → MIMO is not used
 L1B_first_sub_miso → No MISO
 L1B_first_sub_fft_size → 16K
@@ -38,7 +38,7 @@ L1B_first_sub_sbs_first → The first symbol of the first subframe of the curren
 L1B_first_sub_sbs_last → The last symbol of the first subframe of the current frame is not a subframe boundary symbol
 L1B_first_sub_mimo_mixed → PLPs using and not using MIMO are multiplexed within the subframe
 L1B_reserved → 140737488355327
-L1B_crc → 2823363401
+L1B_crc → 3758164160
 
 -- L1 Detail --- 
 L1D_version → Version 0
