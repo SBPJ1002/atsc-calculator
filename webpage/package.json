@@ -1,0 +1,13 @@
+{
+  "name": "atsc-calculator-webpage",
+  "private": true,
+  "version": "0.0.0",
+  "description": "Build tooling for bundling/minifying the ATSC calculator frontend assets.",
+  "scripts": {
+    "build": "bash build.sh"
+  },
+  "devDependencies": {
+    "clean-css-cli": "^5.6.3",
+    "terser": "^5.36.0"
+  }
+}
