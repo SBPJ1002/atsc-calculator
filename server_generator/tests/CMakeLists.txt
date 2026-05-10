@@ -14,6 +14,7 @@ add_executable(atsc_tests
     test_l1_calculator.cpp
     test_json_handler.cpp
     test_table83_pilots.cpp
+    test_golden_snapshots.cpp
     ${CMAKE_SOURCE_DIR}/src/atsc_config.cpp
     ${CMAKE_SOURCE_DIR}/src/binary_utils.cpp
     ${CMAKE_SOURCE_DIR}/src/l1_calculator.cpp
@@ -24,6 +25,12 @@ add_executable(atsc_tests
 
 target_include_directories(atsc_tests PRIVATE
     ${CMAKE_SOURCE_DIR}/inc
+)
+
+# Path absoluto da arvore de fixtures, injetado em build-time. O gerador de
+# golden snapshots escreve la, e o teste de comparacao le do mesmo lugar.
+target_compile_definitions(atsc_tests PRIVATE
+    GOLDEN_FIXTURES_DIR="${CMAKE_CURRENT_SOURCE_DIR}/fixtures"
 )
 
 target_link_libraries(atsc_tests PRIVATE

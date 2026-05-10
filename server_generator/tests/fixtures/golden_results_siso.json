@@ -1,0 +1,7310 @@
+{
+  "metadata": {
+    "description": "Snapshots de computeResultsData capturados do build atual",
+    "input_template": {
+      "bsr_coefficient": 2,
+      "detail_fec_type": 0,
+      "frame_lenght": 250,
+      "frame_lenght_mode": 1,
+      "num_ofdm": 30,
+      "plp.code_rate": 7,
+      "plp.fec_type": 1,
+      "plp.mod_order": 0,
+      "plp.size": 100
+    },
+    "scenario_count": 81,
+    "source": "test_golden_snapshots.cpp [.generate-golden]"
+  },
+  "scenarios": [
+    {
+      "expected": {
+        "frame2LogData": {
+          "error": "Frame_2.log not found",
+          "status": "ok"
+        },
+        "frameDuration": {
+          "status": "ok",
+          "subframeDurations": {
+            "0": 36.388889
+          },
+          "totalDurationMs": 39.601852
+        },
+        "l1dSizeBytes": {
+          "bytes": 25,
+          "source": "Frame_1.log",
+          "status": "ok"
+        },
+        "preambleFields": {
+          "cellsInFirst": 6075,
+          "cellsInNext": 6432,
+          "fftName": "8K",
+          "giSamples": 192,
+          "l1bCells": 3820,
+          "l1dBytes": 25,
+          "l1dCells": 2787,
+          "numSymbols": 2,
+          "plpCells": 5900,
+          "preambleDx": 0,
+          "preambleReducedCarriers": 0,
+          "status": "ok",
+          "totalPreambleCells": 12507
+        },
+        "status": "ok",
+        "subframeResults": [
+          {
+            "plpCapacity": {
+              "capacity": 202650,
+              "capacitySBS": 0,
+              "cps": 6755,
+              "cred": 0,
+              "fft": "8K",
+              "nDataSymbols": 30,
+              "nSbsSymbols": 0,
+              "reason": null,
+              "sbsDataCells": 6648,
+              "spBoost": 0,
+              "status": "ok"
+            },
+            "plpResults": [
+              {
+                "bbFrameRate": 0,
+                "bitrateMbps": 0.003,
+                "bitsPerCell": 2,
+                "celulasTI": 130816,
+                "cnr": {
+                  "bicm": {
+                    "awgn": 1.97
+                  },
+                  "field": {
+                    "awgn": 2.9,
+                    "rc20": 4.2,
+                    "rl20": 4.6
+                  },
+                  "lab": {
+                    "awgn": 2.8,
+                    "rc20": 3.2,
+                    "rl20": 5.6
+                  },
+                  "simulation": {
+                    "awgn": 2.1,
+                    "rc20": 2.5,
+                    "rl20": 4.3
+                  }
+                },
+                "fecBlockSize": 32400,
+                "ldpcSize": 64800,
+                "numFecBlocks": 0
+              }
+            ]
+          }
+        ]
+      },
+      "input": {
+        "fft": 0,
+        "gi": 1,
+        "sp": 14
+      },
+      "name": "8K + GI1_192 + SP32_2"
+    },
+    {
+      "expected": {
+        "frame2LogData": {
+          "error": "Frame_2.log not found",
+          "status": "ok"
+        },
+        "frameDuration": {
+          "status": "ok",
+          "subframeDurations": {
+            "0": 36.388889
+          },
+          "totalDurationMs": 39.601852
+        },
+        "l1dSizeBytes": {
+          "bytes": 25,
+          "source": "Frame_1.log",
+          "status": "ok"
+        },
+        "preambleFields": {
+          "cellsInFirst": 6075,
+          "cellsInNext": 6432,
+          "fftName": "8K",
+          "giSamples": 192,
+          "l1bCells": 3820,
+          "l1dBytes": 25,
+          "l1dCells": 2787,
+          "numSymbols": 2,
+          "plpCells": 5900,
+          "preambleDx": 0,
+          "preambleReducedCarriers": 0,
+          "status": "ok",
+          "totalPreambleCells": 12507
+        },
+        "status": "ok",
+        "subframeResults": [
+          {
+            "plpCapacity": {
+              "capacity": 204210,
+              "capacitySBS": 0,
+              "cps": 6807,
+              "cred": 0,
+              "fft": "8K",
+              "nDataSymbols": 30,
+              "nSbsSymbols": 0,
+              "reason": null,
+              "sbsDataCells": 6648,
+              "spBoost": 0,
+              "status": "ok"
+            },
+            "plpResults": [
+              {
+                "bbFrameRate": 0,
+                "bitrateMbps": 0.003,
+                "bitsPerCell": 2,
+                "celulasTI": 130816,
+                "cnr": {
+                  "bicm": {
+                    "awgn": 1.97
+                  },
+                  "field": {
+                    "awgn": 2.9,
+                    "rc20": 4.2,
+                    "rl20": 4.6
+                  },
+                  "lab": {
+                    "awgn": 2.8,
+                    "rc20": 3.2,
+                    "rl20": 5.6
+                  },
+                  "simulation": {
+                    "awgn": 2.1,
+                    "rc20": 2.5,
+                    "rl20": 4.3
+                  }
+                },
+                "fecBlockSize": 32400,
+                "ldpcSize": 64800,
+                "numFecBlocks": 0
+              }
+            ]
+          }
+        ]
+      },
+      "input": {
+        "fft": 0,
+        "gi": 1,
+        "sp": 15
+      },
+      "name": "8K + GI1_192 + SP32_4"
+    },
+    {
+      "expected": {
+        "frame2LogData": {
+          "error": "Frame_2.log not found",
+          "status": "ok"
+        },
+        "frameDuration": {
+          "status": "ok",
+          "subframeDurations": {
+            "0": 36.388889
+          },
+          "totalDurationMs": 39.601852
+        },
+        "l1dSizeBytes": {
+          "bytes": 25,
+          "source": "Frame_1.log",
+          "status": "ok"
+        },
+        "preambleFields": {
+          "cellsInFirst": 6075,
+          "cellsInNext": 6432,
+          "fftName": "8K",
+          "giSamples": 192,
+          "l1bCells": 3820,
+          "l1dBytes": 25,
+          "l1dCells": 2787,
+          "numSymbols": 2,
+          "plpCells": 5900,
+          "preambleDx": 0,
+          "preambleReducedCarriers": 0,
+          "status": "ok",
+          "totalPreambleCells": 12507
+        },
+        "status": "ok",
+        "subframeResults": [
+          {
+            "plpCapacity": {
+              "capacity": 199410,
+              "capacitySBS": 0,
+              "cps": 6647,
+              "cred": 0,
+              "fft": "8K",
+              "nDataSymbols": 30,
+              "nSbsSymbols": 0,
+              "reason": null,
+              "sbsDataCells": 6432,
+              "spBoost": 0,
+              "status": "ok"
+            },
+            "plpResults": [
+              {
+                "bbFrameRate": 0,
+                "bitrateMbps": 0.003,
+                "bitsPerCell": 2,
+                "celulasTI": 130816,
+                "cnr": {
+                  "bicm": {
+                    "awgn": 1.97
+                  },
+                  "field": {
+                    "awgn": 2.9,
+                    "rc20": 4.2,
+                    "rl20": 4.6
+                  },
+                  "lab": {
+                    "awgn": 2.8,
+                    "rc20": 3.2,
+                    "rl20": 5.6
+                  },
+                  "simulation": {
+                    "awgn": 2.1,
+                    "rc20": 2.5,
+                    "rl20": 4.3
+                  }
+                },
+                "fecBlockSize": 32400,
+                "ldpcSize": 64800,
+                "numFecBlocks": 0
+              }
+            ]
+          }
+        ]
+      },
+      "input": {
+        "fft": 0,
+        "gi": 1,
+        "sp": 10
+      },
+      "name": "8K + GI1_192 + SP16_2"
+    },
+    {
+      "expected": {
+        "frame2LogData": {
+          "error": "Frame_2.log not found",
+          "status": "ok"
+        },
+        "frameDuration": {
+          "status": "ok",
+          "subframeDurations": {
+            "0": 36.388889
+          },
+          "totalDurationMs": 39.601852
+        },
+        "l1dSizeBytes": {
+          "bytes": 25,
+          "source": "Frame_1.log",
+          "status": "ok"
+        },
+        "preambleFields": {
+          "cellsInFirst": 6075,
+          "cellsInNext": 6432,
+          "fftName": "8K",
+          "giSamples": 192,
+          "l1bCells": 3820,
+          "l1dBytes": 25,
+          "l1dCells": 2787,
+          "numSymbols": 2,
+          "plpCells": 5900,
+          "preambleDx": 0,
+          "preambleReducedCarriers": 0,
+          "status": "ok",
+          "totalPreambleCells": 12507
+        },
+        "status": "ok",
+        "subframeResults": [
+          {
+            "plpCapacity": {
+              "capacity": 202590,
+              "capacitySBS": 0,
+              "cps": 6753,
+              "cred": 0,
+              "fft": "8K",
+              "nDataSymbols": 30,
+              "nSbsSymbols": 0,
+              "reason": null,
+              "sbsDataCells": 6432,
+              "spBoost": 0,
+              "status": "ok"
+            },
+            "plpResults": [
+              {
+                "bbFrameRate": 0,
+                "bitrateMbps": 0.003,
+                "bitsPerCell": 2,
+                "celulasTI": 130816,
+                "cnr": {
+                  "bicm": {
+                    "awgn": 1.97
+                  },
+                  "field": {
+                    "awgn": 2.9,
+                    "rc20": 4.2,
+                    "rl20": 4.6
+                  },
+                  "lab": {
+                    "awgn": 2.8,
+                    "rc20": 3.2,
+                    "rl20": 5.6
+                  },
+                  "simulation": {
+                    "awgn": 2.1,
+                    "rc20": 2.5,
+                    "rl20": 4.3
+                  }
+                },
+                "fecBlockSize": 32400,
+                "ldpcSize": 64800,
+                "numFecBlocks": 0
+              }
+            ]
+          }
+        ]
+      },
+      "input": {
+        "fft": 0,
+        "gi": 1,
+        "sp": 11
+      },
+      "name": "8K + GI1_192 + SP16_4"
+    },
+    {
+      "expected": {
+        "frame2LogData": {
+          "error": "Frame_2.log not found",
+          "status": "ok"
+        },
+        "frameDuration": {
+          "status": "ok",
+          "subframeDurations": {
+            "0": 37.222222
+          },
+          "totalDurationMs": 40.462963
+        },
+        "l1dSizeBytes": {
+          "bytes": 25,
+          "source": "Frame_1.log",
+          "status": "ok"
+        },
+        "preambleFields": {
+          "cellsInFirst": 5667,
+          "cellsInNext": 6000,
+          "fftName": "8K",
+          "giSamples": 384,
+          "l1bCells": 3820,
+          "l1dBytes": 25,
+          "l1dCells": 2787,
+          "numSymbols": 2,
+          "plpCells": 5060,
+          "preambleDx": 0,
+          "preambleReducedCarriers": 0,
+          "status": "ok",
+          "totalPreambleCells": 11667
+        },
+        "status": "ok",
+        "subframeResults": [
+          {
+            "plpCapacity": {
+              "capacity": 199410,
+              "capacitySBS": 0,
+              "cps": 6647,
+              "cred": 0,
+              "fft": "8K",
+              "nDataSymbols": 30,
+              "nSbsSymbols": 0,
+              "reason": null,
+              "sbsDataCells": 6432,
+              "spBoost": 0,
+              "status": "ok"
+            },
+            "plpResults": [
+              {
+                "bbFrameRate": 0,
+                "bitrateMbps": 0.003,
+                "bitsPerCell": 2,
+                "celulasTI": 130816,
+                "cnr": {
+                  "bicm": {
+                    "awgn": 1.97
+                  },
+                  "field": {
+                    "awgn": 2.9,
+                    "rc20": 4.2,
+                    "rl20": 4.6
+                  },
+                  "lab": {
+                    "awgn": 2.8,
+                    "rc20": 3.2,
+                    "rl20": 5.6
+                  },
+                  "simulation": {
+                    "awgn": 2.1,
+                    "rc20": 2.5,
+                    "rl20": 4.3
+                  }
+                },
+                "fecBlockSize": 32400,
+                "ldpcSize": 64800,
+                "numFecBlocks": 0
+              }
+            ]
+          }
+        ]
+      },
+      "input": {
+        "fft": 0,
+        "gi": 2,
+        "sp": 10
+      },
+      "name": "8K + GI2_384 + SP16_2"
+    },
+    {
+      "expected": {
+        "frame2LogData": {
+          "error": "Frame_2.log not found",
+          "status": "ok"
+        },
+        "frameDuration": {
+          "status": "ok",
+          "subframeDurations": {
+            "0": 37.222222
+          },
+          "totalDurationMs": 40.462963
+        },
+        "l1dSizeBytes": {
+          "bytes": 25,
+          "source": "Frame_1.log",
+          "status": "ok"
+        },
+        "preambleFields": {
+          "cellsInFirst": 5667,
+          "cellsInNext": 6000,
+          "fftName": "8K",
+          "giSamples": 384,
+          "l1bCells": 3820,
+          "l1dBytes": 25,
+          "l1dCells": 2787,
+          "numSymbols": 2,
+          "plpCells": 5060,
+          "preambleDx": 0,
+          "preambleReducedCarriers": 0,
+          "status": "ok",
+          "totalPreambleCells": 11667
+        },
+        "status": "ok",
+        "subframeResults": [
+          {
+            "plpCapacity": {
+              "capacity": 202590,
+              "capacitySBS": 0,
+              "cps": 6753,
+              "cred": 0,
+              "fft": "8K",
+              "nDataSymbols": 30,
+              "nSbsSymbols": 0,
+              "reason": null,
+              "sbsDataCells": 6432,
+              "spBoost": 0,
+              "status": "ok"
+            },
+            "plpResults": [
+              {
+                "bbFrameRate": 0,
+                "bitrateMbps": 0.003,
+                "bitsPerCell": 2,
+                "celulasTI": 130816,
+                "cnr": {
+                  "bicm": {
+                    "awgn": 1.97
+                  },
+                  "field": {
+                    "awgn": 2.9,
+                    "rc20": 4.2,
+                    "rl20": 4.6
+                  },
+                  "lab": {
+                    "awgn": 2.8,
+                    "rc20": 3.2,
+                    "rl20": 5.6
+                  },
+                  "simulation": {
+                    "awgn": 2.1,
+                    "rc20": 2.5,
+                    "rl20": 4.3
+                  }
+                },
+                "fecBlockSize": 32400,
+                "ldpcSize": 64800,
+                "numFecBlocks": 0
+              }
+            ]
+          }
+        ]
+      },
+      "input": {
+        "fft": 0,
+        "gi": 2,
+        "sp": 11
+      },
+      "name": "8K + GI2_384 + SP16_4"
+    },
+    {
+      "expected": {
+        "frame2LogData": {
+          "error": "Frame_2.log not found",
+          "status": "ok"
+        },
+        "frameDuration": {
+          "status": "ok",
+          "subframeDurations": {
+            "0": 37.222222
+          },
+          "totalDurationMs": 40.462963
+        },
+        "l1dSizeBytes": {
+          "bytes": 25,
+          "source": "Frame_1.log",
+          "status": "ok"
+        },
+        "preambleFields": {
+          "cellsInFirst": 5667,
+          "cellsInNext": 6000,
+          "fftName": "8K",
+          "giSamples": 384,
+          "l1bCells": 3820,
+          "l1dBytes": 25,
+          "l1dCells": 2787,
+          "numSymbols": 2,
+          "plpCells": 5060,
+          "preambleDx": 0,
+          "preambleReducedCarriers": 0,
+          "status": "ok",
+          "totalPreambleCells": 11667
+        },
+        "status": "ok",
+        "subframeResults": [
+          {
+            "plpCapacity": {
+              "capacity": 192930,
+              "capacitySBS": 0,
+              "cps": 6431,
+              "cred": 0,
+              "fft": "8K",
+              "nDataSymbols": 30,
+              "nSbsSymbols": 0,
+              "reason": null,
+              "sbsDataCells": 6000,
+              "spBoost": 0,
+              "status": "ok"
+            },
+            "plpResults": [
+              {
+                "bbFrameRate": 0,
+                "bitrateMbps": 0.003,
+                "bitsPerCell": 2,
+                "celulasTI": 130816,
+                "cnr": {
+                  "bicm": {
+                    "awgn": 1.97
+                  },
+                  "field": {
+                    "awgn": 2.9,
+                    "rc20": 4.2,
+                    "rl20": 4.6
+                  },
+                  "lab": {
+                    "awgn": 2.8,
+                    "rc20": 3.2,
+                    "rl20": 5.6
+                  },
+                  "simulation": {
+                    "awgn": 2.1,
+                    "rc20": 2.5,
+                    "rl20": 4.3
+                  }
+                },
+                "fecBlockSize": 32400,
+                "ldpcSize": 64800,
+                "numFecBlocks": 0
+              }
+            ]
+          }
+        ]
+      },
+      "input": {
+        "fft": 0,
+        "gi": 2,
+        "sp": 6
+      },
+      "name": "8K + GI2_384 + SP8_2"
+    },
+    {
+      "expected": {
+        "frame2LogData": {
+          "error": "Frame_2.log not found",
+          "status": "ok"
+        },
+        "frameDuration": {
+          "status": "ok",
+          "subframeDurations": {
+            "0": 37.222222
+          },
+          "totalDurationMs": 40.462963
+        },
+        "l1dSizeBytes": {
+          "bytes": 25,
+          "source": "Frame_1.log",
+          "status": "ok"
+        },
+        "preambleFields": {
+          "cellsInFirst": 5667,
+          "cellsInNext": 6000,
+          "fftName": "8K",
+          "giSamples": 384,
+          "l1bCells": 3820,
+          "l1dBytes": 25,
+          "l1dCells": 2787,
+          "numSymbols": 2,
+          "plpCells": 5060,
+          "preambleDx": 0,
+          "preambleReducedCarriers": 0,
+          "status": "ok",
+          "totalPreambleCells": 11667
+        },
+        "status": "ok",
+        "subframeResults": [
+          {
+            "plpCapacity": {
+              "capacity": 199350,
+              "capacitySBS": 0,
+              "cps": 6645,
+              "cred": 0,
+              "fft": "8K",
+              "nDataSymbols": 30,
+              "nSbsSymbols": 0,
+              "reason": null,
+              "sbsDataCells": 6000,
+              "spBoost": 0,
+              "status": "ok"
+            },
+            "plpResults": [
+              {
+                "bbFrameRate": 0,
+                "bitrateMbps": 0.003,
+                "bitsPerCell": 2,
+                "celulasTI": 130816,
+                "cnr": {
+                  "bicm": {
+                    "awgn": 1.97
+                  },
+                  "field": {
+                    "awgn": 2.9,
+                    "rc20": 4.2,
+                    "rl20": 4.6
+                  },
+                  "lab": {
+                    "awgn": 2.8,
+                    "rc20": 3.2,
+                    "rl20": 5.6
+                  },
+                  "simulation": {
+                    "awgn": 2.1,
+                    "rc20": 2.5,
+                    "rl20": 4.3
+                  }
+                },
+                "fecBlockSize": 32400,
+                "ldpcSize": 64800,
+                "numFecBlocks": 0
+              }
+            ]
+          }
+        ]
+      },
+      "input": {
+        "fft": 0,
+        "gi": 2,
+        "sp": 7
+      },
+      "name": "8K + GI2_384 + SP8_4"
+    },
+    {
+      "expected": {
+        "frame2LogData": {
+          "error": "Frame_2.log not found",
+          "status": "ok"
+        },
+        "frameDuration": {
+          "status": "ok",
+          "subframeDurations": {
+            "0": 37.777778
+          },
+          "totalDurationMs": 41.037037
+        },
+        "l1dSizeBytes": {
+          "bytes": 25,
+          "source": "Frame_1.log",
+          "status": "ok"
+        },
+        "preambleFields": {
+          "cellsInFirst": 5395,
+          "cellsInNext": 5712,
+          "fftName": "8K",
+          "giSamples": 512,
+          "l1bCells": 3820,
+          "l1dBytes": 25,
+          "l1dCells": 2787,
+          "numSymbols": 2,
+          "plpCells": 4500,
+          "preambleDx": 0,
+          "preambleReducedCarriers": 0,
+          "status": "ok",
+          "totalPreambleCells": 11107
+        },
+        "status": "ok",
+        "subframeResults": [
+          {
+            "plpCapacity": {
+              "capacity": 197250,
+              "capacitySBS": 0,
+              "cps": 6575,
+              "cred": 0,
+              "fft": "8K",
+              "nDataSymbols": 30,
+              "nSbsSymbols": 0,
+              "reason": null,
+              "sbsDataCells": 6288,
+              "spBoost": 0,
+              "status": "ok"
+            },
+            "plpResults": [
+              {
+                "bbFrameRate": 0,
+                "bitrateMbps": 0.003,
+                "bitsPerCell": 2,
+                "celulasTI": 130816,
+                "cnr": {
+                  "bicm": {
+                    "awgn": 1.97
+                  },
+                  "field": {
+                    "awgn": 2.9,
+                    "rc20": 4.2,
+                    "rl20": 4.6
+                  },
+                  "lab": {
+                    "awgn": 2.8,
+                    "rc20": 3.2,
+                    "rl20": 5.6
+                  },
+                  "simulation": {
+                    "awgn": 2.1,
+                    "rc20": 2.5,
+                    "rl20": 4.3
+                  }
+                },
+                "fecBlockSize": 32400,
+                "ldpcSize": 64800,
+                "numFecBlocks": 0
+              }
+            ]
+          }
+        ]
+      },
+      "input": {
+        "fft": 0,
+        "gi": 3,
+        "sp": 8
+      },
+      "name": "8K + GI3_512 + SP12_2"
+    },
+    {
+      "expected": {
+        "frame2LogData": {
+          "error": "Frame_2.log not found",
+          "status": "ok"
+        },
+        "frameDuration": {
+          "status": "ok",
+          "subframeDurations": {
+            "0": 37.777778
+          },
+          "totalDurationMs": 41.037037
+        },
+        "l1dSizeBytes": {
+          "bytes": 25,
+          "source": "Frame_1.log",
+          "status": "ok"
+        },
+        "preambleFields": {
+          "cellsInFirst": 5395,
+          "cellsInNext": 5712,
+          "fftName": "8K",
+          "giSamples": 512,
+          "l1bCells": 3820,
+          "l1dBytes": 25,
+          "l1dCells": 2787,
+          "numSymbols": 2,
+          "plpCells": 4500,
+          "preambleDx": 0,
+          "preambleReducedCarriers": 0,
+          "status": "ok",
+          "totalPreambleCells": 11107
+        },
+        "status": "ok",
+        "subframeResults": [
+          {
+            "plpCapacity": {
+              "capacity": 201510,
+              "capacitySBS": 0,
+              "cps": 6717,
+              "cred": 0,
+              "fft": "8K",
+              "nDataSymbols": 30,
+              "nSbsSymbols": 0,
+              "reason": null,
+              "sbsDataCells": 6288,
+              "spBoost": 0,
+              "status": "ok"
+            },
+            "plpResults": [
+              {
+                "bbFrameRate": 0,
+                "bitrateMbps": 0.003,
+                "bitsPerCell": 2,
+                "celulasTI": 130816,
+                "cnr": {
+                  "bicm": {
+                    "awgn": 1.97
+                  },
+                  "field": {
+                    "awgn": 2.9,
+                    "rc20": 4.2,
+                    "rl20": 4.6
+                  },
+                  "lab": {
+                    "awgn": 2.8,
+                    "rc20": 3.2,
+                    "rl20": 5.6
+                  },
+                  "simulation": {
+                    "awgn": 2.1,
+                    "rc20": 2.5,
+                    "rl20": 4.3
+                  }
+                },
+                "fecBlockSize": 32400,
+                "ldpcSize": 64800,
+                "numFecBlocks": 0
+              }
+            ]
+          }
+        ]
+      },
+      "input": {
+        "fft": 0,
+        "gi": 3,
+        "sp": 9
+      },
+      "name": "8K + GI3_512 + SP12_4"
+    },
+    {
+      "expected": {
+        "frame2LogData": {
+          "error": "Frame_2.log not found",
+          "status": "ok"
+        },
+        "frameDuration": {
+          "status": "ok",
+          "subframeDurations": {
+            "0": 37.777778
+          },
+          "totalDurationMs": 41.037037
+        },
+        "l1dSizeBytes": {
+          "bytes": 25,
+          "source": "Frame_1.log",
+          "status": "ok"
+        },
+        "preambleFields": {
+          "cellsInFirst": 5395,
+          "cellsInNext": 5712,
+          "fftName": "8K",
+          "giSamples": 512,
+          "l1bCells": 3820,
+          "l1dBytes": 25,
+          "l1dCells": 2787,
+          "numSymbols": 2,
+          "plpCells": 4500,
+          "preambleDx": 0,
+          "preambleReducedCarriers": 0,
+          "status": "ok",
+          "totalPreambleCells": 11107
+        },
+        "status": "ok",
+        "subframeResults": [
+          {
+            "plpCapacity": {
+              "capacity": 188610,
+              "capacitySBS": 0,
+              "cps": 6287,
+              "cred": 0,
+              "fft": "8K",
+              "nDataSymbols": 30,
+              "nSbsSymbols": 0,
+              "reason": null,
+              "sbsDataCells": 5712,
+              "spBoost": 0,
+              "status": "ok"
+            },
+            "plpResults": [
+              {
+                "bbFrameRate": 0,
+                "bitrateMbps": 0.003,
+                "bitsPerCell": 2,
+                "celulasTI": 130816,
+                "cnr": {
+                  "bicm": {
+                    "awgn": 1.97
+                  },
+                  "field": {
+                    "awgn": 2.9,
+                    "rc20": 4.2,
+                    "rl20": 4.6
+                  },
+                  "lab": {
+                    "awgn": 2.8,
+                    "rc20": 3.2,
+                    "rl20": 5.6
+                  },
+                  "simulation": {
+                    "awgn": 2.1,
+                    "rc20": 2.5,
+                    "rl20": 4.3
+                  }
+                },
+                "fecBlockSize": 32400,
+                "ldpcSize": 64800,
+                "numFecBlocks": 0
+              }
+            ]
+          }
+        ]
+      },
+      "input": {
+        "fft": 0,
+        "gi": 3,
+        "sp": 4
+      },
+      "name": "8K + GI3_512 + SP6_2"
+    },
+    {
+      "expected": {
+        "frame2LogData": {
+          "error": "Frame_2.log not found",
+          "status": "ok"
+        },
+        "frameDuration": {
+          "status": "ok",
+          "subframeDurations": {
+            "0": 37.777778
+          },
+          "totalDurationMs": 41.037037
+        },
+        "l1dSizeBytes": {
+          "bytes": 25,
+          "source": "Frame_1.log",
+          "status": "ok"
+        },
+        "preambleFields": {
+          "cellsInFirst": 5395,
+          "cellsInNext": 5712,
+          "fftName": "8K",
+          "giSamples": 512,
+          "l1bCells": 3820,
+          "l1dBytes": 25,
+          "l1dCells": 2787,
+          "numSymbols": 2,
+          "plpCells": 4500,
+          "preambleDx": 0,
+          "preambleReducedCarriers": 0,
+          "status": "ok",
+          "totalPreambleCells": 11107
+        },
+        "status": "ok",
+        "subframeResults": [
+          {
+            "plpCapacity": {
+              "capacity": 197190,
+              "capacitySBS": 0,
+              "cps": 6573,
+              "cred": 0,
+              "fft": "8K",
+              "nDataSymbols": 30,
+              "nSbsSymbols": 0,
+              "reason": null,
+              "sbsDataCells": 5712,
+              "spBoost": 0,
+              "status": "ok"
+            },
+            "plpResults": [
+              {
+                "bbFrameRate": 0,
+                "bitrateMbps": 0.003,
+                "bitsPerCell": 2,
+                "celulasTI": 130816,
+                "cnr": {
+                  "bicm": {
+                    "awgn": 1.97
+                  },
+                  "field": {
+                    "awgn": 2.9,
+                    "rc20": 4.2,
+                    "rl20": 4.6
+                  },
+                  "lab": {
+                    "awgn": 2.8,
+                    "rc20": 3.2,
+                    "rl20": 5.6
+                  },
+                  "simulation": {
+                    "awgn": 2.1,
+                    "rc20": 2.5,
+                    "rl20": 4.3
+                  }
+                },
+                "fecBlockSize": 32400,
+                "ldpcSize": 64800,
+                "numFecBlocks": 0
+              }
+            ]
+          }
+        ]
+      },
+      "input": {
+        "fft": 0,
+        "gi": 3,
+        "sp": 5
+      },
+      "name": "8K + GI3_512 + SP6_4"
+    },
+    {
+      "expected": {
+        "frame2LogData": {
+          "error": "Frame_2.log not found",
+          "status": "ok"
+        },
+        "frameDuration": {
+          "status": "ok",
+          "subframeDurations": {
+            "0": 38.888889
+          },
+          "totalDurationMs": 42.185185
+        },
+        "l1dSizeBytes": {
+          "bytes": 25,
+          "source": "Frame_1.log",
+          "status": "ok"
+        },
+        "preambleFields": {
+          "cellsInFirst": 4851,
+          "cellsInNext": 5136,
+          "fftName": "8K",
+          "giSamples": 768,
+          "l1bCells": 3820,
+          "l1dBytes": 25,
+          "l1dCells": 2787,
+          "numSymbols": 2,
+          "plpCells": 3380,
+          "preambleDx": 0,
+          "preambleReducedCarriers": 0,
+          "status": "ok",
+          "totalPreambleCells": 9987
+        },
+        "status": "ok",
+        "subframeResults": [
+          {
+            "plpCapacity": {
+              "capacity": 192930,
+              "capacitySBS": 0,
+              "cps": 6431,
+              "cred": 0,
+              "fft": "8K",
+              "nDataSymbols": 30,
+              "nSbsSymbols": 0,
+              "reason": null,
+              "sbsDataCells": 6000,
+              "spBoost": 0,
+              "status": "ok"
+            },
+            "plpResults": [
+              {
+                "bbFrameRate": 0,
+                "bitrateMbps": 0.003,
+                "bitsPerCell": 2,
+                "celulasTI": 130816,
+                "cnr": {
+                  "bicm": {
+                    "awgn": 1.97
+                  },
+                  "field": {
+                    "awgn": 2.9,
+                    "rc20": 4.2,
+                    "rl20": 4.6
+                  },
+                  "lab": {
+                    "awgn": 2.8,
+                    "rc20": 3.2,
+                    "rl20": 5.6
+                  },
+                  "simulation": {
+                    "awgn": 2.1,
+                    "rc20": 2.5,
+                    "rl20": 4.3
+                  }
+                },
+                "fecBlockSize": 32400,
+                "ldpcSize": 64800,
+                "numFecBlocks": 0
+              }
+            ]
+          }
+        ]
+      },
+      "input": {
+        "fft": 0,
+        "gi": 4,
+        "sp": 6
+      },
+      "name": "8K + GI4_768 + SP8_2"
+    },
+    {
+      "expected": {
+        "frame2LogData": {
+          "error": "Frame_2.log not found",
+          "status": "ok"
+        },
+        "frameDuration": {
+          "status": "ok",
+          "subframeDurations": {
+            "0": 38.888889
+          },
+          "totalDurationMs": 42.185185
+        },
+        "l1dSizeBytes": {
+          "bytes": 25,
+          "source": "Frame_1.log",
+          "status": "ok"
+        },
+        "preambleFields": {
+          "cellsInFirst": 4851,
+          "cellsInNext": 5136,
+          "fftName": "8K",
+          "giSamples": 768,
+          "l1bCells": 3820,
+          "l1dBytes": 25,
+          "l1dCells": 2787,
+          "numSymbols": 2,
+          "plpCells": 3380,
+          "preambleDx": 0,
+          "preambleReducedCarriers": 0,
+          "status": "ok",
+          "totalPreambleCells": 9987
+        },
+        "status": "ok",
+        "subframeResults": [
+          {
+            "plpCapacity": {
+              "capacity": 199350,
+              "capacitySBS": 0,
+              "cps": 6645,
+              "cred": 0,
+              "fft": "8K",
+              "nDataSymbols": 30,
+              "nSbsSymbols": 0,
+              "reason": null,
+              "sbsDataCells": 6000,
+              "spBoost": 0,
+              "status": "ok"
+            },
+            "plpResults": [
+              {
+                "bbFrameRate": 0,
+                "bitrateMbps": 0.003,
+                "bitsPerCell": 2,
+                "celulasTI": 130816,
+                "cnr": {
+                  "bicm": {
+                    "awgn": 1.97
+                  },
+                  "field": {
+                    "awgn": 2.9,
+                    "rc20": 4.2,
+                    "rl20": 4.6
+                  },
+                  "lab": {
+                    "awgn": 2.8,
+                    "rc20": 3.2,
+                    "rl20": 5.6
+                  },
+                  "simulation": {
+                    "awgn": 2.1,
+                    "rc20": 2.5,
+                    "rl20": 4.3
+                  }
+                },
+                "fecBlockSize": 32400,
+                "ldpcSize": 64800,
+                "numFecBlocks": 0
+              }
+            ]
+          }
+        ]
+      },
+      "input": {
+        "fft": 0,
+        "gi": 4,
+        "sp": 7
+      },
+      "name": "8K + GI4_768 + SP8_4"
+    },
+    {
+      "expected": {
+        "frame2LogData": {
+          "error": "Frame_2.log not found",
+          "status": "ok"
+        },
+        "frameDuration": {
+          "status": "ok",
+          "subframeDurations": {
+            "0": 38.888889
+          },
+          "totalDurationMs": 42.185185
+        },
+        "l1dSizeBytes": {
+          "bytes": 25,
+          "source": "Frame_1.log",
+          "status": "ok"
+        },
+        "preambleFields": {
+          "cellsInFirst": 4851,
+          "cellsInNext": 5136,
+          "fftName": "8K",
+          "giSamples": 768,
+          "l1bCells": 3820,
+          "l1dBytes": 25,
+          "l1dCells": 2787,
+          "numSymbols": 2,
+          "plpCells": 3380,
+          "preambleDx": 0,
+          "preambleReducedCarriers": 0,
+          "status": "ok",
+          "totalPreambleCells": 9987
+        },
+        "status": "ok",
+        "subframeResults": [
+          {
+            "plpCapacity": {
+              "capacity": 179970,
+              "capacitySBS": 0,
+              "cps": 5999,
+              "cred": 0,
+              "fft": "8K",
+              "nDataSymbols": 30,
+              "nSbsSymbols": 0,
+              "reason": null,
+              "sbsDataCells": 5136,
+              "spBoost": 0,
+              "status": "ok"
+            },
+            "plpResults": [
+              {
+                "bbFrameRate": 0,
+                "bitrateMbps": 0.003,
+                "bitsPerCell": 2,
+                "celulasTI": 130816,
+                "cnr": {
+                  "bicm": {
+                    "awgn": 1.97
+                  },
+                  "field": {
+                    "awgn": 2.9,
+                    "rc20": 4.2,
+                    "rl20": 4.6
+                  },
+                  "lab": {
+                    "awgn": 2.8,
+                    "rc20": 3.2,
+                    "rl20": 5.6
+                  },
+                  "simulation": {
+                    "awgn": 2.1,
+                    "rc20": 2.5,
+                    "rl20": 4.3
+                  }
+                },
+                "fecBlockSize": 32400,
+                "ldpcSize": 64800,
+                "numFecBlocks": 0
+              }
+            ]
+          }
+        ]
+      },
+      "input": {
+        "fft": 0,
+        "gi": 4,
+        "sp": 2
+      },
+      "name": "8K + GI4_768 + SP4_2"
+    },
+    {
+      "expected": {
+        "frame2LogData": {
+          "error": "Frame_2.log not found",
+          "status": "ok"
+        },
+        "frameDuration": {
+          "status": "ok",
+          "subframeDurations": {
+            "0": 38.888889
+          },
+          "totalDurationMs": 42.185185
+        },
+        "l1dSizeBytes": {
+          "bytes": 25,
+          "source": "Frame_1.log",
+          "status": "ok"
+        },
+        "preambleFields": {
+          "cellsInFirst": 4851,
+          "cellsInNext": 5136,
+          "fftName": "8K",
+          "giSamples": 768,
+          "l1bCells": 3820,
+          "l1dBytes": 25,
+          "l1dCells": 2787,
+          "numSymbols": 2,
+          "plpCells": 3380,
+          "preambleDx": 0,
+          "preambleReducedCarriers": 0,
+          "status": "ok",
+          "totalPreambleCells": 9987
+        },
+        "status": "ok",
+        "subframeResults": [
+          {
+            "plpCapacity": {
+              "capacity": 192870,
+              "capacitySBS": 0,
+              "cps": 6429,
+              "cred": 0,
+              "fft": "8K",
+              "nDataSymbols": 30,
+              "nSbsSymbols": 0,
+              "reason": null,
+              "sbsDataCells": 5136,
+              "spBoost": 0,
+              "status": "ok"
+            },
+            "plpResults": [
+              {
+                "bbFrameRate": 0,
+                "bitrateMbps": 0.003,
+                "bitsPerCell": 2,
+                "celulasTI": 130816,
+                "cnr": {
+                  "bicm": {
+                    "awgn": 1.97
+                  },
+                  "field": {
+                    "awgn": 2.9,
+                    "rc20": 4.2,
+                    "rl20": 4.6
+                  },
+                  "lab": {
+                    "awgn": 2.8,
+                    "rc20": 3.2,
+                    "rl20": 5.6
+                  },
+                  "simulation": {
+                    "awgn": 2.1,
+                    "rc20": 2.5,
+                    "rl20": 4.3
+                  }
+                },
+                "fecBlockSize": 32400,
+                "ldpcSize": 64800,
+                "numFecBlocks": 0
+              }
+            ]
+          }
+        ]
+      },
+      "input": {
+        "fft": 0,
+        "gi": 4,
+        "sp": 3
+      },
+      "name": "8K + GI4_768 + SP4_4"
+    },
+    {
+      "expected": {
+        "frame2LogData": {
+          "error": "Frame_2.log not found",
+          "status": "ok"
+        },
+        "frameDuration": {
+          "status": "ok",
+          "subframeDurations": {
+            "0": 40.0
+          },
+          "totalDurationMs": 43.333333
+        },
+        "l1dSizeBytes": {
+          "bytes": 25,
+          "source": "Frame_1.log",
+          "status": "ok"
+        },
+        "preambleFields": {
+          "cellsInFirst": 4307,
+          "cellsInNext": 4560,
+          "fftName": "8K",
+          "giSamples": 1024,
+          "l1bCells": 3820,
+          "l1dBytes": 25,
+          "l1dCells": 2787,
+          "numSymbols": 2,
+          "plpCells": 2260,
+          "preambleDx": 0,
+          "preambleReducedCarriers": 0,
+          "status": "ok",
+          "totalPreambleCells": 8867
+        },
+        "status": "ok",
+        "subframeResults": [
+          {
+            "plpCapacity": {
+              "capacity": 188610,
+              "capacitySBS": 0,
+              "cps": 6287,
+              "cred": 0,
+              "fft": "8K",
+              "nDataSymbols": 30,
+              "nSbsSymbols": 0,
+              "reason": null,
+              "sbsDataCells": 5712,
+              "spBoost": 0,
+              "status": "ok"
+            },
+            "plpResults": [
+              {
+                "bbFrameRate": 0,
+                "bitrateMbps": 0.003,
+                "bitsPerCell": 2,
+                "celulasTI": 130816,
+                "cnr": {
+                  "bicm": {
+                    "awgn": 1.97
+                  },
+                  "field": {
+                    "awgn": 2.9,
+                    "rc20": 4.2,
+                    "rl20": 4.6
+                  },
+                  "lab": {
+                    "awgn": 2.8,
+                    "rc20": 3.2,
+                    "rl20": 5.6
+                  },
+                  "simulation": {
+                    "awgn": 2.1,
+                    "rc20": 2.5,
+                    "rl20": 4.3
+                  }
+                },
+                "fecBlockSize": 32400,
+                "ldpcSize": 64800,
+                "numFecBlocks": 0
+              }
+            ]
+          }
+        ]
+      },
+      "input": {
+        "fft": 0,
+        "gi": 5,
+        "sp": 4
+      },
+      "name": "8K + GI5_1024 + SP6_2"
+    },
+    {
+      "expected": {
+        "frame2LogData": {
+          "error": "Frame_2.log not found",
+          "status": "ok"
+        },
+        "frameDuration": {
+          "status": "ok",
+          "subframeDurations": {
+            "0": 40.0
+          },
+          "totalDurationMs": 43.333333
+        },
+        "l1dSizeBytes": {
+          "bytes": 25,
+          "source": "Frame_1.log",
+          "status": "ok"
+        },
+        "preambleFields": {
+          "cellsInFirst": 4307,
+          "cellsInNext": 4560,
+          "fftName": "8K",
+          "giSamples": 1024,
+          "l1bCells": 3820,
+          "l1dBytes": 25,
+          "l1dCells": 2787,
+          "numSymbols": 2,
+          "plpCells": 2260,
+          "preambleDx": 0,
+          "preambleReducedCarriers": 0,
+          "status": "ok",
+          "totalPreambleCells": 8867
+        },
+        "status": "ok",
+        "subframeResults": [
+          {
+            "plpCapacity": {
+              "capacity": 197190,
+              "capacitySBS": 0,
+              "cps": 6573,
+              "cred": 0,
+              "fft": "8K",
+              "nDataSymbols": 30,
+              "nSbsSymbols": 0,
+              "reason": null,
+              "sbsDataCells": 5712,
+              "spBoost": 0,
+              "status": "ok"
+            },
+            "plpResults": [
+              {
+                "bbFrameRate": 0,
+                "bitrateMbps": 0.003,
+                "bitsPerCell": 2,
+                "celulasTI": 130816,
+                "cnr": {
+                  "bicm": {
+                    "awgn": 1.97
+                  },
+                  "field": {
+                    "awgn": 2.9,
+                    "rc20": 4.2,
+                    "rl20": 4.6
+                  },
+                  "lab": {
+                    "awgn": 2.8,
+                    "rc20": 3.2,
+                    "rl20": 5.6
+                  },
+                  "simulation": {
+                    "awgn": 2.1,
+                    "rc20": 2.5,
+                    "rl20": 4.3
+                  }
+                },
+                "fecBlockSize": 32400,
+                "ldpcSize": 64800,
+                "numFecBlocks": 0
+              }
+            ]
+          }
+        ]
+      },
+      "input": {
+        "fft": 0,
+        "gi": 5,
+        "sp": 5
+      },
+      "name": "8K + GI5_1024 + SP6_4"
+    },
+    {
+      "expected": {
+        "frame2LogData": {
+          "error": "Frame_2.log not found",
+          "status": "ok"
+        },
+        "frameDuration": {
+          "status": "ok",
+          "subframeDurations": {
+            "0": 40.0
+          },
+          "totalDurationMs": 43.333333
+        },
+        "l1dSizeBytes": {
+          "bytes": 25,
+          "source": "Frame_1.log",
+          "status": "ok"
+        },
+        "preambleFields": {
+          "cellsInFirst": 4307,
+          "cellsInNext": 4560,
+          "fftName": "8K",
+          "giSamples": 1024,
+          "l1bCells": 3820,
+          "l1dBytes": 25,
+          "l1dCells": 2787,
+          "numSymbols": 2,
+          "plpCells": 2260,
+          "preambleDx": 0,
+          "preambleReducedCarriers": 0,
+          "status": "ok",
+          "totalPreambleCells": 8867
+        },
+        "status": "ok",
+        "subframeResults": [
+          {
+            "plpCapacity": {
+              "capacity": 171330,
+              "capacitySBS": 0,
+              "cps": 5711,
+              "cred": 0,
+              "fft": "8K",
+              "nDataSymbols": 30,
+              "nSbsSymbols": 0,
+              "reason": null,
+              "sbsDataCells": 4560,
+              "spBoost": 0,
+              "status": "ok"
+            },
+            "plpResults": [
+              {
+                "bbFrameRate": 0,
+                "bitrateMbps": 0.003,
+                "bitsPerCell": 2,
+                "celulasTI": 130816,
+                "cnr": {
+                  "bicm": {
+                    "awgn": 1.97
+                  },
+                  "field": {
+                    "awgn": 2.9,
+                    "rc20": 4.2,
+                    "rl20": 4.6
+                  },
+                  "lab": {
+                    "awgn": 2.8,
+                    "rc20": 3.2,
+                    "rl20": 5.6
+                  },
+                  "simulation": {
+                    "awgn": 2.1,
+                    "rc20": 2.5,
+                    "rl20": 4.3
+                  }
+                },
+                "fecBlockSize": 32400,
+                "ldpcSize": 64800,
+                "numFecBlocks": 0
+              }
+            ]
+          }
+        ]
+      },
+      "input": {
+        "fft": 0,
+        "gi": 5,
+        "sp": 0
+      },
+      "name": "8K + GI5_1024 + SP3_2"
+    },
+    {
+      "expected": {
+        "frame2LogData": {
+          "error": "Frame_2.log not found",
+          "status": "ok"
+        },
+        "frameDuration": {
+          "status": "ok",
+          "subframeDurations": {
+            "0": 40.0
+          },
+          "totalDurationMs": 43.333333
+        },
+        "l1dSizeBytes": {
+          "bytes": 25,
+          "source": "Frame_1.log",
+          "status": "ok"
+        },
+        "preambleFields": {
+          "cellsInFirst": 4307,
+          "cellsInNext": 4560,
+          "fftName": "8K",
+          "giSamples": 1024,
+          "l1bCells": 3820,
+          "l1dBytes": 25,
+          "l1dCells": 2787,
+          "numSymbols": 2,
+          "plpCells": 2260,
+          "preambleDx": 0,
+          "preambleReducedCarriers": 0,
+          "status": "ok",
+          "totalPreambleCells": 8867
+        },
+        "status": "ok",
+        "subframeResults": [
+          {
+            "plpCapacity": {
+              "capacity": 188550,
+              "capacitySBS": 0,
+              "cps": 6285,
+              "cred": 0,
+              "fft": "8K",
+              "nDataSymbols": 30,
+              "nSbsSymbols": 0,
+              "reason": null,
+              "sbsDataCells": 4560,
+              "spBoost": 0,
+              "status": "ok"
+            },
+            "plpResults": [
+              {
+                "bbFrameRate": 0,
+                "bitrateMbps": 0.003,
+                "bitsPerCell": 2,
+                "celulasTI": 130816,
+                "cnr": {
+                  "bicm": {
+                    "awgn": 1.97
+                  },
+                  "field": {
+                    "awgn": 2.9,
+                    "rc20": 4.2,
+                    "rl20": 4.6
+                  },
+                  "lab": {
+                    "awgn": 2.8,
+                    "rc20": 3.2,
+                    "rl20": 5.6
+                  },
+                  "simulation": {
+                    "awgn": 2.1,
+                    "rc20": 2.5,
+                    "rl20": 4.3
+                  }
+                },
+                "fecBlockSize": 32400,
+                "ldpcSize": 64800,
+                "numFecBlocks": 0
+              }
+            ]
+          }
+        ]
+      },
+      "input": {
+        "fft": 0,
+        "gi": 5,
+        "sp": 1
+      },
+      "name": "8K + GI5_1024 + SP3_4"
+    },
+    {
+      "expected": {
+        "frame2LogData": {
+          "error": "Frame_2.log not found",
+          "status": "ok"
+        },
+        "frameDuration": {
+          "status": "ok",
+          "subframeDurations": {
+            "0": 42.222222
+          },
+          "totalDurationMs": 45.62963
+        },
+        "l1dSizeBytes": {
+          "bytes": 25,
+          "source": "Frame_1.log",
+          "status": "ok"
+        },
+        "preambleFields": {
+          "cellsInFirst": 4851,
+          "cellsInNext": 5136,
+          "fftName": "8K",
+          "giSamples": 1536,
+          "l1bCells": 3820,
+          "l1dBytes": 25,
+          "l1dCells": 2787,
+          "numSymbols": 2,
+          "plpCells": 3380,
+          "preambleDx": 0,
+          "preambleReducedCarriers": 0,
+          "status": "ok",
+          "totalPreambleCells": 9987
+        },
+        "status": "ok",
+        "subframeResults": [
+          {
+            "plpCapacity": {
+              "capacity": 179970,
+              "capacitySBS": 0,
+              "cps": 5999,
+              "cred": 0,
+              "fft": "8K",
+              "nDataSymbols": 30,
+              "nSbsSymbols": 0,
+              "reason": null,
+              "sbsDataCells": 5136,
+              "spBoost": 0,
+              "status": "ok"
+            },
+            "plpResults": [
+              {
+                "bbFrameRate": 0,
+                "bitrateMbps": 0.003,
+                "bitsPerCell": 2,
+                "celulasTI": 130816,
+                "cnr": {
+                  "bicm": {
+                    "awgn": 1.97
+                  },
+                  "field": {
+                    "awgn": 2.9,
+                    "rc20": 4.2,
+                    "rl20": 4.6
+                  },
+                  "lab": {
+                    "awgn": 2.8,
+                    "rc20": 3.2,
+                    "rl20": 5.6
+                  },
+                  "simulation": {
+                    "awgn": 2.1,
+                    "rc20": 2.5,
+                    "rl20": 4.3
+                  }
+                },
+                "fecBlockSize": 32400,
+                "ldpcSize": 64800,
+                "numFecBlocks": 0
+              }
+            ]
+          }
+        ]
+      },
+      "input": {
+        "fft": 0,
+        "gi": 6,
+        "sp": 2
+      },
+      "name": "8K + GI6_1536 + SP4_2"
+    },
+    {
+      "expected": {
+        "frame2LogData": {
+          "error": "Frame_2.log not found",
+          "status": "ok"
+        },
+        "frameDuration": {
+          "status": "ok",
+          "subframeDurations": {
+            "0": 42.222222
+          },
+          "totalDurationMs": 45.62963
+        },
+        "l1dSizeBytes": {
+          "bytes": 25,
+          "source": "Frame_1.log",
+          "status": "ok"
+        },
+        "preambleFields": {
+          "cellsInFirst": 4851,
+          "cellsInNext": 5136,
+          "fftName": "8K",
+          "giSamples": 1536,
+          "l1bCells": 3820,
+          "l1dBytes": 25,
+          "l1dCells": 2787,
+          "numSymbols": 2,
+          "plpCells": 3380,
+          "preambleDx": 0,
+          "preambleReducedCarriers": 0,
+          "status": "ok",
+          "totalPreambleCells": 9987
+        },
+        "status": "ok",
+        "subframeResults": [
+          {
+            "plpCapacity": {
+              "capacity": 192870,
+              "capacitySBS": 0,
+              "cps": 6429,
+              "cred": 0,
+              "fft": "8K",
+              "nDataSymbols": 30,
+              "nSbsSymbols": 0,
+              "reason": null,
+              "sbsDataCells": 5136,
+              "spBoost": 0,
+              "status": "ok"
+            },
+            "plpResults": [
+              {
+                "bbFrameRate": 0,
+                "bitrateMbps": 0.003,
+                "bitsPerCell": 2,
+                "celulasTI": 130816,
+                "cnr": {
+                  "bicm": {
+                    "awgn": 1.97
+                  },
+                  "field": {
+                    "awgn": 2.9,
+                    "rc20": 4.2,
+                    "rl20": 4.6
+                  },
+                  "lab": {
+                    "awgn": 2.8,
+                    "rc20": 3.2,
+                    "rl20": 5.6
+                  },
+                  "simulation": {
+                    "awgn": 2.1,
+                    "rc20": 2.5,
+                    "rl20": 4.3
+                  }
+                },
+                "fecBlockSize": 32400,
+                "ldpcSize": 64800,
+                "numFecBlocks": 0
+              }
+            ]
+          }
+        ]
+      },
+      "input": {
+        "fft": 0,
+        "gi": 6,
+        "sp": 3
+      },
+      "name": "8K + GI6_1536 + SP4_4"
+    },
+    {
+      "expected": {
+        "frame2LogData": {
+          "error": "Frame_2.log not found",
+          "status": "ok"
+        },
+        "frameDuration": {
+          "status": "ok",
+          "subframeDurations": {
+            "0": 44.444444
+          },
+          "totalDurationMs": 47.925926
+        },
+        "l1dSizeBytes": {
+          "bytes": 25,
+          "source": "Frame_1.log",
+          "status": "ok"
+        },
+        "preambleFields": {
+          "cellsInFirst": 4307,
+          "cellsInNext": 4560,
+          "fftName": "8K",
+          "giSamples": 2048,
+          "l1bCells": 3820,
+          "l1dBytes": 25,
+          "l1dCells": 2787,
+          "numSymbols": 2,
+          "plpCells": 2260,
+          "preambleDx": 0,
+          "preambleReducedCarriers": 0,
+          "status": "ok",
+          "totalPreambleCells": 8867
+        },
+        "status": "ok",
+        "subframeResults": [
+          {
+            "plpCapacity": {
+              "capacity": 171330,
+              "capacitySBS": 0,
+              "cps": 5711,
+              "cred": 0,
+              "fft": "8K",
+              "nDataSymbols": 30,
+              "nSbsSymbols": 0,
+              "reason": null,
+              "sbsDataCells": 4560,
+              "spBoost": 0,
+              "status": "ok"
+            },
+            "plpResults": [
+              {
+                "bbFrameRate": 0,
+                "bitrateMbps": 0.002,
+                "bitsPerCell": 2,
+                "celulasTI": 130816,
+                "cnr": {
+                  "bicm": {
+                    "awgn": 1.97
+                  },
+                  "field": {
+                    "awgn": 2.9,
+                    "rc20": 4.2,
+                    "rl20": 4.6
+                  },
+                  "lab": {
+                    "awgn": 2.8,
+                    "rc20": 3.2,
+                    "rl20": 5.6
+                  },
+                  "simulation": {
+                    "awgn": 2.1,
+                    "rc20": 2.5,
+                    "rl20": 4.3
+                  }
+                },
+                "fecBlockSize": 32400,
+                "ldpcSize": 64800,
+                "numFecBlocks": 0
+              }
+            ]
+          }
+        ]
+      },
+      "input": {
+        "fft": 0,
+        "gi": 7,
+        "sp": 0
+      },
+      "name": "8K + GI7_2048 + SP3_2"
+    },
+    {
+      "expected": {
+        "frame2LogData": {
+          "error": "Frame_2.log not found",
+          "status": "ok"
+        },
+        "frameDuration": {
+          "status": "ok",
+          "subframeDurations": {
+            "0": 44.444444
+          },
+          "totalDurationMs": 47.925926
+        },
+        "l1dSizeBytes": {
+          "bytes": 25,
+          "source": "Frame_1.log",
+          "status": "ok"
+        },
+        "preambleFields": {
+          "cellsInFirst": 4307,
+          "cellsInNext": 4560,
+          "fftName": "8K",
+          "giSamples": 2048,
+          "l1bCells": 3820,
+          "l1dBytes": 25,
+          "l1dCells": 2787,
+          "numSymbols": 2,
+          "plpCells": 2260,
+          "preambleDx": 0,
+          "preambleReducedCarriers": 0,
+          "status": "ok",
+          "totalPreambleCells": 8867
+        },
+        "status": "ok",
+        "subframeResults": [
+          {
+            "plpCapacity": {
+              "capacity": 188550,
+              "capacitySBS": 0,
+              "cps": 6285,
+              "cred": 0,
+              "fft": "8K",
+              "nDataSymbols": 30,
+              "nSbsSymbols": 0,
+              "reason": null,
+              "sbsDataCells": 4560,
+              "spBoost": 0,
+              "status": "ok"
+            },
+            "plpResults": [
+              {
+                "bbFrameRate": 0,
+                "bitrateMbps": 0.002,
+                "bitsPerCell": 2,
+                "celulasTI": 130816,
+                "cnr": {
+                  "bicm": {
+                    "awgn": 1.97
+                  },
+                  "field": {
+                    "awgn": 2.9,
+                    "rc20": 4.2,
+                    "rl20": 4.6
+                  },
+                  "lab": {
+                    "awgn": 2.8,
+                    "rc20": 3.2,
+                    "rl20": 5.6
+                  },
+                  "simulation": {
+                    "awgn": 2.1,
+                    "rc20": 2.5,
+                    "rl20": 4.3
+                  }
+                },
+                "fecBlockSize": 32400,
+                "ldpcSize": 64800,
+                "numFecBlocks": 0
+              }
+            ]
+          }
+        ]
+      },
+      "input": {
+        "fft": 0,
+        "gi": 7,
+        "sp": 1
+      },
+      "name": "8K + GI7_2048 + SP3_4"
+    },
+    {
+      "expected": {
+        "frame2LogData": {
+          "error": "Frame_2.log not found",
+          "status": "ok"
+        },
+        "frameDuration": {
+          "status": "ok",
+          "subframeDurations": {
+            "0": 71.944444
+          },
+          "totalDurationMs": 76.342593
+        },
+        "l1dSizeBytes": {
+          "bytes": 25,
+          "source": "Frame_1.log",
+          "status": "ok"
+        },
+        "preambleFields": {
+          "cellsInFirst": 12558,
+          "cellsInNext": 13296,
+          "fftName": "16K",
+          "giSamples": 192,
+          "l1bCells": 3820,
+          "l1dBytes": 25,
+          "l1dCells": 2787,
+          "numSymbols": 1,
+          "plpCells": 5951,
+          "preambleDx": 0,
+          "preambleReducedCarriers": 0,
+          "status": "ok",
+          "totalPreambleCells": 12558
+        },
+        "status": "ok",
+        "subframeResults": [
+          {
+            "plpCapacity": {
+              "capacity": 405330,
+              "capacitySBS": 0,
+              "cps": 13511,
+              "cred": 0,
+              "fft": "16K",
+              "nDataSymbols": 30,
+              "nSbsSymbols": 0,
+              "reason": null,
+              "sbsDataCells": 13296,
+              "spBoost": 0,
+              "status": "ok"
+            },
+            "plpResults": [
+              {
+                "bbFrameRate": 0,
+                "bitrateMbps": 0.002,
+                "bitsPerCell": 2,
+                "celulasTI": 130816,
+                "cnr": {
+                  "bicm": {
+                    "awgn": 1.97
+                  },
+                  "field": {
+                    "awgn": 2.9,
+                    "rc20": 4.2,
+                    "rl20": 4.6
+                  },
+                  "lab": {
+                    "awgn": 2.8,
+                    "rc20": 3.2,
+                    "rl20": 5.6
+                  },
+                  "simulation": {
+                    "awgn": 2.1,
+                    "rc20": 2.5,
+                    "rl20": 4.3
+                  }
+                },
+                "fecBlockSize": 32400,
+                "ldpcSize": 64800,
+                "numFecBlocks": 0
+              }
+            ]
+          }
+        ]
+      },
+      "input": {
+        "fft": 1,
+        "gi": 1,
+        "sp": 14
+      },
+      "name": "16K + GI1_192 + SP32_2"
+    },
+    {
+      "expected": {
+        "frame2LogData": {
+          "error": "Frame_2.log not found",
+          "status": "ok"
+        },
+        "frameDuration": {
+          "status": "ok",
+          "subframeDurations": {
+            "0": 71.944444
+          },
+          "totalDurationMs": 76.342593
+        },
+        "l1dSizeBytes": {
+          "bytes": 25,
+          "source": "Frame_1.log",
+          "status": "ok"
+        },
+        "preambleFields": {
+          "cellsInFirst": 12558,
+          "cellsInNext": 13296,
+          "fftName": "16K",
+          "giSamples": 192,
+          "l1bCells": 3820,
+          "l1dBytes": 25,
+          "l1dCells": 2787,
+          "numSymbols": 1,
+          "plpCells": 5951,
+          "preambleDx": 0,
+          "preambleReducedCarriers": 0,
+          "status": "ok",
+          "totalPreambleCells": 12558
+        },
+        "status": "ok",
+        "subframeResults": [
+          {
+            "plpCapacity": {
+              "capacity": 408510,
+              "capacitySBS": 0,
+              "cps": 13617,
+              "cred": 0,
+              "fft": "16K",
+              "nDataSymbols": 30,
+              "nSbsSymbols": 0,
+              "reason": null,
+              "sbsDataCells": 13296,
+              "spBoost": 0,
+              "status": "ok"
+            },
+            "plpResults": [
+              {
+                "bbFrameRate": 0,
+                "bitrateMbps": 0.002,
+                "bitsPerCell": 2,
+                "celulasTI": 130816,
+                "cnr": {
+                  "bicm": {
+                    "awgn": 1.97
+                  },
+                  "field": {
+                    "awgn": 2.9,
+                    "rc20": 4.2,
+                    "rl20": 4.6
+                  },
+                  "lab": {
+                    "awgn": 2.8,
+                    "rc20": 3.2,
+                    "rl20": 5.6
+                  },
+                  "simulation": {
+                    "awgn": 2.1,
+                    "rc20": 2.5,
+                    "rl20": 4.3
+                  }
+                },
+                "fecBlockSize": 32400,
+                "ldpcSize": 64800,
+                "numFecBlocks": 0
+              }
+            ]
+          }
+        ]
+      },
+      "input": {
+        "fft": 1,
+        "gi": 1,
+        "sp": 15
+      },
+      "name": "16K + GI1_192 + SP32_4"
+    },
+    {
+      "expected": {
+        "frame2LogData": {
+          "error": "Frame_2.log not found",
+          "status": "ok"
+        },
+        "frameDuration": {
+          "status": "ok",
+          "subframeDurations": {
+            "0": 72.777778
+          },
+          "totalDurationMs": 77.203704
+        },
+        "l1dSizeBytes": {
+          "bytes": 25,
+          "source": "Frame_1.log",
+          "status": "ok"
+        },
+        "preambleFields": {
+          "cellsInFirst": 12150,
+          "cellsInNext": 12864,
+          "fftName": "16K",
+          "giSamples": 384,
+          "l1bCells": 3820,
+          "l1dBytes": 25,
+          "l1dCells": 2787,
+          "numSymbols": 1,
+          "plpCells": 5543,
+          "preambleDx": 0,
+          "preambleReducedCarriers": 0,
+          "status": "ok",
+          "totalPreambleCells": 12150
+        },
+        "status": "ok",
+        "subframeResults": [
+          {
+            "plpCapacity": {
+              "capacity": 405330,
+              "capacitySBS": 0,
+              "cps": 13511,
+              "cred": 0,
+              "fft": "16K",
+              "nDataSymbols": 30,
+              "nSbsSymbols": 0,
+              "reason": null,
+              "sbsDataCells": 13296,
+              "spBoost": 0,
+              "status": "ok"
+            },
+            "plpResults": [
+              {
+                "bbFrameRate": 0,
+                "bitrateMbps": 0.002,
+                "bitsPerCell": 2,
+                "celulasTI": 130816,
+                "cnr": {
+                  "bicm": {
+                    "awgn": 1.97
+                  },
+                  "field": {
+                    "awgn": 2.9,
+                    "rc20": 4.2,
+                    "rl20": 4.6
+                  },
+                  "lab": {
+                    "awgn": 2.8,
+                    "rc20": 3.2,
+                    "rl20": 5.6
+                  },
+                  "simulation": {
+                    "awgn": 2.1,
+                    "rc20": 2.5,
+                    "rl20": 4.3
+                  }
+                },
+                "fecBlockSize": 32400,
+                "ldpcSize": 64800,
+                "numFecBlocks": 0
+              }
+            ]
+          }
+        ]
+      },
+      "input": {
+        "fft": 1,
+        "gi": 2,
+        "sp": 14
+      },
+      "name": "16K + GI2_384 + SP32_2"
+    },
+    {
+      "expected": {
+        "frame2LogData": {
+          "error": "Frame_2.log not found",
+          "status": "ok"
+        },
+        "frameDuration": {
+          "status": "ok",
+          "subframeDurations": {
+            "0": 72.777778
+          },
+          "totalDurationMs": 77.203704
+        },
+        "l1dSizeBytes": {
+          "bytes": 25,
+          "source": "Frame_1.log",
+          "status": "ok"
+        },
+        "preambleFields": {
+          "cellsInFirst": 12150,
+          "cellsInNext": 12864,
+          "fftName": "16K",
+          "giSamples": 384,
+          "l1bCells": 3820,
+          "l1dBytes": 25,
+          "l1dCells": 2787,
+          "numSymbols": 1,
+          "plpCells": 5543,
+          "preambleDx": 0,
+          "preambleReducedCarriers": 0,
+          "status": "ok",
+          "totalPreambleCells": 12150
+        },
+        "status": "ok",
+        "subframeResults": [
+          {
+            "plpCapacity": {
+              "capacity": 408510,
+              "capacitySBS": 0,
+              "cps": 13617,
+              "cred": 0,
+              "fft": "16K",
+              "nDataSymbols": 30,
+              "nSbsSymbols": 0,
+              "reason": null,
+              "sbsDataCells": 13296,
+              "spBoost": 0,
+              "status": "ok"
+            },
+            "plpResults": [
+              {
+                "bbFrameRate": 0,
+                "bitrateMbps": 0.002,
+                "bitsPerCell": 2,
+                "celulasTI": 130816,
+                "cnr": {
+                  "bicm": {
+                    "awgn": 1.97
+                  },
+                  "field": {
+                    "awgn": 2.9,
+                    "rc20": 4.2,
+                    "rl20": 4.6
+                  },
+                  "lab": {
+                    "awgn": 2.8,
+                    "rc20": 3.2,
+                    "rl20": 5.6
+                  },
+                  "simulation": {
+                    "awgn": 2.1,
+                    "rc20": 2.5,
+                    "rl20": 4.3
+                  }
+                },
+                "fecBlockSize": 32400,
+                "ldpcSize": 64800,
+                "numFecBlocks": 0
+              }
+            ]
+          }
+        ]
+      },
+      "input": {
+        "fft": 1,
+        "gi": 2,
+        "sp": 15
+      },
+      "name": "16K + GI2_384 + SP32_4"
+    },
+    {
+      "expected": {
+        "frame2LogData": {
+          "error": "Frame_2.log not found",
+          "status": "ok"
+        },
+        "frameDuration": {
+          "status": "ok",
+          "subframeDurations": {
+            "0": 72.777778
+          },
+          "totalDurationMs": 77.203704
+        },
+        "l1dSizeBytes": {
+          "bytes": 25,
+          "source": "Frame_1.log",
+          "status": "ok"
+        },
+        "preambleFields": {
+          "cellsInFirst": 12150,
+          "cellsInNext": 12864,
+          "fftName": "16K",
+          "giSamples": 384,
+          "l1bCells": 3820,
+          "l1dBytes": 25,
+          "l1dCells": 2787,
+          "numSymbols": 1,
+          "plpCells": 5543,
+          "preambleDx": 0,
+          "preambleReducedCarriers": 0,
+          "status": "ok",
+          "totalPreambleCells": 12150
+        },
+        "status": "ok",
+        "subframeResults": [
+          {
+            "plpCapacity": {
+              "capacity": 398850,
+              "capacitySBS": 0,
+              "cps": 13295,
+              "cred": 0,
+              "fft": "16K",
+              "nDataSymbols": 30,
+              "nSbsSymbols": 0,
+              "reason": null,
+              "sbsDataCells": 12864,
+              "spBoost": 0,
+              "status": "ok"
+            },
+            "plpResults": [
+              {
+                "bbFrameRate": 0,
+                "bitrateMbps": 0.002,
+                "bitsPerCell": 2,
+                "celulasTI": 130816,
+                "cnr": {
+                  "bicm": {
+                    "awgn": 1.97
+                  },
+                  "field": {
+                    "awgn": 2.9,
+                    "rc20": 4.2,
+                    "rl20": 4.6
+                  },
+                  "lab": {
+                    "awgn": 2.8,
+                    "rc20": 3.2,
+                    "rl20": 5.6
+                  },
+                  "simulation": {
+                    "awgn": 2.1,
+                    "rc20": 2.5,
+                    "rl20": 4.3
+                  }
+                },
+                "fecBlockSize": 32400,
+                "ldpcSize": 64800,
+                "numFecBlocks": 0
+              }
+            ]
+          }
+        ]
+      },
+      "input": {
+        "fft": 1,
+        "gi": 2,
+        "sp": 10
+      },
+      "name": "16K + GI2_384 + SP16_2"
+    },
+    {
+      "expected": {
+        "frame2LogData": {
+          "error": "Frame_2.log not found",
+          "status": "ok"
+        },
+        "frameDuration": {
+          "status": "ok",
+          "subframeDurations": {
+            "0": 72.777778
+          },
+          "totalDurationMs": 77.203704
+        },
+        "l1dSizeBytes": {
+          "bytes": 25,
+          "source": "Frame_1.log",
+          "status": "ok"
+        },
+        "preambleFields": {
+          "cellsInFirst": 12150,
+          "cellsInNext": 12864,
+          "fftName": "16K",
+          "giSamples": 384,
+          "l1bCells": 3820,
+          "l1dBytes": 25,
+          "l1dCells": 2787,
+          "numSymbols": 1,
+          "plpCells": 5543,
+          "preambleDx": 0,
+          "preambleReducedCarriers": 0,
+          "status": "ok",
+          "totalPreambleCells": 12150
+        },
+        "status": "ok",
+        "subframeResults": [
+          {
+            "plpCapacity": {
+              "capacity": 405270,
+              "capacitySBS": 0,
+              "cps": 13509,
+              "cred": 0,
+              "fft": "16K",
+              "nDataSymbols": 30,
+              "nSbsSymbols": 0,
+              "reason": null,
+              "sbsDataCells": 12864,
+              "spBoost": 0,
+              "status": "ok"
+            },
+            "plpResults": [
+              {
+                "bbFrameRate": 0,
+                "bitrateMbps": 0.002,
+                "bitsPerCell": 2,
+                "celulasTI": 130816,
+                "cnr": {
+                  "bicm": {
+                    "awgn": 1.97
+                  },
+                  "field": {
+                    "awgn": 2.9,
+                    "rc20": 4.2,
+                    "rl20": 4.6
+                  },
+                  "lab": {
+                    "awgn": 2.8,
+                    "rc20": 3.2,
+                    "rl20": 5.6
+                  },
+                  "simulation": {
+                    "awgn": 2.1,
+                    "rc20": 2.5,
+                    "rl20": 4.3
+                  }
+                },
+                "fecBlockSize": 32400,
+                "ldpcSize": 64800,
+                "numFecBlocks": 0
+              }
+            ]
+          }
+        ]
+      },
+      "input": {
+        "fft": 1,
+        "gi": 2,
+        "sp": 11
+      },
+      "name": "16K + GI2_384 + SP16_4"
+    },
+    {
+      "expected": {
+        "frame2LogData": {
+          "error": "Frame_2.log not found",
+          "status": "ok"
+        },
+        "frameDuration": {
+          "status": "ok",
+          "subframeDurations": {
+            "0": 73.333333
+          },
+          "totalDurationMs": 77.777778
+        },
+        "l1dSizeBytes": {
+          "bytes": 25,
+          "source": "Frame_1.log",
+          "status": "ok"
+        },
+        "preambleFields": {
+          "cellsInFirst": 11878,
+          "cellsInNext": 12576,
+          "fftName": "16K",
+          "giSamples": 512,
+          "l1bCells": 3820,
+          "l1dBytes": 25,
+          "l1dCells": 2787,
+          "numSymbols": 1,
+          "plpCells": 5271,
+          "preambleDx": 0,
+          "preambleReducedCarriers": 0,
+          "status": "ok",
+          "totalPreambleCells": 11878
+        },
+        "status": "ok",
+        "subframeResults": [
+          {
+            "plpCapacity": {
+              "capacity": 403170,
+              "capacitySBS": 0,
+              "cps": 13439,
+              "cred": 0,
+              "fft": "16K",
+              "nDataSymbols": 30,
+              "nSbsSymbols": 0,
+              "reason": null,
+              "sbsDataCells": 13152,
+              "spBoost": 0,
+              "status": "ok"
+            },
+            "plpResults": [
+              {
+                "bbFrameRate": 0,
+                "bitrateMbps": 0.002,
+                "bitsPerCell": 2,
+                "celulasTI": 130816,
+                "cnr": {
+                  "bicm": {
+                    "awgn": 1.97
+                  },
+                  "field": {
+                    "awgn": 2.9,
+                    "rc20": 4.2,
+                    "rl20": 4.6
+                  },
+                  "lab": {
+                    "awgn": 2.8,
+                    "rc20": 3.2,
+                    "rl20": 5.6
+                  },
+                  "simulation": {
+                    "awgn": 2.1,
+                    "rc20": 2.5,
+                    "rl20": 4.3
+                  }
+                },
+                "fecBlockSize": 32400,
+                "ldpcSize": 64800,
+                "numFecBlocks": 0
+              }
+            ]
+          }
+        ]
+      },
+      "input": {
+        "fft": 1,
+        "gi": 3,
+        "sp": 12
+      },
+      "name": "16K + GI3_512 + SP24_2"
+    },
+    {
+      "expected": {
+        "frame2LogData": {
+          "error": "Frame_2.log not found",
+          "status": "ok"
+        },
+        "frameDuration": {
+          "status": "ok",
+          "subframeDurations": {
+            "0": 73.333333
+          },
+          "totalDurationMs": 77.777778
+        },
+        "l1dSizeBytes": {
+          "bytes": 25,
+          "source": "Frame_1.log",
+          "status": "ok"
+        },
+        "preambleFields": {
+          "cellsInFirst": 11878,
+          "cellsInNext": 12576,
+          "fftName": "16K",
+          "giSamples": 512,
+          "l1bCells": 3820,
+          "l1dBytes": 25,
+          "l1dCells": 2787,
+          "numSymbols": 1,
+          "plpCells": 5271,
+          "preambleDx": 0,
+          "preambleReducedCarriers": 0,
+          "status": "ok",
+          "totalPreambleCells": 11878
+        },
+        "status": "ok",
+        "subframeResults": [
+          {
+            "plpCapacity": {
+              "capacity": 407430,
+              "capacitySBS": 0,
+              "cps": 13581,
+              "cred": 0,
+              "fft": "16K",
+              "nDataSymbols": 30,
+              "nSbsSymbols": 0,
+              "reason": null,
+              "sbsDataCells": 13152,
+              "spBoost": 0,
+              "status": "ok"
+            },
+            "plpResults": [
+              {
+                "bbFrameRate": 0,
+                "bitrateMbps": 0.002,
+                "bitsPerCell": 2,
+                "celulasTI": 130816,
+                "cnr": {
+                  "bicm": {
+                    "awgn": 1.97
+                  },
+                  "field": {
+                    "awgn": 2.9,
+                    "rc20": 4.2,
+                    "rl20": 4.6
+                  },
+                  "lab": {
+                    "awgn": 2.8,
+                    "rc20": 3.2,
+                    "rl20": 5.6
+                  },
+                  "simulation": {
+                    "awgn": 2.1,
+                    "rc20": 2.5,
+                    "rl20": 4.3
+                  }
+                },
+                "fecBlockSize": 32400,
+                "ldpcSize": 64800,
+                "numFecBlocks": 0
+              }
+            ]
+          }
+        ]
+      },
+      "input": {
+        "fft": 1,
+        "gi": 3,
+        "sp": 13
+      },
+      "name": "16K + GI3_512 + SP24_4"
+    },
+    {
+      "expected": {
+        "frame2LogData": {
+          "error": "Frame_2.log not found",
+          "status": "ok"
+        },
+        "frameDuration": {
+          "status": "ok",
+          "subframeDurations": {
+            "0": 73.333333
+          },
+          "totalDurationMs": 77.777778
+        },
+        "l1dSizeBytes": {
+          "bytes": 25,
+          "source": "Frame_1.log",
+          "status": "ok"
+        },
+        "preambleFields": {
+          "cellsInFirst": 11878,
+          "cellsInNext": 12576,
+          "fftName": "16K",
+          "giSamples": 512,
+          "l1bCells": 3820,
+          "l1dBytes": 25,
+          "l1dCells": 2787,
+          "numSymbols": 1,
+          "plpCells": 5271,
+          "preambleDx": 0,
+          "preambleReducedCarriers": 0,
+          "status": "ok",
+          "totalPreambleCells": 11878
+        },
+        "status": "ok",
+        "subframeResults": [
+          {
+            "plpCapacity": {
+              "capacity": 394530,
+              "capacitySBS": 0,
+              "cps": 13151,
+              "cred": 0,
+              "fft": "16K",
+              "nDataSymbols": 30,
+              "nSbsSymbols": 0,
+              "reason": null,
+              "sbsDataCells": 12576,
+              "spBoost": 0,
+              "status": "ok"
+            },
+            "plpResults": [
+              {
+                "bbFrameRate": 0,
+                "bitrateMbps": 0.002,
+                "bitsPerCell": 2,
+                "celulasTI": 130816,
+                "cnr": {
+                  "bicm": {
+                    "awgn": 1.97
+                  },
+                  "field": {
+                    "awgn": 2.9,
+                    "rc20": 4.2,
+                    "rl20": 4.6
+                  },
+                  "lab": {
+                    "awgn": 2.8,
+                    "rc20": 3.2,
+                    "rl20": 5.6
+                  },
+                  "simulation": {
+                    "awgn": 2.1,
+                    "rc20": 2.5,
+                    "rl20": 4.3
+                  }
+                },
+                "fecBlockSize": 32400,
+                "ldpcSize": 64800,
+                "numFecBlocks": 0
+              }
+            ]
+          }
+        ]
+      },
+      "input": {
+        "fft": 1,
+        "gi": 3,
+        "sp": 8
+      },
+      "name": "16K + GI3_512 + SP12_2"
+    },
+    {
+      "expected": {
+        "frame2LogData": {
+          "error": "Frame_2.log not found",
+          "status": "ok"
+        },
+        "frameDuration": {
+          "status": "ok",
+          "subframeDurations": {
+            "0": 73.333333
+          },
+          "totalDurationMs": 77.777778
+        },
+        "l1dSizeBytes": {
+          "bytes": 25,
+          "source": "Frame_1.log",
+          "status": "ok"
+        },
+        "preambleFields": {
+          "cellsInFirst": 11878,
+          "cellsInNext": 12576,
+          "fftName": "16K",
+          "giSamples": 512,
+          "l1bCells": 3820,
+          "l1dBytes": 25,
+          "l1dCells": 2787,
+          "numSymbols": 1,
+          "plpCells": 5271,
+          "preambleDx": 0,
+          "preambleReducedCarriers": 0,
+          "status": "ok",
+          "totalPreambleCells": 11878
+        },
+        "status": "ok",
+        "subframeResults": [
+          {
+            "plpCapacity": {
+              "capacity": 403110,
+              "capacitySBS": 0,
+              "cps": 13437,
+              "cred": 0,
+              "fft": "16K",
+              "nDataSymbols": 30,
+              "nSbsSymbols": 0,
+              "reason": null,
+              "sbsDataCells": 12576,
+              "spBoost": 0,
+              "status": "ok"
+            },
+            "plpResults": [
+              {
+                "bbFrameRate": 0,
+                "bitrateMbps": 0.002,
+                "bitsPerCell": 2,
+                "celulasTI": 130816,
+                "cnr": {
+                  "bicm": {
+                    "awgn": 1.97
+                  },
+                  "field": {
+                    "awgn": 2.9,
+                    "rc20": 4.2,
+                    "rl20": 4.6
+                  },
+                  "lab": {
+                    "awgn": 2.8,
+                    "rc20": 3.2,
+                    "rl20": 5.6
+                  },
+                  "simulation": {
+                    "awgn": 2.1,
+                    "rc20": 2.5,
+                    "rl20": 4.3
+                  }
+                },
+                "fecBlockSize": 32400,
+                "ldpcSize": 64800,
+                "numFecBlocks": 0
+              }
+            ]
+          }
+        ]
+      },
+      "input": {
+        "fft": 1,
+        "gi": 3,
+        "sp": 9
+      },
+      "name": "16K + GI3_512 + SP12_4"
+    },
+    {
+      "expected": {
+        "frame2LogData": {
+          "error": "Frame_2.log not found",
+          "status": "ok"
+        },
+        "frameDuration": {
+          "status": "ok",
+          "subframeDurations": {
+            "0": 74.444444
+          },
+          "totalDurationMs": 78.925926
+        },
+        "l1dSizeBytes": {
+          "bytes": 25,
+          "source": "Frame_1.log",
+          "status": "ok"
+        },
+        "preambleFields": {
+          "cellsInFirst": 11334,
+          "cellsInNext": 12000,
+          "fftName": "16K",
+          "giSamples": 768,
+          "l1bCells": 3820,
+          "l1dBytes": 25,
+          "l1dCells": 2787,
+          "numSymbols": 1,
+          "plpCells": 4727,
+          "preambleDx": 0,
+          "preambleReducedCarriers": 0,
+          "status": "ok",
+          "totalPreambleCells": 11334
+        },
+        "status": "ok",
+        "subframeResults": [
+          {
+            "plpCapacity": {
+              "capacity": 398850,
+              "capacitySBS": 0,
+              "cps": 13295,
+              "cred": 0,
+              "fft": "16K",
+              "nDataSymbols": 30,
+              "nSbsSymbols": 0,
+              "reason": null,
+              "sbsDataCells": 12864,
+              "spBoost": 0,
+              "status": "ok"
+            },
+            "plpResults": [
+              {
+                "bbFrameRate": 0,
+                "bitrateMbps": 0.002,
+                "bitsPerCell": 2,
+                "celulasTI": 130816,
+                "cnr": {
+                  "bicm": {
+                    "awgn": 1.97
+                  },
+                  "field": {
+                    "awgn": 2.9,
+                    "rc20": 4.2,
+                    "rl20": 4.6
+                  },
+                  "lab": {
+                    "awgn": 2.8,
+                    "rc20": 3.2,
+                    "rl20": 5.6
+                  },
+                  "simulation": {
+                    "awgn": 2.1,
+                    "rc20": 2.5,
+                    "rl20": 4.3
+                  }
+                },
+                "fecBlockSize": 32400,
+                "ldpcSize": 64800,
+                "numFecBlocks": 0
+              }
+            ]
+          }
+        ]
+      },
+      "input": {
+        "fft": 1,
+        "gi": 4,
+        "sp": 10
+      },
+      "name": "16K + GI4_768 + SP16_2"
+    },
+    {
+      "expected": {
+        "frame2LogData": {
+          "error": "Frame_2.log not found",
+          "status": "ok"
+        },
+        "frameDuration": {
+          "status": "ok",
+          "subframeDurations": {
+            "0": 74.444444
+          },
+          "totalDurationMs": 78.925926
+        },
+        "l1dSizeBytes": {
+          "bytes": 25,
+          "source": "Frame_1.log",
+          "status": "ok"
+        },
+        "preambleFields": {
+          "cellsInFirst": 11334,
+          "cellsInNext": 12000,
+          "fftName": "16K",
+          "giSamples": 768,
+          "l1bCells": 3820,
+          "l1dBytes": 25,
+          "l1dCells": 2787,
+          "numSymbols": 1,
+          "plpCells": 4727,
+          "preambleDx": 0,
+          "preambleReducedCarriers": 0,
+          "status": "ok",
+          "totalPreambleCells": 11334
+        },
+        "status": "ok",
+        "subframeResults": [
+          {
+            "plpCapacity": {
+              "capacity": 405270,
+              "capacitySBS": 0,
+              "cps": 13509,
+              "cred": 0,
+              "fft": "16K",
+              "nDataSymbols": 30,
+              "nSbsSymbols": 0,
+              "reason": null,
+              "sbsDataCells": 12864,
+              "spBoost": 0,
+              "status": "ok"
+            },
+            "plpResults": [
+              {
+                "bbFrameRate": 0,
+                "bitrateMbps": 0.002,
+                "bitsPerCell": 2,
+                "celulasTI": 130816,
+                "cnr": {
+                  "bicm": {
+                    "awgn": 1.97
+                  },
+                  "field": {
+                    "awgn": 2.9,
+                    "rc20": 4.2,
+                    "rl20": 4.6
+                  },
+                  "lab": {
+                    "awgn": 2.8,
+                    "rc20": 3.2,
+                    "rl20": 5.6
+                  },
+                  "simulation": {
+                    "awgn": 2.1,
+                    "rc20": 2.5,
+                    "rl20": 4.3
+                  }
+                },
+                "fecBlockSize": 32400,
+                "ldpcSize": 64800,
+                "numFecBlocks": 0
+              }
+            ]
+          }
+        ]
+      },
+      "input": {
+        "fft": 1,
+        "gi": 4,
+        "sp": 11
+      },
+      "name": "16K + GI4_768 + SP16_4"
+    },
+    {
+      "expected": {
+        "frame2LogData": {
+          "error": "Frame_2.log not found",
+          "status": "ok"
+        },
+        "frameDuration": {
+          "status": "ok",
+          "subframeDurations": {
+            "0": 74.444444
+          },
+          "totalDurationMs": 78.925926
+        },
+        "l1dSizeBytes": {
+          "bytes": 25,
+          "source": "Frame_1.log",
+          "status": "ok"
+        },
+        "preambleFields": {
+          "cellsInFirst": 11334,
+          "cellsInNext": 12000,
+          "fftName": "16K",
+          "giSamples": 768,
+          "l1bCells": 3820,
+          "l1dBytes": 25,
+          "l1dCells": 2787,
+          "numSymbols": 1,
+          "plpCells": 4727,
+          "preambleDx": 0,
+          "preambleReducedCarriers": 0,
+          "status": "ok",
+          "totalPreambleCells": 11334
+        },
+        "status": "ok",
+        "subframeResults": [
+          {
+            "plpCapacity": {
+              "capacity": 385890,
+              "capacitySBS": 0,
+              "cps": 12863,
+              "cred": 0,
+              "fft": "16K",
+              "nDataSymbols": 30,
+              "nSbsSymbols": 0,
+              "reason": null,
+              "sbsDataCells": 12000,
+              "spBoost": 0,
+              "status": "ok"
+            },
+            "plpResults": [
+              {
+                "bbFrameRate": 0,
+                "bitrateMbps": 0.002,
+                "bitsPerCell": 2,
+                "celulasTI": 130816,
+                "cnr": {
+                  "bicm": {
+                    "awgn": 1.97
+                  },
+                  "field": {
+                    "awgn": 2.9,
+                    "rc20": 4.2,
+                    "rl20": 4.6
+                  },
+                  "lab": {
+                    "awgn": 2.8,
+                    "rc20": 3.2,
+                    "rl20": 5.6
+                  },
+                  "simulation": {
+                    "awgn": 2.1,
+                    "rc20": 2.5,
+                    "rl20": 4.3
+                  }
+                },
+                "fecBlockSize": 32400,
+                "ldpcSize": 64800,
+                "numFecBlocks": 0
+              }
+            ]
+          }
+        ]
+      },
+      "input": {
+        "fft": 1,
+        "gi": 4,
+        "sp": 6
+      },
+      "name": "16K + GI4_768 + SP8_2"
+    },
+    {
+      "expected": {
+        "frame2LogData": {
+          "error": "Frame_2.log not found",
+          "status": "ok"
+        },
+        "frameDuration": {
+          "status": "ok",
+          "subframeDurations": {
+            "0": 74.444444
+          },
+          "totalDurationMs": 78.925926
+        },
+        "l1dSizeBytes": {
+          "bytes": 25,
+          "source": "Frame_1.log",
+          "status": "ok"
+        },
+        "preambleFields": {
+          "cellsInFirst": 11334,
+          "cellsInNext": 12000,
+          "fftName": "16K",
+          "giSamples": 768,
+          "l1bCells": 3820,
+          "l1dBytes": 25,
+          "l1dCells": 2787,
+          "numSymbols": 1,
+          "plpCells": 4727,
+          "preambleDx": 0,
+          "preambleReducedCarriers": 0,
+          "status": "ok",
+          "totalPreambleCells": 11334
+        },
+        "status": "ok",
+        "subframeResults": [
+          {
+            "plpCapacity": {
+              "capacity": 398790,
+              "capacitySBS": 0,
+              "cps": 13293,
+              "cred": 0,
+              "fft": "16K",
+              "nDataSymbols": 30,
+              "nSbsSymbols": 0,
+              "reason": null,
+              "sbsDataCells": 12000,
+              "spBoost": 0,
+              "status": "ok"
+            },
+            "plpResults": [
+              {
+                "bbFrameRate": 0,
+                "bitrateMbps": 0.002,
+                "bitsPerCell": 2,
+                "celulasTI": 130816,
+                "cnr": {
+                  "bicm": {
+                    "awgn": 1.97
+                  },
+                  "field": {
+                    "awgn": 2.9,
+                    "rc20": 4.2,
+                    "rl20": 4.6
+                  },
+                  "lab": {
+                    "awgn": 2.8,
+                    "rc20": 3.2,
+                    "rl20": 5.6
+                  },
+                  "simulation": {
+                    "awgn": 2.1,
+                    "rc20": 2.5,
+                    "rl20": 4.3
+                  }
+                },
+                "fecBlockSize": 32400,
+                "ldpcSize": 64800,
+                "numFecBlocks": 0
+              }
+            ]
+          }
+        ]
+      },
+      "input": {
+        "fft": 1,
+        "gi": 4,
+        "sp": 7
+      },
+      "name": "16K + GI4_768 + SP8_4"
+    },
+    {
+      "expected": {
+        "frame2LogData": {
+          "error": "Frame_2.log not found",
+          "status": "ok"
+        },
+        "frameDuration": {
+          "status": "ok",
+          "subframeDurations": {
+            "0": 75.555556
+          },
+          "totalDurationMs": 80.074074
+        },
+        "l1dSizeBytes": {
+          "bytes": 25,
+          "source": "Frame_1.log",
+          "status": "ok"
+        },
+        "preambleFields": {
+          "cellsInFirst": 10790,
+          "cellsInNext": 11424,
+          "fftName": "16K",
+          "giSamples": 1024,
+          "l1bCells": 3820,
+          "l1dBytes": 25,
+          "l1dCells": 2787,
+          "numSymbols": 1,
+          "plpCells": 4183,
+          "preambleDx": 0,
+          "preambleReducedCarriers": 0,
+          "status": "ok",
+          "totalPreambleCells": 10790
+        },
+        "status": "ok",
+        "subframeResults": [
+          {
+            "plpCapacity": {
+              "capacity": 394530,
+              "capacitySBS": 0,
+              "cps": 13151,
+              "cred": 0,
+              "fft": "16K",
+              "nDataSymbols": 30,
+              "nSbsSymbols": 0,
+              "reason": null,
+              "sbsDataCells": 12576,
+              "spBoost": 0,
+              "status": "ok"
+            },
+            "plpResults": [
+              {
+                "bbFrameRate": 0,
+                "bitrateMbps": 0.001,
+                "bitsPerCell": 2,
+                "celulasTI": 130816,
+                "cnr": {
+                  "bicm": {
+                    "awgn": 1.97
+                  },
+                  "field": {
+                    "awgn": 2.9,
+                    "rc20": 4.2,
+                    "rl20": 4.6
+                  },
+                  "lab": {
+                    "awgn": 2.8,
+                    "rc20": 3.2,
+                    "rl20": 5.6
+                  },
+                  "simulation": {
+                    "awgn": 2.1,
+                    "rc20": 2.5,
+                    "rl20": 4.3
+                  }
+                },
+                "fecBlockSize": 32400,
+                "ldpcSize": 64800,
+                "numFecBlocks": 0
+              }
+            ]
+          }
+        ]
+      },
+      "input": {
+        "fft": 1,
+        "gi": 5,
+        "sp": 8
+      },
+      "name": "16K + GI5_1024 + SP12_2"
+    },
+    {
+      "expected": {
+        "frame2LogData": {
+          "error": "Frame_2.log not found",
+          "status": "ok"
+        },
+        "frameDuration": {
+          "status": "ok",
+          "subframeDurations": {
+            "0": 75.555556
+          },
+          "totalDurationMs": 80.074074
+        },
+        "l1dSizeBytes": {
+          "bytes": 25,
+          "source": "Frame_1.log",
+          "status": "ok"
+        },
+        "preambleFields": {
+          "cellsInFirst": 10790,
+          "cellsInNext": 11424,
+          "fftName": "16K",
+          "giSamples": 1024,
+          "l1bCells": 3820,
+          "l1dBytes": 25,
+          "l1dCells": 2787,
+          "numSymbols": 1,
+          "plpCells": 4183,
+          "preambleDx": 0,
+          "preambleReducedCarriers": 0,
+          "status": "ok",
+          "totalPreambleCells": 10790
+        },
+        "status": "ok",
+        "subframeResults": [
+          {
+            "plpCapacity": {
+              "capacity": 403110,
+              "capacitySBS": 0,
+              "cps": 13437,
+              "cred": 0,
+              "fft": "16K",
+              "nDataSymbols": 30,
+              "nSbsSymbols": 0,
+              "reason": null,
+              "sbsDataCells": 12576,
+              "spBoost": 0,
+              "status": "ok"
+            },
+            "plpResults": [
+              {
+                "bbFrameRate": 0,
+                "bitrateMbps": 0.001,
+                "bitsPerCell": 2,
+                "celulasTI": 130816,
+                "cnr": {
+                  "bicm": {
+                    "awgn": 1.97
+                  },
+                  "field": {
+                    "awgn": 2.9,
+                    "rc20": 4.2,
+                    "rl20": 4.6
+                  },
+                  "lab": {
+                    "awgn": 2.8,
+                    "rc20": 3.2,
+                    "rl20": 5.6
+                  },
+                  "simulation": {
+                    "awgn": 2.1,
+                    "rc20": 2.5,
+                    "rl20": 4.3
+                  }
+                },
+                "fecBlockSize": 32400,
+                "ldpcSize": 64800,
+                "numFecBlocks": 0
+              }
+            ]
+          }
+        ]
+      },
+      "input": {
+        "fft": 1,
+        "gi": 5,
+        "sp": 9
+      },
+      "name": "16K + GI5_1024 + SP12_4"
+    },
+    {
+      "expected": {
+        "frame2LogData": {
+          "error": "Frame_2.log not found",
+          "status": "ok"
+        },
+        "frameDuration": {
+          "status": "ok",
+          "subframeDurations": {
+            "0": 75.555556
+          },
+          "totalDurationMs": 80.074074
+        },
+        "l1dSizeBytes": {
+          "bytes": 25,
+          "source": "Frame_1.log",
+          "status": "ok"
+        },
+        "preambleFields": {
+          "cellsInFirst": 10790,
+          "cellsInNext": 11424,
+          "fftName": "16K",
+          "giSamples": 1024,
+          "l1bCells": 3820,
+          "l1dBytes": 25,
+          "l1dCells": 2787,
+          "numSymbols": 1,
+          "plpCells": 4183,
+          "preambleDx": 0,
+          "preambleReducedCarriers": 0,
+          "status": "ok",
+          "totalPreambleCells": 10790
+        },
+        "status": "ok",
+        "subframeResults": [
+          {
+            "plpCapacity": {
+              "capacity": 377250,
+              "capacitySBS": 0,
+              "cps": 12575,
+              "cred": 0,
+              "fft": "16K",
+              "nDataSymbols": 30,
+              "nSbsSymbols": 0,
+              "reason": null,
+              "sbsDataCells": 11424,
+              "spBoost": 0,
+              "status": "ok"
+            },
+            "plpResults": [
+              {
+                "bbFrameRate": 0,
+                "bitrateMbps": 0.001,
+                "bitsPerCell": 2,
+                "celulasTI": 130816,
+                "cnr": {
+                  "bicm": {
+                    "awgn": 1.97
+                  },
+                  "field": {
+                    "awgn": 2.9,
+                    "rc20": 4.2,
+                    "rl20": 4.6
+                  },
+                  "lab": {
+                    "awgn": 2.8,
+                    "rc20": 3.2,
+                    "rl20": 5.6
+                  },
+                  "simulation": {
+                    "awgn": 2.1,
+                    "rc20": 2.5,
+                    "rl20": 4.3
+                  }
+                },
+                "fecBlockSize": 32400,
+                "ldpcSize": 64800,
+                "numFecBlocks": 0
+              }
+            ]
+          }
+        ]
+      },
+      "input": {
+        "fft": 1,
+        "gi": 5,
+        "sp": 4
+      },
+      "name": "16K + GI5_1024 + SP6_2"
+    },
+    {
+      "expected": {
+        "frame2LogData": {
+          "error": "Frame_2.log not found",
+          "status": "ok"
+        },
+        "frameDuration": {
+          "status": "ok",
+          "subframeDurations": {
+            "0": 75.555556
+          },
+          "totalDurationMs": 80.074074
+        },
+        "l1dSizeBytes": {
+          "bytes": 25,
+          "source": "Frame_1.log",
+          "status": "ok"
+        },
+        "preambleFields": {
+          "cellsInFirst": 10790,
+          "cellsInNext": 11424,
+          "fftName": "16K",
+          "giSamples": 1024,
+          "l1bCells": 3820,
+          "l1dBytes": 25,
+          "l1dCells": 2787,
+          "numSymbols": 1,
+          "plpCells": 4183,
+          "preambleDx": 0,
+          "preambleReducedCarriers": 0,
+          "status": "ok",
+          "totalPreambleCells": 10790
+        },
+        "status": "ok",
+        "subframeResults": [
+          {
+            "plpCapacity": {
+              "capacity": 394470,
+              "capacitySBS": 0,
+              "cps": 13149,
+              "cred": 0,
+              "fft": "16K",
+              "nDataSymbols": 30,
+              "nSbsSymbols": 0,
+              "reason": null,
+              "sbsDataCells": 11424,
+              "spBoost": 0,
+              "status": "ok"
+            },
+            "plpResults": [
+              {
+                "bbFrameRate": 0,
+                "bitrateMbps": 0.001,
+                "bitsPerCell": 2,
+                "celulasTI": 130816,
+                "cnr": {
+                  "bicm": {
+                    "awgn": 1.97
+                  },
+                  "field": {
+                    "awgn": 2.9,
+                    "rc20": 4.2,
+                    "rl20": 4.6
+                  },
+                  "lab": {
+                    "awgn": 2.8,
+                    "rc20": 3.2,
+                    "rl20": 5.6
+                  },
+                  "simulation": {
+                    "awgn": 2.1,
+                    "rc20": 2.5,
+                    "rl20": 4.3
+                  }
+                },
+                "fecBlockSize": 32400,
+                "ldpcSize": 64800,
+                "numFecBlocks": 0
+              }
+            ]
+          }
+        ]
+      },
+      "input": {
+        "fft": 1,
+        "gi": 5,
+        "sp": 5
+      },
+      "name": "16K + GI5_1024 + SP6_4"
+    },
+    {
+      "expected": {
+        "frame2LogData": {
+          "error": "Frame_2.log not found",
+          "status": "ok"
+        },
+        "frameDuration": {
+          "status": "ok",
+          "subframeDurations": {
+            "0": 77.777778
+          },
+          "totalDurationMs": 82.37037
+        },
+        "l1dSizeBytes": {
+          "bytes": 25,
+          "source": "Frame_1.log",
+          "status": "ok"
+        },
+        "preambleFields": {
+          "cellsInFirst": 9702,
+          "cellsInNext": 10272,
+          "fftName": "16K",
+          "giSamples": 1536,
+          "l1bCells": 3820,
+          "l1dBytes": 25,
+          "l1dCells": 2787,
+          "numSymbols": 1,
+          "plpCells": 3095,
+          "preambleDx": 0,
+          "preambleReducedCarriers": 0,
+          "status": "ok",
+          "totalPreambleCells": 9702
+        },
+        "status": "ok",
+        "subframeResults": [
+          {
+            "plpCapacity": {
+              "capacity": 385890,
+              "capacitySBS": 0,
+              "cps": 12863,
+              "cred": 0,
+              "fft": "16K",
+              "nDataSymbols": 30,
+              "nSbsSymbols": 0,
+              "reason": null,
+              "sbsDataCells": 12000,
+              "spBoost": 0,
+              "status": "ok"
+            },
+            "plpResults": [
+              {
+                "bbFrameRate": 0,
+                "bitrateMbps": 0.001,
+                "bitsPerCell": 2,
+                "celulasTI": 130816,
+                "cnr": {
+                  "bicm": {
+                    "awgn": 1.97
+                  },
+                  "field": {
+                    "awgn": 2.9,
+                    "rc20": 4.2,
+                    "rl20": 4.6
+                  },
+                  "lab": {
+                    "awgn": 2.8,
+                    "rc20": 3.2,
+                    "rl20": 5.6
+                  },
+                  "simulation": {
+                    "awgn": 2.1,
+                    "rc20": 2.5,
+                    "rl20": 4.3
+                  }
+                },
+                "fecBlockSize": 32400,
+                "ldpcSize": 64800,
+                "numFecBlocks": 0
+              }
+            ]
+          }
+        ]
+      },
+      "input": {
+        "fft": 1,
+        "gi": 6,
+        "sp": 6
+      },
+      "name": "16K + GI6_1536 + SP8_2"
+    },
+    {
+      "expected": {
+        "frame2LogData": {
+          "error": "Frame_2.log not found",
+          "status": "ok"
+        },
+        "frameDuration": {
+          "status": "ok",
+          "subframeDurations": {
+            "0": 77.777778
+          },
+          "totalDurationMs": 82.37037
+        },
+        "l1dSizeBytes": {
+          "bytes": 25,
+          "source": "Frame_1.log",
+          "status": "ok"
+        },
+        "preambleFields": {
+          "cellsInFirst": 9702,
+          "cellsInNext": 10272,
+          "fftName": "16K",
+          "giSamples": 1536,
+          "l1bCells": 3820,
+          "l1dBytes": 25,
+          "l1dCells": 2787,
+          "numSymbols": 1,
+          "plpCells": 3095,
+          "preambleDx": 0,
+          "preambleReducedCarriers": 0,
+          "status": "ok",
+          "totalPreambleCells": 9702
+        },
+        "status": "ok",
+        "subframeResults": [
+          {
+            "plpCapacity": {
+              "capacity": 398790,
+              "capacitySBS": 0,
+              "cps": 13293,
+              "cred": 0,
+              "fft": "16K",
+              "nDataSymbols": 30,
+              "nSbsSymbols": 0,
+              "reason": null,
+              "sbsDataCells": 12000,
+              "spBoost": 0,
+              "status": "ok"
+            },
+            "plpResults": [
+              {
+                "bbFrameRate": 0,
+                "bitrateMbps": 0.001,
+                "bitsPerCell": 2,
+                "celulasTI": 130816,
+                "cnr": {
+                  "bicm": {
+                    "awgn": 1.97
+                  },
+                  "field": {
+                    "awgn": 2.9,
+                    "rc20": 4.2,
+                    "rl20": 4.6
+                  },
+                  "lab": {
+                    "awgn": 2.8,
+                    "rc20": 3.2,
+                    "rl20": 5.6
+                  },
+                  "simulation": {
+                    "awgn": 2.1,
+                    "rc20": 2.5,
+                    "rl20": 4.3
+                  }
+                },
+                "fecBlockSize": 32400,
+                "ldpcSize": 64800,
+                "numFecBlocks": 0
+              }
+            ]
+          }
+        ]
+      },
+      "input": {
+        "fft": 1,
+        "gi": 6,
+        "sp": 7
+      },
+      "name": "16K + GI6_1536 + SP8_4"
+    },
+    {
+      "expected": {
+        "frame2LogData": {
+          "error": "Frame_2.log not found",
+          "status": "ok"
+        },
+        "frameDuration": {
+          "status": "ok",
+          "subframeDurations": {
+            "0": 77.777778
+          },
+          "totalDurationMs": 82.37037
+        },
+        "l1dSizeBytes": {
+          "bytes": 25,
+          "source": "Frame_1.log",
+          "status": "ok"
+        },
+        "preambleFields": {
+          "cellsInFirst": 9702,
+          "cellsInNext": 10272,
+          "fftName": "16K",
+          "giSamples": 1536,
+          "l1bCells": 3820,
+          "l1dBytes": 25,
+          "l1dCells": 2787,
+          "numSymbols": 1,
+          "plpCells": 3095,
+          "preambleDx": 0,
+          "preambleReducedCarriers": 0,
+          "status": "ok",
+          "totalPreambleCells": 9702
+        },
+        "status": "ok",
+        "subframeResults": [
+          {
+            "plpCapacity": {
+              "capacity": 359970,
+              "capacitySBS": 0,
+              "cps": 11999,
+              "cred": 0,
+              "fft": "16K",
+              "nDataSymbols": 30,
+              "nSbsSymbols": 0,
+              "reason": null,
+              "sbsDataCells": 10272,
+              "spBoost": 0,
+              "status": "ok"
+            },
+            "plpResults": [
+              {
+                "bbFrameRate": 0,
+                "bitrateMbps": 0.001,
+                "bitsPerCell": 2,
+                "celulasTI": 130816,
+                "cnr": {
+                  "bicm": {
+                    "awgn": 1.97
+                  },
+                  "field": {
+                    "awgn": 2.9,
+                    "rc20": 4.2,
+                    "rl20": 4.6
+                  },
+                  "lab": {
+                    "awgn": 2.8,
+                    "rc20": 3.2,
+                    "rl20": 5.6
+                  },
+                  "simulation": {
+                    "awgn": 2.1,
+                    "rc20": 2.5,
+                    "rl20": 4.3
+                  }
+                },
+                "fecBlockSize": 32400,
+                "ldpcSize": 64800,
+                "numFecBlocks": 0
+              }
+            ]
+          }
+        ]
+      },
+      "input": {
+        "fft": 1,
+        "gi": 6,
+        "sp": 2
+      },
+      "name": "16K + GI6_1536 + SP4_2"
+    },
+    {
+      "expected": {
+        "frame2LogData": {
+          "error": "Frame_2.log not found",
+          "status": "ok"
+        },
+        "frameDuration": {
+          "status": "ok",
+          "subframeDurations": {
+            "0": 77.777778
+          },
+          "totalDurationMs": 82.37037
+        },
+        "l1dSizeBytes": {
+          "bytes": 25,
+          "source": "Frame_1.log",
+          "status": "ok"
+        },
+        "preambleFields": {
+          "cellsInFirst": 9702,
+          "cellsInNext": 10272,
+          "fftName": "16K",
+          "giSamples": 1536,
+          "l1bCells": 3820,
+          "l1dBytes": 25,
+          "l1dCells": 2787,
+          "numSymbols": 1,
+          "plpCells": 3095,
+          "preambleDx": 0,
+          "preambleReducedCarriers": 0,
+          "status": "ok",
+          "totalPreambleCells": 9702
+        },
+        "status": "ok",
+        "subframeResults": [
+          {
+            "plpCapacity": {
+              "capacity": 385830,
+              "capacitySBS": 0,
+              "cps": 12861,
+              "cred": 0,
+              "fft": "16K",
+              "nDataSymbols": 30,
+              "nSbsSymbols": 0,
+              "reason": null,
+              "sbsDataCells": 10272,
+              "spBoost": 0,
+              "status": "ok"
+            },
+            "plpResults": [
+              {
+                "bbFrameRate": 0,
+                "bitrateMbps": 0.001,
+                "bitsPerCell": 2,
+                "celulasTI": 130816,
+                "cnr": {
+                  "bicm": {
+                    "awgn": 1.97
+                  },
+                  "field": {
+                    "awgn": 2.9,
+                    "rc20": 4.2,
+                    "rl20": 4.6
+                  },
+                  "lab": {
+                    "awgn": 2.8,
+                    "rc20": 3.2,
+                    "rl20": 5.6
+                  },
+                  "simulation": {
+                    "awgn": 2.1,
+                    "rc20": 2.5,
+                    "rl20": 4.3
+                  }
+                },
+                "fecBlockSize": 32400,
+                "ldpcSize": 64800,
+                "numFecBlocks": 0
+              }
+            ]
+          }
+        ]
+      },
+      "input": {
+        "fft": 1,
+        "gi": 6,
+        "sp": 3
+      },
+      "name": "16K + GI6_1536 + SP4_4"
+    },
+    {
+      "expected": {
+        "frame2LogData": {
+          "error": "Frame_2.log not found",
+          "status": "ok"
+        },
+        "frameDuration": {
+          "status": "ok",
+          "subframeDurations": {
+            "0": 80.0
+          },
+          "totalDurationMs": 84.666667
+        },
+        "l1dSizeBytes": {
+          "bytes": 25,
+          "source": "Frame_1.log",
+          "status": "ok"
+        },
+        "preambleFields": {
+          "cellsInFirst": 8614,
+          "cellsInNext": 9120,
+          "fftName": "16K",
+          "giSamples": 2048,
+          "l1bCells": 3820,
+          "l1dBytes": 25,
+          "l1dCells": 2787,
+          "numSymbols": 1,
+          "plpCells": 2007,
+          "preambleDx": 0,
+          "preambleReducedCarriers": 0,
+          "status": "ok",
+          "totalPreambleCells": 8614
+        },
+        "status": "ok",
+        "subframeResults": [
+          {
+            "plpCapacity": {
+              "capacity": 377250,
+              "capacitySBS": 0,
+              "cps": 12575,
+              "cred": 0,
+              "fft": "16K",
+              "nDataSymbols": 30,
+              "nSbsSymbols": 0,
+              "reason": null,
+              "sbsDataCells": 11424,
+              "spBoost": 0,
+              "status": "ok"
+            },
+            "plpResults": [
+              {
+                "bbFrameRate": 0,
+                "bitrateMbps": 0.001,
+                "bitsPerCell": 2,
+                "celulasTI": 130816,
+                "cnr": {
+                  "bicm": {
+                    "awgn": 1.97
+                  },
+                  "field": {
+                    "awgn": 2.9,
+                    "rc20": 4.2,
+                    "rl20": 4.6
+                  },
+                  "lab": {
+                    "awgn": 2.8,
+                    "rc20": 3.2,
+                    "rl20": 5.6
+                  },
+                  "simulation": {
+                    "awgn": 2.1,
+                    "rc20": 2.5,
+                    "rl20": 4.3
+                  }
+                },
+                "fecBlockSize": 32400,
+                "ldpcSize": 64800,
+                "numFecBlocks": 0
+              }
+            ]
+          }
+        ]
+      },
+      "input": {
+        "fft": 1,
+        "gi": 7,
+        "sp": 4
+      },
+      "name": "16K + GI7_2048 + SP6_2"
+    },
+    {
+      "expected": {
+        "frame2LogData": {
+          "error": "Frame_2.log not found",
+          "status": "ok"
+        },
+        "frameDuration": {
+          "status": "ok",
+          "subframeDurations": {
+            "0": 80.0
+          },
+          "totalDurationMs": 84.666667
+        },
+        "l1dSizeBytes": {
+          "bytes": 25,
+          "source": "Frame_1.log",
+          "status": "ok"
+        },
+        "preambleFields": {
+          "cellsInFirst": 8614,
+          "cellsInNext": 9120,
+          "fftName": "16K",
+          "giSamples": 2048,
+          "l1bCells": 3820,
+          "l1dBytes": 25,
+          "l1dCells": 2787,
+          "numSymbols": 1,
+          "plpCells": 2007,
+          "preambleDx": 0,
+          "preambleReducedCarriers": 0,
+          "status": "ok",
+          "totalPreambleCells": 8614
+        },
+        "status": "ok",
+        "subframeResults": [
+          {
+            "plpCapacity": {
+              "capacity": 394470,
+              "capacitySBS": 0,
+              "cps": 13149,
+              "cred": 0,
+              "fft": "16K",
+              "nDataSymbols": 30,
+              "nSbsSymbols": 0,
+              "reason": null,
+              "sbsDataCells": 11424,
+              "spBoost": 0,
+              "status": "ok"
+            },
+            "plpResults": [
+              {
+                "bbFrameRate": 0,
+                "bitrateMbps": 0.001,
+                "bitsPerCell": 2,
+                "celulasTI": 130816,
+                "cnr": {
+                  "bicm": {
+                    "awgn": 1.97
+                  },
+                  "field": {
+                    "awgn": 2.9,
+                    "rc20": 4.2,
+                    "rl20": 4.6
+                  },
+                  "lab": {
+                    "awgn": 2.8,
+                    "rc20": 3.2,
+                    "rl20": 5.6
+                  },
+                  "simulation": {
+                    "awgn": 2.1,
+                    "rc20": 2.5,
+                    "rl20": 4.3
+                  }
+                },
+                "fecBlockSize": 32400,
+                "ldpcSize": 64800,
+                "numFecBlocks": 0
+              }
+            ]
+          }
+        ]
+      },
+      "input": {
+        "fft": 1,
+        "gi": 7,
+        "sp": 5
+      },
+      "name": "16K + GI7_2048 + SP6_4"
+    },
+    {
+      "expected": {
+        "frame2LogData": {
+          "error": "Frame_2.log not found",
+          "status": "ok"
+        },
+        "frameDuration": {
+          "status": "ok",
+          "subframeDurations": {
+            "0": 80.0
+          },
+          "totalDurationMs": 84.666667
+        },
+        "l1dSizeBytes": {
+          "bytes": 25,
+          "source": "Frame_1.log",
+          "status": "ok"
+        },
+        "preambleFields": {
+          "cellsInFirst": 8614,
+          "cellsInNext": 9120,
+          "fftName": "16K",
+          "giSamples": 2048,
+          "l1bCells": 3820,
+          "l1dBytes": 25,
+          "l1dCells": 2787,
+          "numSymbols": 1,
+          "plpCells": 2007,
+          "preambleDx": 0,
+          "preambleReducedCarriers": 0,
+          "status": "ok",
+          "totalPreambleCells": 8614
+        },
+        "status": "ok",
+        "subframeResults": [
+          {
+            "plpCapacity": {
+              "capacity": 342690,
+              "capacitySBS": 0,
+              "cps": 11423,
+              "cred": 0,
+              "fft": "16K",
+              "nDataSymbols": 30,
+              "nSbsSymbols": 0,
+              "reason": null,
+              "sbsDataCells": 9120,
+              "spBoost": 0,
+              "status": "ok"
+            },
+            "plpResults": [
+              {
+                "bbFrameRate": 0,
+                "bitrateMbps": 0.001,
+                "bitsPerCell": 2,
+                "celulasTI": 130816,
+                "cnr": {
+                  "bicm": {
+                    "awgn": 1.97
+                  },
+                  "field": {
+                    "awgn": 2.9,
+                    "rc20": 4.2,
+                    "rl20": 4.6
+                  },
+                  "lab": {
+                    "awgn": 2.8,
+                    "rc20": 3.2,
+                    "rl20": 5.6
+                  },
+                  "simulation": {
+                    "awgn": 2.1,
+                    "rc20": 2.5,
+                    "rl20": 4.3
+                  }
+                },
+                "fecBlockSize": 32400,
+                "ldpcSize": 64800,
+                "numFecBlocks": 0
+              }
+            ]
+          }
+        ]
+      },
+      "input": {
+        "fft": 1,
+        "gi": 7,
+        "sp": 0
+      },
+      "name": "16K + GI7_2048 + SP3_2"
+    },
+    {
+      "expected": {
+        "frame2LogData": {
+          "error": "Frame_2.log not found",
+          "status": "ok"
+        },
+        "frameDuration": {
+          "status": "ok",
+          "subframeDurations": {
+            "0": 80.0
+          },
+          "totalDurationMs": 84.666667
+        },
+        "l1dSizeBytes": {
+          "bytes": 25,
+          "source": "Frame_1.log",
+          "status": "ok"
+        },
+        "preambleFields": {
+          "cellsInFirst": 8614,
+          "cellsInNext": 9120,
+          "fftName": "16K",
+          "giSamples": 2048,
+          "l1bCells": 3820,
+          "l1dBytes": 25,
+          "l1dCells": 2787,
+          "numSymbols": 1,
+          "plpCells": 2007,
+          "preambleDx": 0,
+          "preambleReducedCarriers": 0,
+          "status": "ok",
+          "totalPreambleCells": 8614
+        },
+        "status": "ok",
+        "subframeResults": [
+          {
+            "plpCapacity": {
+              "capacity": 377190,
+              "capacitySBS": 0,
+              "cps": 12573,
+              "cred": 0,
+              "fft": "16K",
+              "nDataSymbols": 30,
+              "nSbsSymbols": 0,
+              "reason": null,
+              "sbsDataCells": 9120,
+              "spBoost": 0,
+              "status": "ok"
+            },
+            "plpResults": [
+              {
+                "bbFrameRate": 0,
+                "bitrateMbps": 0.001,
+                "bitsPerCell": 2,
+                "celulasTI": 130816,
+                "cnr": {
+                  "bicm": {
+                    "awgn": 1.97
+                  },
+                  "field": {
+                    "awgn": 2.9,
+                    "rc20": 4.2,
+                    "rl20": 4.6
+                  },
+                  "lab": {
+                    "awgn": 2.8,
+                    "rc20": 3.2,
+                    "rl20": 5.6
+                  },
+                  "simulation": {
+                    "awgn": 2.1,
+                    "rc20": 2.5,
+                    "rl20": 4.3
+                  }
+                },
+                "fecBlockSize": 32400,
+                "ldpcSize": 64800,
+                "numFecBlocks": 0
+              }
+            ]
+          }
+        ]
+      },
+      "input": {
+        "fft": 1,
+        "gi": 7,
+        "sp": 1
+      },
+      "name": "16K + GI7_2048 + SP3_4"
+    },
+    {
+      "expected": {
+        "frame2LogData": {
+          "error": "Frame_2.log not found",
+          "status": "ok"
+        },
+        "frameDuration": {
+          "status": "ok",
+          "subframeDurations": {
+            "0": 81.666667
+          },
+          "totalDurationMs": 86.388889
+        },
+        "l1dSizeBytes": {
+          "bytes": 25,
+          "source": "Frame_1.log",
+          "status": "ok"
+        },
+        "preambleFields": {
+          "cellsInFirst": 8614,
+          "cellsInNext": 9120,
+          "fftName": "16K",
+          "giSamples": 2432,
+          "l1bCells": 3820,
+          "l1dBytes": 25,
+          "l1dCells": 2787,
+          "numSymbols": 1,
+          "plpCells": 2007,
+          "preambleDx": 0,
+          "preambleReducedCarriers": 0,
+          "status": "ok",
+          "totalPreambleCells": 8614
+        },
+        "status": "ok",
+        "subframeResults": [
+          {
+            "plpCapacity": {
+              "capacity": 377250,
+              "capacitySBS": 0,
+              "cps": 12575,
+              "cred": 0,
+              "fft": "16K",
+              "nDataSymbols": 30,
+              "nSbsSymbols": 0,
+              "reason": null,
+              "sbsDataCells": 11424,
+              "spBoost": 0,
+              "status": "ok"
+            },
+            "plpResults": [
+              {
+                "bbFrameRate": 0,
+                "bitrateMbps": 0.001,
+                "bitsPerCell": 2,
+                "celulasTI": 130816,
+                "cnr": {
+                  "bicm": {
+                    "awgn": 1.97
+                  },
+                  "field": {
+                    "awgn": 2.9,
+                    "rc20": 4.2,
+                    "rl20": 4.6
+                  },
+                  "lab": {
+                    "awgn": 2.8,
+                    "rc20": 3.2,
+                    "rl20": 5.6
+                  },
+                  "simulation": {
+                    "awgn": 2.1,
+                    "rc20": 2.5,
+                    "rl20": 4.3
+                  }
+                },
+                "fecBlockSize": 32400,
+                "ldpcSize": 64800,
+                "numFecBlocks": 0
+              }
+            ]
+          }
+        ]
+      },
+      "input": {
+        "fft": 1,
+        "gi": 8,
+        "sp": 4
+      },
+      "name": "16K + GI8_2432 + SP6_2"
+    },
+    {
+      "expected": {
+        "frame2LogData": {
+          "error": "Frame_2.log not found",
+          "status": "ok"
+        },
+        "frameDuration": {
+          "status": "ok",
+          "subframeDurations": {
+            "0": 81.666667
+          },
+          "totalDurationMs": 86.388889
+        },
+        "l1dSizeBytes": {
+          "bytes": 25,
+          "source": "Frame_1.log",
+          "status": "ok"
+        },
+        "preambleFields": {
+          "cellsInFirst": 8614,
+          "cellsInNext": 9120,
+          "fftName": "16K",
+          "giSamples": 2432,
+          "l1bCells": 3820,
+          "l1dBytes": 25,
+          "l1dCells": 2787,
+          "numSymbols": 1,
+          "plpCells": 2007,
+          "preambleDx": 0,
+          "preambleReducedCarriers": 0,
+          "status": "ok",
+          "totalPreambleCells": 8614
+        },
+        "status": "ok",
+        "subframeResults": [
+          {
+            "plpCapacity": {
+              "capacity": 394470,
+              "capacitySBS": 0,
+              "cps": 13149,
+              "cred": 0,
+              "fft": "16K",
+              "nDataSymbols": 30,
+              "nSbsSymbols": 0,
+              "reason": null,
+              "sbsDataCells": 11424,
+              "spBoost": 0,
+              "status": "ok"
+            },
+            "plpResults": [
+              {
+                "bbFrameRate": 0,
+                "bitrateMbps": 0.001,
+                "bitsPerCell": 2,
+                "celulasTI": 130816,
+                "cnr": {
+                  "bicm": {
+                    "awgn": 1.97
+                  },
+                  "field": {
+                    "awgn": 2.9,
+                    "rc20": 4.2,
+                    "rl20": 4.6
+                  },
+                  "lab": {
+                    "awgn": 2.8,
+                    "rc20": 3.2,
+                    "rl20": 5.6
+                  },
+                  "simulation": {
+                    "awgn": 2.1,
+                    "rc20": 2.5,
+                    "rl20": 4.3
+                  }
+                },
+                "fecBlockSize": 32400,
+                "ldpcSize": 64800,
+                "numFecBlocks": 0
+              }
+            ]
+          }
+        ]
+      },
+      "input": {
+        "fft": 1,
+        "gi": 8,
+        "sp": 5
+      },
+      "name": "16K + GI8_2432 + SP6_4"
+    },
+    {
+      "expected": {
+        "frame2LogData": {
+          "error": "Frame_2.log not found",
+          "status": "ok"
+        },
+        "frameDuration": {
+          "status": "ok",
+          "subframeDurations": {
+            "0": 81.666667
+          },
+          "totalDurationMs": 86.388889
+        },
+        "l1dSizeBytes": {
+          "bytes": 25,
+          "source": "Frame_1.log",
+          "status": "ok"
+        },
+        "preambleFields": {
+          "cellsInFirst": 8614,
+          "cellsInNext": 9120,
+          "fftName": "16K",
+          "giSamples": 2432,
+          "l1bCells": 3820,
+          "l1dBytes": 25,
+          "l1dCells": 2787,
+          "numSymbols": 1,
+          "plpCells": 2007,
+          "preambleDx": 0,
+          "preambleReducedCarriers": 0,
+          "status": "ok",
+          "totalPreambleCells": 8614
+        },
+        "status": "ok",
+        "subframeResults": [
+          {
+            "plpCapacity": {
+              "capacity": 342690,
+              "capacitySBS": 0,
+              "cps": 11423,
+              "cred": 0,
+              "fft": "16K",
+              "nDataSymbols": 30,
+              "nSbsSymbols": 0,
+              "reason": null,
+              "sbsDataCells": 9120,
+              "spBoost": 0,
+              "status": "ok"
+            },
+            "plpResults": [
+              {
+                "bbFrameRate": 0,
+                "bitrateMbps": 0.001,
+                "bitsPerCell": 2,
+                "celulasTI": 130816,
+                "cnr": {
+                  "bicm": {
+                    "awgn": 1.97
+                  },
+                  "field": {
+                    "awgn": 2.9,
+                    "rc20": 4.2,
+                    "rl20": 4.6
+                  },
+                  "lab": {
+                    "awgn": 2.8,
+                    "rc20": 3.2,
+                    "rl20": 5.6
+                  },
+                  "simulation": {
+                    "awgn": 2.1,
+                    "rc20": 2.5,
+                    "rl20": 4.3
+                  }
+                },
+                "fecBlockSize": 32400,
+                "ldpcSize": 64800,
+                "numFecBlocks": 0
+              }
+            ]
+          }
+        ]
+      },
+      "input": {
+        "fft": 1,
+        "gi": 8,
+        "sp": 0
+      },
+      "name": "16K + GI8_2432 + SP3_2"
+    },
+    {
+      "expected": {
+        "frame2LogData": {
+          "error": "Frame_2.log not found",
+          "status": "ok"
+        },
+        "frameDuration": {
+          "status": "ok",
+          "subframeDurations": {
+            "0": 81.666667
+          },
+          "totalDurationMs": 86.388889
+        },
+        "l1dSizeBytes": {
+          "bytes": 25,
+          "source": "Frame_1.log",
+          "status": "ok"
+        },
+        "preambleFields": {
+          "cellsInFirst": 8614,
+          "cellsInNext": 9120,
+          "fftName": "16K",
+          "giSamples": 2432,
+          "l1bCells": 3820,
+          "l1dBytes": 25,
+          "l1dCells": 2787,
+          "numSymbols": 1,
+          "plpCells": 2007,
+          "preambleDx": 0,
+          "preambleReducedCarriers": 0,
+          "status": "ok",
+          "totalPreambleCells": 8614
+        },
+        "status": "ok",
+        "subframeResults": [
+          {
+            "plpCapacity": {
+              "capacity": 377190,
+              "capacitySBS": 0,
+              "cps": 12573,
+              "cred": 0,
+              "fft": "16K",
+              "nDataSymbols": 30,
+              "nSbsSymbols": 0,
+              "reason": null,
+              "sbsDataCells": 9120,
+              "spBoost": 0,
+              "status": "ok"
+            },
+            "plpResults": [
+              {
+                "bbFrameRate": 0,
+                "bitrateMbps": 0.001,
+                "bitsPerCell": 2,
+                "celulasTI": 130816,
+                "cnr": {
+                  "bicm": {
+                    "awgn": 1.97
+                  },
+                  "field": {
+                    "awgn": 2.9,
+                    "rc20": 4.2,
+                    "rl20": 4.6
+                  },
+                  "lab": {
+                    "awgn": 2.8,
+                    "rc20": 3.2,
+                    "rl20": 5.6
+                  },
+                  "simulation": {
+                    "awgn": 2.1,
+                    "rc20": 2.5,
+                    "rl20": 4.3
+                  }
+                },
+                "fecBlockSize": 32400,
+                "ldpcSize": 64800,
+                "numFecBlocks": 0
+              }
+            ]
+          }
+        ]
+      },
+      "input": {
+        "fft": 1,
+        "gi": 8,
+        "sp": 1
+      },
+      "name": "16K + GI8_2432 + SP3_4"
+    },
+    {
+      "expected": {
+        "frame2LogData": {
+          "error": "Frame_2.log not found",
+          "status": "ok"
+        },
+        "frameDuration": {
+          "status": "ok",
+          "subframeDurations": {
+            "0": 84.444444
+          },
+          "totalDurationMs": 89.259259
+        },
+        "l1dSizeBytes": {
+          "bytes": 25,
+          "source": "Frame_1.log",
+          "status": "ok"
+        },
+        "preambleFields": {
+          "cellsInFirst": 9702,
+          "cellsInNext": 10272,
+          "fftName": "16K",
+          "giSamples": 3072,
+          "l1bCells": 3820,
+          "l1dBytes": 25,
+          "l1dCells": 2787,
+          "numSymbols": 1,
+          "plpCells": 3095,
+          "preambleDx": 0,
+          "preambleReducedCarriers": 0,
+          "status": "ok",
+          "totalPreambleCells": 9702
+        },
+        "status": "ok",
+        "subframeResults": [
+          {
+            "plpCapacity": {
+              "capacity": 359970,
+              "capacitySBS": 0,
+              "cps": 11999,
+              "cred": 0,
+              "fft": "16K",
+              "nDataSymbols": 30,
+              "nSbsSymbols": 0,
+              "reason": null,
+              "sbsDataCells": 10272,
+              "spBoost": 0,
+              "status": "ok"
+            },
+            "plpResults": [
+              {
+                "bbFrameRate": 0,
+                "bitrateMbps": 0.001,
+                "bitsPerCell": 2,
+                "celulasTI": 130816,
+                "cnr": {
+                  "bicm": {
+                    "awgn": 1.97
+                  },
+                  "field": {
+                    "awgn": 2.9,
+                    "rc20": 4.2,
+                    "rl20": 4.6
+                  },
+                  "lab": {
+                    "awgn": 2.8,
+                    "rc20": 3.2,
+                    "rl20": 5.6
+                  },
+                  "simulation": {
+                    "awgn": 2.1,
+                    "rc20": 2.5,
+                    "rl20": 4.3
+                  }
+                },
+                "fecBlockSize": 32400,
+                "ldpcSize": 64800,
+                "numFecBlocks": 0
+              }
+            ]
+          }
+        ]
+      },
+      "input": {
+        "fft": 1,
+        "gi": 9,
+        "sp": 2
+      },
+      "name": "16K + GI9_3072 + SP4_2"
+    },
+    {
+      "expected": {
+        "frame2LogData": {
+          "error": "Frame_2.log not found",
+          "status": "ok"
+        },
+        "frameDuration": {
+          "status": "ok",
+          "subframeDurations": {
+            "0": 84.444444
+          },
+          "totalDurationMs": 89.259259
+        },
+        "l1dSizeBytes": {
+          "bytes": 25,
+          "source": "Frame_1.log",
+          "status": "ok"
+        },
+        "preambleFields": {
+          "cellsInFirst": 9702,
+          "cellsInNext": 10272,
+          "fftName": "16K",
+          "giSamples": 3072,
+          "l1bCells": 3820,
+          "l1dBytes": 25,
+          "l1dCells": 2787,
+          "numSymbols": 1,
+          "plpCells": 3095,
+          "preambleDx": 0,
+          "preambleReducedCarriers": 0,
+          "status": "ok",
+          "totalPreambleCells": 9702
+        },
+        "status": "ok",
+        "subframeResults": [
+          {
+            "plpCapacity": {
+              "capacity": 385830,
+              "capacitySBS": 0,
+              "cps": 12861,
+              "cred": 0,
+              "fft": "16K",
+              "nDataSymbols": 30,
+              "nSbsSymbols": 0,
+              "reason": null,
+              "sbsDataCells": 10272,
+              "spBoost": 0,
+              "status": "ok"
+            },
+            "plpResults": [
+              {
+                "bbFrameRate": 0,
+                "bitrateMbps": 0.001,
+                "bitsPerCell": 2,
+                "celulasTI": 130816,
+                "cnr": {
+                  "bicm": {
+                    "awgn": 1.97
+                  },
+                  "field": {
+                    "awgn": 2.9,
+                    "rc20": 4.2,
+                    "rl20": 4.6
+                  },
+                  "lab": {
+                    "awgn": 2.8,
+                    "rc20": 3.2,
+                    "rl20": 5.6
+                  },
+                  "simulation": {
+                    "awgn": 2.1,
+                    "rc20": 2.5,
+                    "rl20": 4.3
+                  }
+                },
+                "fecBlockSize": 32400,
+                "ldpcSize": 64800,
+                "numFecBlocks": 0
+              }
+            ]
+          }
+        ]
+      },
+      "input": {
+        "fft": 1,
+        "gi": 9,
+        "sp": 3
+      },
+      "name": "16K + GI9_3072 + SP4_4"
+    },
+    {
+      "expected": {
+        "frame2LogData": {
+          "error": "Frame_2.log not found",
+          "status": "ok"
+        },
+        "frameDuration": {
+          "status": "ok",
+          "subframeDurations": {
+            "0": 86.944444
+          },
+          "totalDurationMs": 91.842593
+        },
+        "l1dSizeBytes": {
+          "bytes": 25,
+          "source": "Frame_1.log",
+          "status": "ok"
+        },
+        "preambleFields": {
+          "cellsInFirst": 9702,
+          "cellsInNext": 10272,
+          "fftName": "16K",
+          "giSamples": 3648,
+          "l1bCells": 3820,
+          "l1dBytes": 25,
+          "l1dCells": 2787,
+          "numSymbols": 1,
+          "plpCells": 3095,
+          "preambleDx": 0,
+          "preambleReducedCarriers": 0,
+          "status": "ok",
+          "totalPreambleCells": 9702
+        },
+        "status": "ok",
+        "subframeResults": [
+          {
+            "plpCapacity": {
+              "capacity": 359970,
+              "capacitySBS": 0,
+              "cps": 11999,
+              "cred": 0,
+              "fft": "16K",
+              "nDataSymbols": 30,
+              "nSbsSymbols": 0,
+              "reason": null,
+              "sbsDataCells": 10272,
+              "spBoost": 0,
+              "status": "ok"
+            },
+            "plpResults": [
+              {
+                "bbFrameRate": 0,
+                "bitrateMbps": 0.001,
+                "bitsPerCell": 2,
+                "celulasTI": 130816,
+                "cnr": {
+                  "bicm": {
+                    "awgn": 1.97
+                  },
+                  "field": {
+                    "awgn": 2.9,
+                    "rc20": 4.2,
+                    "rl20": 4.6
+                  },
+                  "lab": {
+                    "awgn": 2.8,
+                    "rc20": 3.2,
+                    "rl20": 5.6
+                  },
+                  "simulation": {
+                    "awgn": 2.1,
+                    "rc20": 2.5,
+                    "rl20": 4.3
+                  }
+                },
+                "fecBlockSize": 32400,
+                "ldpcSize": 64800,
+                "numFecBlocks": 0
+              }
+            ]
+          }
+        ]
+      },
+      "input": {
+        "fft": 1,
+        "gi": 10,
+        "sp": 2
+      },
+      "name": "16K + GI10_3648 + SP4_2"
+    },
+    {
+      "expected": {
+        "frame2LogData": {
+          "error": "Frame_2.log not found",
+          "status": "ok"
+        },
+        "frameDuration": {
+          "status": "ok",
+          "subframeDurations": {
+            "0": 86.944444
+          },
+          "totalDurationMs": 91.842593
+        },
+        "l1dSizeBytes": {
+          "bytes": 25,
+          "source": "Frame_1.log",
+          "status": "ok"
+        },
+        "preambleFields": {
+          "cellsInFirst": 9702,
+          "cellsInNext": 10272,
+          "fftName": "16K",
+          "giSamples": 3648,
+          "l1bCells": 3820,
+          "l1dBytes": 25,
+          "l1dCells": 2787,
+          "numSymbols": 1,
+          "plpCells": 3095,
+          "preambleDx": 0,
+          "preambleReducedCarriers": 0,
+          "status": "ok",
+          "totalPreambleCells": 9702
+        },
+        "status": "ok",
+        "subframeResults": [
+          {
+            "plpCapacity": {
+              "capacity": 385830,
+              "capacitySBS": 0,
+              "cps": 12861,
+              "cred": 0,
+              "fft": "16K",
+              "nDataSymbols": 30,
+              "nSbsSymbols": 0,
+              "reason": null,
+              "sbsDataCells": 10272,
+              "spBoost": 0,
+              "status": "ok"
+            },
+            "plpResults": [
+              {
+                "bbFrameRate": 0,
+                "bitrateMbps": 0.001,
+                "bitsPerCell": 2,
+                "celulasTI": 130816,
+                "cnr": {
+                  "bicm": {
+                    "awgn": 1.97
+                  },
+                  "field": {
+                    "awgn": 2.9,
+                    "rc20": 4.2,
+                    "rl20": 4.6
+                  },
+                  "lab": {
+                    "awgn": 2.8,
+                    "rc20": 3.2,
+                    "rl20": 5.6
+                  },
+                  "simulation": {
+                    "awgn": 2.1,
+                    "rc20": 2.5,
+                    "rl20": 4.3
+                  }
+                },
+                "fecBlockSize": 32400,
+                "ldpcSize": 64800,
+                "numFecBlocks": 0
+              }
+            ]
+          }
+        ]
+      },
+      "input": {
+        "fft": 1,
+        "gi": 10,
+        "sp": 3
+      },
+      "name": "16K + GI10_3648 + SP4_4"
+    },
+    {
+      "expected": {
+        "frame2LogData": {
+          "error": "Frame_2.log not found",
+          "status": "ok"
+        },
+        "frameDuration": {
+          "status": "ok",
+          "subframeDurations": {
+            "0": 88.888889
+          },
+          "totalDurationMs": 93.851852
+        },
+        "l1dSizeBytes": {
+          "bytes": 25,
+          "source": "Frame_1.log",
+          "status": "ok"
+        },
+        "preambleFields": {
+          "cellsInFirst": 8614,
+          "cellsInNext": 9120,
+          "fftName": "16K",
+          "giSamples": 4096,
+          "l1bCells": 3820,
+          "l1dBytes": 25,
+          "l1dCells": 2787,
+          "numSymbols": 1,
+          "plpCells": 2007,
+          "preambleDx": 0,
+          "preambleReducedCarriers": 0,
+          "status": "ok",
+          "totalPreambleCells": 8614
+        },
+        "status": "ok",
+        "subframeResults": [
+          {
+            "plpCapacity": {
+              "capacity": 342690,
+              "capacitySBS": 0,
+              "cps": 11423,
+              "cred": 0,
+              "fft": "16K",
+              "nDataSymbols": 30,
+              "nSbsSymbols": 0,
+              "reason": null,
+              "sbsDataCells": 9120,
+              "spBoost": 0,
+              "status": "ok"
+            },
+            "plpResults": [
+              {
+                "bbFrameRate": 0,
+                "bitrateMbps": 0.001,
+                "bitsPerCell": 2,
+                "celulasTI": 130816,
+                "cnr": {
+                  "bicm": {
+                    "awgn": 1.97
+                  },
+                  "field": {
+                    "awgn": 2.9,
+                    "rc20": 4.2,
+                    "rl20": 4.6
+                  },
+                  "lab": {
+                    "awgn": 2.8,
+                    "rc20": 3.2,
+                    "rl20": 5.6
+                  },
+                  "simulation": {
+                    "awgn": 2.1,
+                    "rc20": 2.5,
+                    "rl20": 4.3
+                  }
+                },
+                "fecBlockSize": 32400,
+                "ldpcSize": 64800,
+                "numFecBlocks": 0
+              }
+            ]
+          }
+        ]
+      },
+      "input": {
+        "fft": 1,
+        "gi": 11,
+        "sp": 0
+      },
+      "name": "16K + GI11_4096 + SP3_2"
+    },
+    {
+      "expected": {
+        "frame2LogData": {
+          "error": "Frame_2.log not found",
+          "status": "ok"
+        },
+        "frameDuration": {
+          "status": "ok",
+          "subframeDurations": {
+            "0": 88.888889
+          },
+          "totalDurationMs": 93.851852
+        },
+        "l1dSizeBytes": {
+          "bytes": 25,
+          "source": "Frame_1.log",
+          "status": "ok"
+        },
+        "preambleFields": {
+          "cellsInFirst": 8614,
+          "cellsInNext": 9120,
+          "fftName": "16K",
+          "giSamples": 4096,
+          "l1bCells": 3820,
+          "l1dBytes": 25,
+          "l1dCells": 2787,
+          "numSymbols": 1,
+          "plpCells": 2007,
+          "preambleDx": 0,
+          "preambleReducedCarriers": 0,
+          "status": "ok",
+          "totalPreambleCells": 8614
+        },
+        "status": "ok",
+        "subframeResults": [
+          {
+            "plpCapacity": {
+              "capacity": 377190,
+              "capacitySBS": 0,
+              "cps": 12573,
+              "cred": 0,
+              "fft": "16K",
+              "nDataSymbols": 30,
+              "nSbsSymbols": 0,
+              "reason": null,
+              "sbsDataCells": 9120,
+              "spBoost": 0,
+              "status": "ok"
+            },
+            "plpResults": [
+              {
+                "bbFrameRate": 0,
+                "bitrateMbps": 0.001,
+                "bitsPerCell": 2,
+                "celulasTI": 130816,
+                "cnr": {
+                  "bicm": {
+                    "awgn": 1.97
+                  },
+                  "field": {
+                    "awgn": 2.9,
+                    "rc20": 4.2,
+                    "rl20": 4.6
+                  },
+                  "lab": {
+                    "awgn": 2.8,
+                    "rc20": 3.2,
+                    "rl20": 5.6
+                  },
+                  "simulation": {
+                    "awgn": 2.1,
+                    "rc20": 2.5,
+                    "rl20": 4.3
+                  }
+                },
+                "fecBlockSize": 32400,
+                "ldpcSize": 64800,
+                "numFecBlocks": 0
+              }
+            ]
+          }
+        ]
+      },
+      "input": {
+        "fft": 1,
+        "gi": 11,
+        "sp": 1
+      },
+      "name": "16K + GI11_4096 + SP3_4"
+    },
+    {
+      "expected": {
+        "frame2LogData": {
+          "error": "Frame_2.log not found",
+          "status": "ok"
+        },
+        "frameDuration": {
+          "status": "ok",
+          "subframeDurations": {
+            "0": 143.055556
+          },
+          "totalDurationMs": 149.824074
+        },
+        "l1dSizeBytes": {
+          "bytes": 25,
+          "source": "Frame_1.log",
+          "status": "ok"
+        },
+        "preambleFields": {
+          "cellsInFirst": 25116,
+          "cellsInNext": 26592,
+          "fftName": "32K",
+          "giSamples": 192,
+          "l1bCells": 3820,
+          "l1dBytes": 25,
+          "l1dCells": 2787,
+          "numSymbols": 1,
+          "plpCells": 18509,
+          "preambleDx": 0,
+          "preambleReducedCarriers": 0,
+          "status": "ok",
+          "totalPreambleCells": 25116
+        },
+        "status": "ok",
+        "subframeResults": [
+          {
+            "plpCapacity": {
+              "capacity": 810690,
+              "capacitySBS": 0,
+              "cps": 27023,
+              "cred": 0,
+              "fft": "32K",
+              "nDataSymbols": 30,
+              "nSbsSymbols": 0,
+              "reason": null,
+              "sbsDataCells": 26592,
+              "spBoost": 0,
+              "status": "ok"
+            },
+            "plpResults": [
+              {
+                "bbFrameRate": 0,
+                "bitrateMbps": 0.001,
+                "bitsPerCell": 2,
+                "celulasTI": 130816,
+                "cnr": {
+                  "bicm": {
+                    "awgn": 1.97
+                  },
+                  "field": {
+                    "awgn": 2.9,
+                    "rc20": 4.2,
+                    "rl20": 4.6
+                  },
+                  "lab": {
+                    "awgn": 2.8,
+                    "rc20": 3.2,
+                    "rl20": 5.6
+                  },
+                  "simulation": {
+                    "awgn": 2.1,
+                    "rc20": 2.5,
+                    "rl20": 4.3
+                  }
+                },
+                "fecBlockSize": 32400,
+                "ldpcSize": 64800,
+                "numFecBlocks": 0
+              }
+            ]
+          }
+        ]
+      },
+      "input": {
+        "fft": 2,
+        "gi": 1,
+        "sp": 14
+      },
+      "name": "32K + GI1_192 + SP32_2"
+    },
+    {
+      "expected": {
+        "frame2LogData": {
+          "error": "Frame_2.log not found",
+          "status": "ok"
+        },
+        "frameDuration": {
+          "status": "ok",
+          "subframeDurations": {
+            "0": 143.888889
+          },
+          "totalDurationMs": 150.685185
+        },
+        "l1dSizeBytes": {
+          "bytes": 25,
+          "source": "Frame_1.log",
+          "status": "ok"
+        },
+        "preambleFields": {
+          "cellsInFirst": 25116,
+          "cellsInNext": 26592,
+          "fftName": "32K",
+          "giSamples": 384,
+          "l1bCells": 3820,
+          "l1dBytes": 25,
+          "l1dCells": 2787,
+          "numSymbols": 1,
+          "plpCells": 18509,
+          "preambleDx": 0,
+          "preambleReducedCarriers": 0,
+          "status": "ok",
+          "totalPreambleCells": 25116
+        },
+        "status": "ok",
+        "subframeResults": [
+          {
+            "plpCapacity": {
+              "capacity": 810690,
+              "capacitySBS": 0,
+              "cps": 27023,
+              "cred": 0,
+              "fft": "32K",
+              "nDataSymbols": 30,
+              "nSbsSymbols": 0,
+              "reason": null,
+              "sbsDataCells": 26592,
+              "spBoost": 0,
+              "status": "ok"
+            },
+            "plpResults": [
+              {
+                "bbFrameRate": 0,
+                "bitrateMbps": 0.001,
+                "bitsPerCell": 2,
+                "celulasTI": 130816,
+                "cnr": {
+                  "bicm": {
+                    "awgn": 1.97
+                  },
+                  "field": {
+                    "awgn": 2.9,
+                    "rc20": 4.2,
+                    "rl20": 4.6
+                  },
+                  "lab": {
+                    "awgn": 2.8,
+                    "rc20": 3.2,
+                    "rl20": 5.6
+                  },
+                  "simulation": {
+                    "awgn": 2.1,
+                    "rc20": 2.5,
+                    "rl20": 4.3
+                  }
+                },
+                "fecBlockSize": 32400,
+                "ldpcSize": 64800,
+                "numFecBlocks": 0
+              }
+            ]
+          }
+        ]
+      },
+      "input": {
+        "fft": 2,
+        "gi": 2,
+        "sp": 14
+      },
+      "name": "32K + GI2_384 + SP32_2"
+    },
+    {
+      "expected": {
+        "frame2LogData": {
+          "error": "Frame_2.log not found",
+          "status": "ok"
+        },
+        "frameDuration": {
+          "status": "ok",
+          "subframeDurations": {
+            "0": 144.444444
+          },
+          "totalDurationMs": 151.259259
+        },
+        "l1dSizeBytes": {
+          "bytes": 25,
+          "source": "Frame_1.log",
+          "status": "ok"
+        },
+        "preambleFields": {
+          "cellsInFirst": 24844,
+          "cellsInNext": 26304,
+          "fftName": "32K",
+          "giSamples": 512,
+          "l1bCells": 3820,
+          "l1dBytes": 25,
+          "l1dCells": 2787,
+          "numSymbols": 1,
+          "plpCells": 18237,
+          "preambleDx": 0,
+          "preambleReducedCarriers": 0,
+          "status": "ok",
+          "totalPreambleCells": 24844
+        },
+        "status": "ok",
+        "subframeResults": [
+          {
+            "plpCapacity": {
+              "capacity": 806370,
+              "capacitySBS": 0,
+              "cps": 26879,
+              "cred": 0,
+              "fft": "32K",
+              "nDataSymbols": 30,
+              "nSbsSymbols": 0,
+              "reason": null,
+              "sbsDataCells": 26304,
+              "spBoost": 0,
+              "status": "ok"
+            },
+            "plpResults": [
+              {
+                "bbFrameRate": 0,
+                "bitrateMbps": 0.001,
+                "bitsPerCell": 2,
+                "celulasTI": 130816,
+                "cnr": {
+                  "bicm": {
+                    "awgn": 1.97
+                  },
+                  "field": {
+                    "awgn": 2.9,
+                    "rc20": 4.2,
+                    "rl20": 4.6
+                  },
+                  "lab": {
+                    "awgn": 2.8,
+                    "rc20": 3.2,
+                    "rl20": 5.6
+                  },
+                  "simulation": {
+                    "awgn": 2.1,
+                    "rc20": 2.5,
+                    "rl20": 4.3
+                  }
+                },
+                "fecBlockSize": 32400,
+                "ldpcSize": 64800,
+                "numFecBlocks": 0
+              }
+            ]
+          }
+        ]
+      },
+      "input": {
+        "fft": 2,
+        "gi": 3,
+        "sp": 12
+      },
+      "name": "32K + GI3_512 + SP24_2"
+    },
+    {
+      "expected": {
+        "frame2LogData": {
+          "error": "Frame_2.log not found",
+          "status": "ok"
+        },
+        "frameDuration": {
+          "status": "ok",
+          "subframeDurations": {
+            "0": 145.555556
+          },
+          "totalDurationMs": 152.407407
+        },
+        "l1dSizeBytes": {
+          "bytes": 25,
+          "source": "Frame_1.log",
+          "status": "ok"
+        },
+        "preambleFields": {
+          "cellsInFirst": 24300,
+          "cellsInNext": 25728,
+          "fftName": "32K",
+          "giSamples": 768,
+          "l1bCells": 3820,
+          "l1dBytes": 25,
+          "l1dCells": 2787,
+          "numSymbols": 1,
+          "plpCells": 17693,
+          "preambleDx": 0,
+          "preambleReducedCarriers": 0,
+          "status": "ok",
+          "totalPreambleCells": 24300
+        },
+        "status": "ok",
+        "subframeResults": [
+          {
+            "plpCapacity": {
+              "capacity": 810690,
+              "capacitySBS": 0,
+              "cps": 27023,
+              "cred": 0,
+              "fft": "32K",
+              "nDataSymbols": 30,
+              "nSbsSymbols": 0,
+              "reason": null,
+              "sbsDataCells": 26592,
+              "spBoost": 0,
+              "status": "ok"
+            },
+            "plpResults": [
+              {
+                "bbFrameRate": 0,
+                "bitrateMbps": 0.001,
+                "bitsPerCell": 2,
+                "celulasTI": 130816,
+                "cnr": {
+                  "bicm": {
+                    "awgn": 1.97
+                  },
+                  "field": {
+                    "awgn": 2.9,
+                    "rc20": 4.2,
+                    "rl20": 4.6
+                  },
+                  "lab": {
+                    "awgn": 2.8,
+                    "rc20": 3.2,
+                    "rl20": 5.6
+                  },
+                  "simulation": {
+                    "awgn": 2.1,
+                    "rc20": 2.5,
+                    "rl20": 4.3
+                  }
+                },
+                "fecBlockSize": 32400,
+                "ldpcSize": 64800,
+                "numFecBlocks": 0
+              }
+            ]
+          }
+        ]
+      },
+      "input": {
+        "fft": 2,
+        "gi": 4,
+        "sp": 14
+      },
+      "name": "32K + GI4_768 + SP32_2"
+    },
+    {
+      "expected": {
+        "frame2LogData": {
+          "error": "Frame_2.log not found",
+          "status": "ok"
+        },
+        "frameDuration": {
+          "status": "ok",
+          "subframeDurations": {
+            "0": 145.555556
+          },
+          "totalDurationMs": 152.407407
+        },
+        "l1dSizeBytes": {
+          "bytes": 25,
+          "source": "Frame_1.log",
+          "status": "ok"
+        },
+        "preambleFields": {
+          "cellsInFirst": 24300,
+          "cellsInNext": 25728,
+          "fftName": "32K",
+          "giSamples": 768,
+          "l1bCells": 3820,
+          "l1dBytes": 25,
+          "l1dCells": 2787,
+          "numSymbols": 1,
+          "plpCells": 17693,
+          "preambleDx": 0,
+          "preambleReducedCarriers": 0,
+          "status": "ok",
+          "totalPreambleCells": 24300
+        },
+        "status": "ok",
+        "subframeResults": [
+          {
+            "plpCapacity": {
+              "capacity": 797730,
+              "capacitySBS": 0,
+              "cps": 26591,
+              "cred": 0,
+              "fft": "32K",
+              "nDataSymbols": 30,
+              "nSbsSymbols": 0,
+              "reason": null,
+              "sbsDataCells": 25728,
+              "spBoost": 0,
+              "status": "ok"
+            },
+            "plpResults": [
+              {
+                "bbFrameRate": 0,
+                "bitrateMbps": 0.001,
+                "bitsPerCell": 2,
+                "celulasTI": 130816,
+                "cnr": {
+                  "bicm": {
+                    "awgn": 1.97
+                  },
+                  "field": {
+                    "awgn": 2.9,
+                    "rc20": 4.2,
+                    "rl20": 4.6
+                  },
+                  "lab": {
+                    "awgn": 2.8,
+                    "rc20": 3.2,
+                    "rl20": 5.6
+                  },
+                  "simulation": {
+                    "awgn": 2.1,
+                    "rc20": 2.5,
+                    "rl20": 4.3
+                  }
+                },
+                "fecBlockSize": 32400,
+                "ldpcSize": 64800,
+                "numFecBlocks": 0
+              }
+            ]
+          }
+        ]
+      },
+      "input": {
+        "fft": 2,
+        "gi": 4,
+        "sp": 10
+      },
+      "name": "32K + GI4_768 + SP16_2"
+    },
+    {
+      "expected": {
+        "frame2LogData": {
+          "error": "Frame_2.log not found",
+          "status": "ok"
+        },
+        "frameDuration": {
+          "status": "ok",
+          "subframeDurations": {
+            "0": 146.666667
+          },
+          "totalDurationMs": 153.555556
+        },
+        "l1dSizeBytes": {
+          "bytes": 25,
+          "source": "Frame_1.log",
+          "status": "ok"
+        },
+        "preambleFields": {
+          "cellsInFirst": 23756,
+          "cellsInNext": 25152,
+          "fftName": "32K",
+          "giSamples": 1024,
+          "l1bCells": 3820,
+          "l1dBytes": 25,
+          "l1dCells": 2787,
+          "numSymbols": 1,
+          "plpCells": 17149,
+          "preambleDx": 0,
+          "preambleReducedCarriers": 0,
+          "status": "ok",
+          "totalPreambleCells": 23756
+        },
+        "status": "ok",
+        "subframeResults": [
+          {
+            "plpCapacity": {
+              "capacity": 806370,
+              "capacitySBS": 0,
+              "cps": 26879,
+              "cred": 0,
+              "fft": "32K",
+              "nDataSymbols": 30,
+              "nSbsSymbols": 0,
+              "reason": null,
+              "sbsDataCells": 26304,
+              "spBoost": 0,
+              "status": "ok"
+            },
+            "plpResults": [
+              {
+                "bbFrameRate": 0,
+                "bitrateMbps": 0.001,
+                "bitsPerCell": 2,
+                "celulasTI": 130816,
+                "cnr": {
+                  "bicm": {
+                    "awgn": 1.97
+                  },
+                  "field": {
+                    "awgn": 2.9,
+                    "rc20": 4.2,
+                    "rl20": 4.6
+                  },
+                  "lab": {
+                    "awgn": 2.8,
+                    "rc20": 3.2,
+                    "rl20": 5.6
+                  },
+                  "simulation": {
+                    "awgn": 2.1,
+                    "rc20": 2.5,
+                    "rl20": 4.3
+                  }
+                },
+                "fecBlockSize": 32400,
+                "ldpcSize": 64800,
+                "numFecBlocks": 0
+              }
+            ]
+          }
+        ]
+      },
+      "input": {
+        "fft": 2,
+        "gi": 5,
+        "sp": 12
+      },
+      "name": "32K + GI5_1024 + SP24_2"
+    },
+    {
+      "expected": {
+        "frame2LogData": {
+          "error": "Frame_2.log not found",
+          "status": "ok"
+        },
+        "frameDuration": {
+          "status": "ok",
+          "subframeDurations": {
+            "0": 146.666667
+          },
+          "totalDurationMs": 153.555556
+        },
+        "l1dSizeBytes": {
+          "bytes": 25,
+          "source": "Frame_1.log",
+          "status": "ok"
+        },
+        "preambleFields": {
+          "cellsInFirst": 23756,
+          "cellsInNext": 25152,
+          "fftName": "32K",
+          "giSamples": 1024,
+          "l1bCells": 3820,
+          "l1dBytes": 25,
+          "l1dCells": 2787,
+          "numSymbols": 1,
+          "plpCells": 17149,
+          "preambleDx": 0,
+          "preambleReducedCarriers": 0,
+          "status": "ok",
+          "totalPreambleCells": 23756
+        },
+        "status": "ok",
+        "subframeResults": [
+          {
+            "plpCapacity": {
+              "capacity": 789090,
+              "capacitySBS": 0,
+              "cps": 26303,
+              "cred": 0,
+              "fft": "32K",
+              "nDataSymbols": 30,
+              "nSbsSymbols": 0,
+              "reason": null,
+              "sbsDataCells": 25152,
+              "spBoost": 0,
+              "status": "ok"
+            },
+            "plpResults": [
+              {
+                "bbFrameRate": 0,
+                "bitrateMbps": 0.001,
+                "bitsPerCell": 2,
+                "celulasTI": 130816,
+                "cnr": {
+                  "bicm": {
+                    "awgn": 1.97
+                  },
+                  "field": {
+                    "awgn": 2.9,
+                    "rc20": 4.2,
+                    "rl20": 4.6
+                  },
+                  "lab": {
+                    "awgn": 2.8,
+                    "rc20": 3.2,
+                    "rl20": 5.6
+                  },
+                  "simulation": {
+                    "awgn": 2.1,
+                    "rc20": 2.5,
+                    "rl20": 4.3
+                  }
+                },
+                "fecBlockSize": 32400,
+                "ldpcSize": 64800,
+                "numFecBlocks": 0
+              }
+            ]
+          }
+        ]
+      },
+      "input": {
+        "fft": 2,
+        "gi": 5,
+        "sp": 8
+      },
+      "name": "32K + GI5_1024 + SP12_2"
+    },
+    {
+      "expected": {
+        "frame2LogData": {
+          "error": "Frame_2.log not found",
+          "status": "ok"
+        },
+        "frameDuration": {
+          "status": "ok",
+          "subframeDurations": {
+            "0": 148.888889
+          },
+          "totalDurationMs": 155.851852
+        },
+        "l1dSizeBytes": {
+          "bytes": 25,
+          "source": "Frame_1.log",
+          "status": "ok"
+        },
+        "preambleFields": {
+          "cellsInFirst": 22668,
+          "cellsInNext": 24000,
+          "fftName": "32K",
+          "giSamples": 1536,
+          "l1bCells": 3820,
+          "l1dBytes": 25,
+          "l1dCells": 2787,
+          "numSymbols": 1,
+          "plpCells": 16061,
+          "preambleDx": 0,
+          "preambleReducedCarriers": 0,
+          "status": "ok",
+          "totalPreambleCells": 22668
+        },
+        "status": "ok",
+        "subframeResults": [
+          {
+            "plpCapacity": {
+              "capacity": 797730,
+              "capacitySBS": 0,
+              "cps": 26591,
+              "cred": 0,
+              "fft": "32K",
+              "nDataSymbols": 30,
+              "nSbsSymbols": 0,
+              "reason": null,
+              "sbsDataCells": 25728,
+              "spBoost": 0,
+              "status": "ok"
+            },
+            "plpResults": [
+              {
+                "bbFrameRate": 0,
+                "bitrateMbps": 0.001,
+                "bitsPerCell": 2,
+                "celulasTI": 130816,
+                "cnr": {
+                  "bicm": {
+                    "awgn": 1.97
+                  },
+                  "field": {
+                    "awgn": 2.9,
+                    "rc20": 4.2,
+                    "rl20": 4.6
+                  },
+                  "lab": {
+                    "awgn": 2.8,
+                    "rc20": 3.2,
+                    "rl20": 5.6
+                  },
+                  "simulation": {
+                    "awgn": 2.1,
+                    "rc20": 2.5,
+                    "rl20": 4.3
+                  }
+                },
+                "fecBlockSize": 32400,
+                "ldpcSize": 64800,
+                "numFecBlocks": 0
+              }
+            ]
+          }
+        ]
+      },
+      "input": {
+        "fft": 2,
+        "gi": 6,
+        "sp": 10
+      },
+      "name": "32K + GI6_1536 + SP16_2"
+    },
+    {
+      "expected": {
+        "frame2LogData": {
+          "error": "Frame_2.log not found",
+          "status": "ok"
+        },
+        "frameDuration": {
+          "status": "ok",
+          "subframeDurations": {
+            "0": 148.888889
+          },
+          "totalDurationMs": 155.851852
+        },
+        "l1dSizeBytes": {
+          "bytes": 25,
+          "source": "Frame_1.log",
+          "status": "ok"
+        },
+        "preambleFields": {
+          "cellsInFirst": 22668,
+          "cellsInNext": 24000,
+          "fftName": "32K",
+          "giSamples": 1536,
+          "l1bCells": 3820,
+          "l1dBytes": 25,
+          "l1dCells": 2787,
+          "numSymbols": 1,
+          "plpCells": 16061,
+          "preambleDx": 0,
+          "preambleReducedCarriers": 0,
+          "status": "ok",
+          "totalPreambleCells": 22668
+        },
+        "status": "ok",
+        "subframeResults": [
+          {
+            "plpCapacity": {
+              "capacity": 771810,
+              "capacitySBS": 0,
+              "cps": 25727,
+              "cred": 0,
+              "fft": "32K",
+              "nDataSymbols": 30,
+              "nSbsSymbols": 0,
+              "reason": null,
+              "sbsDataCells": 24000,
+              "spBoost": 0,
+              "status": "ok"
+            },
+            "plpResults": [
+              {
+                "bbFrameRate": 0,
+                "bitrateMbps": 0.001,
+                "bitsPerCell": 2,
+                "celulasTI": 130816,
+                "cnr": {
+                  "bicm": {
+                    "awgn": 1.97
+                  },
+                  "field": {
+                    "awgn": 2.9,
+                    "rc20": 4.2,
+                    "rl20": 4.6
+                  },
+                  "lab": {
+                    "awgn": 2.8,
+                    "rc20": 3.2,
+                    "rl20": 5.6
+                  },
+                  "simulation": {
+                    "awgn": 2.1,
+                    "rc20": 2.5,
+                    "rl20": 4.3
+                  }
+                },
+                "fecBlockSize": 32400,
+                "ldpcSize": 64800,
+                "numFecBlocks": 0
+              }
+            ]
+          }
+        ]
+      },
+      "input": {
+        "fft": 2,
+        "gi": 6,
+        "sp": 6
+      },
+      "name": "32K + GI6_1536 + SP8_2"
+    },
+    {
+      "expected": {
+        "frame2LogData": {
+          "error": "Frame_2.log not found",
+          "status": "ok"
+        },
+        "frameDuration": {
+          "status": "ok",
+          "subframeDurations": {
+            "0": 151.111111
+          },
+          "totalDurationMs": 158.148148
+        },
+        "l1dSizeBytes": {
+          "bytes": 25,
+          "source": "Frame_1.log",
+          "status": "ok"
+        },
+        "preambleFields": {
+          "cellsInFirst": 21580,
+          "cellsInNext": 22848,
+          "fftName": "32K",
+          "giSamples": 2048,
+          "l1bCells": 3820,
+          "l1dBytes": 25,
+          "l1dCells": 2787,
+          "numSymbols": 1,
+          "plpCells": 14973,
+          "preambleDx": 0,
+          "preambleReducedCarriers": 0,
+          "status": "ok",
+          "totalPreambleCells": 21580
+        },
+        "status": "ok",
+        "subframeResults": [
+          {
+            "plpCapacity": {
+              "capacity": 789090,
+              "capacitySBS": 0,
+              "cps": 26303,
+              "cred": 0,
+              "fft": "32K",
+              "nDataSymbols": 30,
+              "nSbsSymbols": 0,
+              "reason": null,
+              "sbsDataCells": 25152,
+              "spBoost": 0,
+              "status": "ok"
+            },
+            "plpResults": [
+              {
+                "bbFrameRate": 0,
+                "bitrateMbps": 0.001,
+                "bitsPerCell": 2,
+                "celulasTI": 130816,
+                "cnr": {
+                  "bicm": {
+                    "awgn": 1.97
+                  },
+                  "field": {
+                    "awgn": 2.9,
+                    "rc20": 4.2,
+                    "rl20": 4.6
+                  },
+                  "lab": {
+                    "awgn": 2.8,
+                    "rc20": 3.2,
+                    "rl20": 5.6
+                  },
+                  "simulation": {
+                    "awgn": 2.1,
+                    "rc20": 2.5,
+                    "rl20": 4.3
+                  }
+                },
+                "fecBlockSize": 32400,
+                "ldpcSize": 64800,
+                "numFecBlocks": 0
+              }
+            ]
+          }
+        ]
+      },
+      "input": {
+        "fft": 2,
+        "gi": 7,
+        "sp": 8
+      },
+      "name": "32K + GI7_2048 + SP12_2"
+    },
+    {
+      "expected": {
+        "frame2LogData": {
+          "error": "Frame_2.log not found",
+          "status": "ok"
+        },
+        "frameDuration": {
+          "status": "ok",
+          "subframeDurations": {
+            "0": 151.111111
+          },
+          "totalDurationMs": 158.148148
+        },
+        "l1dSizeBytes": {
+          "bytes": 25,
+          "source": "Frame_1.log",
+          "status": "ok"
+        },
+        "preambleFields": {
+          "cellsInFirst": 21580,
+          "cellsInNext": 22848,
+          "fftName": "32K",
+          "giSamples": 2048,
+          "l1bCells": 3820,
+          "l1dBytes": 25,
+          "l1dCells": 2787,
+          "numSymbols": 1,
+          "plpCells": 14973,
+          "preambleDx": 0,
+          "preambleReducedCarriers": 0,
+          "status": "ok",
+          "totalPreambleCells": 21580
+        },
+        "status": "ok",
+        "subframeResults": [
+          {
+            "plpCapacity": {
+              "capacity": 754530,
+              "capacitySBS": 0,
+              "cps": 25151,
+              "cred": 0,
+              "fft": "32K",
+              "nDataSymbols": 30,
+              "nSbsSymbols": 0,
+              "reason": null,
+              "sbsDataCells": 22848,
+              "spBoost": 0,
+              "status": "ok"
+            },
+            "plpResults": [
+              {
+                "bbFrameRate": 0,
+                "bitrateMbps": 0.001,
+                "bitsPerCell": 2,
+                "celulasTI": 130816,
+                "cnr": {
+                  "bicm": {
+                    "awgn": 1.97
+                  },
+                  "field": {
+                    "awgn": 2.9,
+                    "rc20": 4.2,
+                    "rl20": 4.6
+                  },
+                  "lab": {
+                    "awgn": 2.8,
+                    "rc20": 3.2,
+                    "rl20": 5.6
+                  },
+                  "simulation": {
+                    "awgn": 2.1,
+                    "rc20": 2.5,
+                    "rl20": 4.3
+                  }
+                },
+                "fecBlockSize": 32400,
+                "ldpcSize": 64800,
+                "numFecBlocks": 0
+              }
+            ]
+          }
+        ]
+      },
+      "input": {
+        "fft": 2,
+        "gi": 7,
+        "sp": 4
+      },
+      "name": "32K + GI7_2048 + SP6_2"
+    },
+    {
+      "expected": {
+        "frame2LogData": {
+          "error": "Frame_2.log not found",
+          "status": "ok"
+        },
+        "frameDuration": {
+          "status": "ok",
+          "subframeDurations": {
+            "0": 152.777778
+          },
+          "totalDurationMs": 159.87037
+        },
+        "l1dSizeBytes": {
+          "bytes": 25,
+          "source": "Frame_1.log",
+          "status": "ok"
+        },
+        "preambleFields": {
+          "cellsInFirst": 21580,
+          "cellsInNext": 22848,
+          "fftName": "32K",
+          "giSamples": 2432,
+          "l1bCells": 3820,
+          "l1dBytes": 25,
+          "l1dCells": 2787,
+          "numSymbols": 1,
+          "plpCells": 14973,
+          "preambleDx": 0,
+          "preambleReducedCarriers": 0,
+          "status": "ok",
+          "totalPreambleCells": 21580
+        },
+        "status": "ok",
+        "subframeResults": [
+          {
+            "plpCapacity": {
+              "capacity": 789090,
+              "capacitySBS": 0,
+              "cps": 26303,
+              "cred": 0,
+              "fft": "32K",
+              "nDataSymbols": 30,
+              "nSbsSymbols": 0,
+              "reason": null,
+              "sbsDataCells": 25152,
+              "spBoost": 0,
+              "status": "ok"
+            },
+            "plpResults": [
+              {
+                "bbFrameRate": 0,
+                "bitrateMbps": 0.001,
+                "bitsPerCell": 2,
+                "celulasTI": 130816,
+                "cnr": {
+                  "bicm": {
+                    "awgn": 1.97
+                  },
+                  "field": {
+                    "awgn": 2.9,
+                    "rc20": 4.2,
+                    "rl20": 4.6
+                  },
+                  "lab": {
+                    "awgn": 2.8,
+                    "rc20": 3.2,
+                    "rl20": 5.6
+                  },
+                  "simulation": {
+                    "awgn": 2.1,
+                    "rc20": 2.5,
+                    "rl20": 4.3
+                  }
+                },
+                "fecBlockSize": 32400,
+                "ldpcSize": 64800,
+                "numFecBlocks": 0
+              }
+            ]
+          }
+        ]
+      },
+      "input": {
+        "fft": 2,
+        "gi": 8,
+        "sp": 8
+      },
+      "name": "32K + GI8_2432 + SP12_2"
+    },
+    {
+      "expected": {
+        "frame2LogData": {
+          "error": "Frame_2.log not found",
+          "status": "ok"
+        },
+        "frameDuration": {
+          "status": "ok",
+          "subframeDurations": {
+            "0": 152.777778
+          },
+          "totalDurationMs": 159.87037
+        },
+        "l1dSizeBytes": {
+          "bytes": 25,
+          "source": "Frame_1.log",
+          "status": "ok"
+        },
+        "preambleFields": {
+          "cellsInFirst": 21580,
+          "cellsInNext": 22848,
+          "fftName": "32K",
+          "giSamples": 2432,
+          "l1bCells": 3820,
+          "l1dBytes": 25,
+          "l1dCells": 2787,
+          "numSymbols": 1,
+          "plpCells": 14973,
+          "preambleDx": 0,
+          "preambleReducedCarriers": 0,
+          "status": "ok",
+          "totalPreambleCells": 21580
+        },
+        "status": "ok",
+        "subframeResults": [
+          {
+            "plpCapacity": {
+              "capacity": 754530,
+              "capacitySBS": 0,
+              "cps": 25151,
+              "cred": 0,
+              "fft": "32K",
+              "nDataSymbols": 30,
+              "nSbsSymbols": 0,
+              "reason": null,
+              "sbsDataCells": 22848,
+              "spBoost": 0,
+              "status": "ok"
+            },
+            "plpResults": [
+              {
+                "bbFrameRate": 0,
+                "bitrateMbps": 0.001,
+                "bitsPerCell": 2,
+                "celulasTI": 130816,
+                "cnr": {
+                  "bicm": {
+                    "awgn": 1.97
+                  },
+                  "field": {
+                    "awgn": 2.9,
+                    "rc20": 4.2,
+                    "rl20": 4.6
+                  },
+                  "lab": {
+                    "awgn": 2.8,
+                    "rc20": 3.2,
+                    "rl20": 5.6
+                  },
+                  "simulation": {
+                    "awgn": 2.1,
+                    "rc20": 2.5,
+                    "rl20": 4.3
+                  }
+                },
+                "fecBlockSize": 32400,
+                "ldpcSize": 64800,
+                "numFecBlocks": 0
+              }
+            ]
+          }
+        ]
+      },
+      "input": {
+        "fft": 2,
+        "gi": 8,
+        "sp": 4
+      },
+      "name": "32K + GI8_2432 + SP6_2"
+    },
+    {
+      "expected": {
+        "frame2LogData": {
+          "error": "Frame_2.log not found",
+          "status": "ok"
+        },
+        "frameDuration": {
+          "status": "ok",
+          "subframeDurations": {
+            "0": 155.555556
+          },
+          "totalDurationMs": 162.740741
+        },
+        "l1dSizeBytes": {
+          "bytes": 25,
+          "source": "Frame_1.log",
+          "status": "ok"
+        },
+        "preambleFields": {
+          "cellsInFirst": 22668,
+          "cellsInNext": 24000,
+          "fftName": "32K",
+          "giSamples": 3072,
+          "l1bCells": 3820,
+          "l1dBytes": 25,
+          "l1dCells": 2787,
+          "numSymbols": 1,
+          "plpCells": 16061,
+          "preambleDx": 0,
+          "preambleReducedCarriers": 0,
+          "status": "ok",
+          "totalPreambleCells": 22668
+        },
+        "status": "ok",
+        "subframeResults": [
+          {
+            "plpCapacity": {
+              "capacity": 771810,
+              "capacitySBS": 0,
+              "cps": 25727,
+              "cred": 0,
+              "fft": "32K",
+              "nDataSymbols": 30,
+              "nSbsSymbols": 0,
+              "reason": null,
+              "sbsDataCells": 24000,
+              "spBoost": 0,
+              "status": "ok"
+            },
+            "plpResults": [
+              {
+                "bbFrameRate": 0,
+                "bitrateMbps": 0.001,
+                "bitsPerCell": 2,
+                "celulasTI": 130816,
+                "cnr": {
+                  "bicm": {
+                    "awgn": 1.97
+                  },
+                  "field": {
+                    "awgn": 2.9,
+                    "rc20": 4.2,
+                    "rl20": 4.6
+                  },
+                  "lab": {
+                    "awgn": 2.8,
+                    "rc20": 3.2,
+                    "rl20": 5.6
+                  },
+                  "simulation": {
+                    "awgn": 2.1,
+                    "rc20": 2.5,
+                    "rl20": 4.3
+                  }
+                },
+                "fecBlockSize": 32400,
+                "ldpcSize": 64800,
+                "numFecBlocks": 0
+              }
+            ]
+          }
+        ]
+      },
+      "input": {
+        "fft": 2,
+        "gi": 9,
+        "sp": 6
+      },
+      "name": "32K + GI9_3072 + SP8_2"
+    },
+    {
+      "expected": {
+        "frame2LogData": {
+          "error": "Frame_2.log not found",
+          "status": "ok"
+        },
+        "frameDuration": {
+          "status": "ok",
+          "subframeDurations": {
+            "0": 155.555556
+          },
+          "totalDurationMs": 162.740741
+        },
+        "l1dSizeBytes": {
+          "bytes": 25,
+          "source": "Frame_1.log",
+          "status": "ok"
+        },
+        "preambleFields": {
+          "cellsInFirst": 22668,
+          "cellsInNext": 24000,
+          "fftName": "32K",
+          "giSamples": 3072,
+          "l1bCells": 3820,
+          "l1dBytes": 25,
+          "l1dCells": 2787,
+          "numSymbols": 1,
+          "plpCells": 16061,
+          "preambleDx": 0,
+          "preambleReducedCarriers": 0,
+          "status": "ok",
+          "totalPreambleCells": 22668
+        },
+        "status": "ok",
+        "subframeResults": [
+          {
+            "plpCapacity": {
+              "capacity": 685410,
+              "capacitySBS": 0,
+              "cps": 22847,
+              "cred": 0,
+              "fft": "32K",
+              "nDataSymbols": 30,
+              "nSbsSymbols": 0,
+              "reason": null,
+              "sbsDataCells": 18240,
+              "spBoost": 0,
+              "status": "ok"
+            },
+            "plpResults": [
+              {
+                "bbFrameRate": 0,
+                "bitrateMbps": 0.001,
+                "bitsPerCell": 2,
+                "celulasTI": 130816,
+                "cnr": {
+                  "bicm": {
+                    "awgn": 1.97
+                  },
+                  "field": {
+                    "awgn": 2.9,
+                    "rc20": 4.2,
+                    "rl20": 4.6
+                  },
+                  "lab": {
+                    "awgn": 2.8,
+                    "rc20": 3.2,
+                    "rl20": 5.6
+                  },
+                  "simulation": {
+                    "awgn": 2.1,
+                    "rc20": 2.5,
+                    "rl20": 4.3
+                  }
+                },
+                "fecBlockSize": 32400,
+                "ldpcSize": 64800,
+                "numFecBlocks": 0
+              }
+            ]
+          }
+        ]
+      },
+      "input": {
+        "fft": 2,
+        "gi": 9,
+        "sp": 0
+      },
+      "name": "32K + GI9_3072 + SP3_2"
+    },
+    {
+      "expected": {
+        "frame2LogData": {
+          "error": "Frame_2.log not found",
+          "status": "ok"
+        },
+        "frameDuration": {
+          "status": "ok",
+          "subframeDurations": {
+            "0": 158.055556
+          },
+          "totalDurationMs": 165.324074
+        },
+        "l1dSizeBytes": {
+          "bytes": 25,
+          "source": "Frame_1.log",
+          "status": "ok"
+        },
+        "preambleFields": {
+          "cellsInFirst": 22668,
+          "cellsInNext": 24000,
+          "fftName": "32K",
+          "giSamples": 3648,
+          "l1bCells": 3820,
+          "l1dBytes": 25,
+          "l1dCells": 2787,
+          "numSymbols": 1,
+          "plpCells": 16061,
+          "preambleDx": 0,
+          "preambleReducedCarriers": 0,
+          "status": "ok",
+          "totalPreambleCells": 22668
+        },
+        "status": "ok",
+        "subframeResults": [
+          {
+            "plpCapacity": {
+              "capacity": 771810,
+              "capacitySBS": 0,
+              "cps": 25727,
+              "cred": 0,
+              "fft": "32K",
+              "nDataSymbols": 30,
+              "nSbsSymbols": 0,
+              "reason": null,
+              "sbsDataCells": 24000,
+              "spBoost": 0,
+              "status": "ok"
+            },
+            "plpResults": [
+              {
+                "bbFrameRate": 0,
+                "bitrateMbps": 0.001,
+                "bitsPerCell": 2,
+                "celulasTI": 130816,
+                "cnr": {
+                  "bicm": {
+                    "awgn": 1.97
+                  },
+                  "field": {
+                    "awgn": 2.9,
+                    "rc20": 4.2,
+                    "rl20": 4.6
+                  },
+                  "lab": {
+                    "awgn": 2.8,
+                    "rc20": 3.2,
+                    "rl20": 5.6
+                  },
+                  "simulation": {
+                    "awgn": 2.1,
+                    "rc20": 2.5,
+                    "rl20": 4.3
+                  }
+                },
+                "fecBlockSize": 32400,
+                "ldpcSize": 64800,
+                "numFecBlocks": 0
+              }
+            ]
+          }
+        ]
+      },
+      "input": {
+        "fft": 2,
+        "gi": 10,
+        "sp": 6
+      },
+      "name": "32K + GI10_3648 + SP8_2"
+    },
+    {
+      "expected": {
+        "frame2LogData": {
+          "error": "Frame_2.log not found",
+          "status": "ok"
+        },
+        "frameDuration": {
+          "status": "ok",
+          "subframeDurations": {
+            "0": 158.055556
+          },
+          "totalDurationMs": 165.324074
+        },
+        "l1dSizeBytes": {
+          "bytes": 25,
+          "source": "Frame_1.log",
+          "status": "ok"
+        },
+        "preambleFields": {
+          "cellsInFirst": 22668,
+          "cellsInNext": 24000,
+          "fftName": "32K",
+          "giSamples": 3648,
+          "l1bCells": 3820,
+          "l1dBytes": 25,
+          "l1dCells": 2787,
+          "numSymbols": 1,
+          "plpCells": 16061,
+          "preambleDx": 0,
+          "preambleReducedCarriers": 0,
+          "status": "ok",
+          "totalPreambleCells": 22668
+        },
+        "status": "ok",
+        "subframeResults": [
+          {
+            "plpCapacity": {
+              "capacity": 685410,
+              "capacitySBS": 0,
+              "cps": 22847,
+              "cred": 0,
+              "fft": "32K",
+              "nDataSymbols": 30,
+              "nSbsSymbols": 0,
+              "reason": null,
+              "sbsDataCells": 18240,
+              "spBoost": 0,
+              "status": "ok"
+            },
+            "plpResults": [
+              {
+                "bbFrameRate": 0,
+                "bitrateMbps": 0.001,
+                "bitsPerCell": 2,
+                "celulasTI": 130816,
+                "cnr": {
+                  "bicm": {
+                    "awgn": 1.97
+                  },
+                  "field": {
+                    "awgn": 2.9,
+                    "rc20": 4.2,
+                    "rl20": 4.6
+                  },
+                  "lab": {
+                    "awgn": 2.8,
+                    "rc20": 3.2,
+                    "rl20": 5.6
+                  },
+                  "simulation": {
+                    "awgn": 2.1,
+                    "rc20": 2.5,
+                    "rl20": 4.3
+                  }
+                },
+                "fecBlockSize": 32400,
+                "ldpcSize": 64800,
+                "numFecBlocks": 0
+              }
+            ]
+          }
+        ]
+      },
+      "input": {
+        "fft": 2,
+        "gi": 10,
+        "sp": 0
+      },
+      "name": "32K + GI10_3648 + SP3_2"
+    },
+    {
+      "expected": {
+        "frame2LogData": {
+          "error": "Frame_2.log not found",
+          "status": "ok"
+        },
+        "frameDuration": {
+          "status": "ok",
+          "subframeDurations": {
+            "0": 160.0
+          },
+          "totalDurationMs": 167.333333
+        },
+        "l1dSizeBytes": {
+          "bytes": 25,
+          "source": "Frame_1.log",
+          "status": "ok"
+        },
+        "preambleFields": {
+          "cellsInFirst": 17228,
+          "cellsInNext": 18240,
+          "fftName": "32K",
+          "giSamples": 4096,
+          "l1bCells": 3820,
+          "l1dBytes": 25,
+          "l1dCells": 2787,
+          "numSymbols": 1,
+          "plpCells": 10621,
+          "preambleDx": 0,
+          "preambleReducedCarriers": 0,
+          "status": "ok",
+          "totalPreambleCells": 17228
+        },
+        "status": "ok",
+        "subframeResults": [
+          {
+            "plpCapacity": {
+              "capacity": 754530,
+              "capacitySBS": 0,
+              "cps": 25151,
+              "cred": 0,
+              "fft": "32K",
+              "nDataSymbols": 30,
+              "nSbsSymbols": 0,
+              "reason": null,
+              "sbsDataCells": 22848,
+              "spBoost": 0,
+              "status": "ok"
+            },
+            "plpResults": [
+              {
+                "bbFrameRate": 0,
+                "bitrateMbps": 0.001,
+                "bitsPerCell": 2,
+                "celulasTI": 130816,
+                "cnr": {
+                  "bicm": {
+                    "awgn": 1.97
+                  },
+                  "field": {
+                    "awgn": 2.9,
+                    "rc20": 4.2,
+                    "rl20": 4.6
+                  },
+                  "lab": {
+                    "awgn": 2.8,
+                    "rc20": 3.2,
+                    "rl20": 5.6
+                  },
+                  "simulation": {
+                    "awgn": 2.1,
+                    "rc20": 2.5,
+                    "rl20": 4.3
+                  }
+                },
+                "fecBlockSize": 32400,
+                "ldpcSize": 64800,
+                "numFecBlocks": 0
+              }
+            ]
+          }
+        ]
+      },
+      "input": {
+        "fft": 2,
+        "gi": 11,
+        "sp": 4
+      },
+      "name": "32K + GI11_4096 + SP6_2"
+    },
+    {
+      "expected": {
+        "frame2LogData": {
+          "error": "Frame_2.log not found",
+          "status": "ok"
+        },
+        "frameDuration": {
+          "status": "ok",
+          "subframeDurations": {
+            "0": 160.0
+          },
+          "totalDurationMs": 167.333333
+        },
+        "l1dSizeBytes": {
+          "bytes": 25,
+          "source": "Frame_1.log",
+          "status": "ok"
+        },
+        "preambleFields": {
+          "cellsInFirst": 17228,
+          "cellsInNext": 18240,
+          "fftName": "32K",
+          "giSamples": 4096,
+          "l1bCells": 3820,
+          "l1dBytes": 25,
+          "l1dCells": 2787,
+          "numSymbols": 1,
+          "plpCells": 10621,
+          "preambleDx": 0,
+          "preambleReducedCarriers": 0,
+          "status": "ok",
+          "totalPreambleCells": 17228
+        },
+        "status": "ok",
+        "subframeResults": [
+          {
+            "plpCapacity": {
+              "capacity": 685410,
+              "capacitySBS": 0,
+              "cps": 22847,
+              "cred": 0,
+              "fft": "32K",
+              "nDataSymbols": 30,
+              "nSbsSymbols": 0,
+              "reason": null,
+              "sbsDataCells": 18240,
+              "spBoost": 0,
+              "status": "ok"
+            },
+            "plpResults": [
+              {
+                "bbFrameRate": 0,
+                "bitrateMbps": 0.001,
+                "bitsPerCell": 2,
+                "celulasTI": 130816,
+                "cnr": {
+                  "bicm": {
+                    "awgn": 1.97
+                  },
+                  "field": {
+                    "awgn": 2.9,
+                    "rc20": 4.2,
+                    "rl20": 4.6
+                  },
+                  "lab": {
+                    "awgn": 2.8,
+                    "rc20": 3.2,
+                    "rl20": 5.6
+                  },
+                  "simulation": {
+                    "awgn": 2.1,
+                    "rc20": 2.5,
+                    "rl20": 4.3
+                  }
+                },
+                "fecBlockSize": 32400,
+                "ldpcSize": 64800,
+                "numFecBlocks": 0
+              }
+            ]
+          }
+        ]
+      },
+      "input": {
+        "fft": 2,
+        "gi": 11,
+        "sp": 0
+      },
+      "name": "32K + GI11_4096 + SP3_2"
+    },
+    {
+      "expected": {
+        "frame2LogData": {
+          "error": "Frame_2.log not found",
+          "status": "ok"
+        },
+        "frameDuration": {
+          "status": "ok",
+          "subframeDurations": {
+            "0": 163.333333
+          },
+          "totalDurationMs": 170.777778
+        },
+        "l1dSizeBytes": {
+          "bytes": 25,
+          "source": "Frame_1.log",
+          "status": "ok"
+        },
+        "preambleFields": {
+          "cellsInFirst": 17228,
+          "cellsInNext": 18240,
+          "fftName": "32K",
+          "giSamples": 4864,
+          "l1bCells": 3820,
+          "l1dBytes": 25,
+          "l1dCells": 2787,
+          "numSymbols": 1,
+          "plpCells": 10621,
+          "preambleDx": 0,
+          "preambleReducedCarriers": 0,
+          "status": "ok",
+          "totalPreambleCells": 17228
+        },
+        "status": "ok",
+        "subframeResults": [
+          {
+            "plpCapacity": {
+              "capacity": 754530,
+              "capacitySBS": 0,
+              "cps": 25151,
+              "cred": 0,
+              "fft": "32K",
+              "nDataSymbols": 30,
+              "nSbsSymbols": 0,
+              "reason": null,
+              "sbsDataCells": 22848,
+              "spBoost": 0,
+              "status": "ok"
+            },
+            "plpResults": [
+              {
+                "bbFrameRate": 0,
+                "bitrateMbps": 0.001,
+                "bitsPerCell": 2,
+                "celulasTI": 130816,
+                "cnr": {
+                  "bicm": {
+                    "awgn": 1.97
+                  },
+                  "field": {
+                    "awgn": 2.9,
+                    "rc20": 4.2,
+                    "rl20": 4.6
+                  },
+                  "lab": {
+                    "awgn": 2.8,
+                    "rc20": 3.2,
+                    "rl20": 5.6
+                  },
+                  "simulation": {
+                    "awgn": 2.1,
+                    "rc20": 2.5,
+                    "rl20": 4.3
+                  }
+                },
+                "fecBlockSize": 32400,
+                "ldpcSize": 64800,
+                "numFecBlocks": 0
+              }
+            ]
+          }
+        ]
+      },
+      "input": {
+        "fft": 2,
+        "gi": 12,
+        "sp": 4
+      },
+      "name": "32K + GI12_4864 + SP6_2"
+    },
+    {
+      "expected": {
+        "frame2LogData": {
+          "error": "Frame_2.log not found",
+          "status": "ok"
+        },
+        "frameDuration": {
+          "status": "ok",
+          "subframeDurations": {
+            "0": 163.333333
+          },
+          "totalDurationMs": 170.777778
+        },
+        "l1dSizeBytes": {
+          "bytes": 25,
+          "source": "Frame_1.log",
+          "status": "ok"
+        },
+        "preambleFields": {
+          "cellsInFirst": 17228,
+          "cellsInNext": 18240,
+          "fftName": "32K",
+          "giSamples": 4864,
+          "l1bCells": 3820,
+          "l1dBytes": 25,
+          "l1dCells": 2787,
+          "numSymbols": 1,
+          "plpCells": 10621,
+          "preambleDx": 0,
+          "preambleReducedCarriers": 0,
+          "status": "ok",
+          "totalPreambleCells": 17228
+        },
+        "status": "ok",
+        "subframeResults": [
+          {
+            "plpCapacity": {
+              "capacity": 685410,
+              "capacitySBS": 0,
+              "cps": 22847,
+              "cred": 0,
+              "fft": "32K",
+              "nDataSymbols": 30,
+              "nSbsSymbols": 0,
+              "reason": null,
+              "sbsDataCells": 18240,
+              "spBoost": 0,
+              "status": "ok"
+            },
+            "plpResults": [
+              {
+                "bbFrameRate": 0,
+                "bitrateMbps": 0.001,
+                "bitsPerCell": 2,
+                "celulasTI": 130816,
+                "cnr": {
+                  "bicm": {
+                    "awgn": 1.97
+                  },
+                  "field": {
+                    "awgn": 2.9,
+                    "rc20": 4.2,
+                    "rl20": 4.6
+                  },
+                  "lab": {
+                    "awgn": 2.8,
+                    "rc20": 3.2,
+                    "rl20": 5.6
+                  },
+                  "simulation": {
+                    "awgn": 2.1,
+                    "rc20": 2.5,
+                    "rl20": 4.3
+                  }
+                },
+                "fecBlockSize": 32400,
+                "ldpcSize": 64800,
+                "numFecBlocks": 0
+              }
+            ]
+          }
+        ]
+      },
+      "input": {
+        "fft": 2,
+        "gi": 12,
+        "sp": 0
+      },
+      "name": "32K + GI12_4864 + SP3_2"
+    }
+  ]
+}
